@@ -1,0 +1,62 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-15T08:39:37+00:00
+
+====== 3. Factory Pattern ======
+Created Wednesday 15 March 2017
+
+Apparently the most widely used pattern after the Singleton pattern.
+Creational Pattern
+Deals with creation of similar types of objects and producing them in a centralized manner depending on the condition/type of object requested.
+Separate creation from usage of objects.
+
+===== Simple Factory =====
+
+Class with one method which create a specific type of object based on a condition.
+All types of objects which can be created implement a single interface.
+This is the factory I have used
+
+Interface of object to create
+implementations of this interfaceFactory with method which returns and instance of interface
+if/else or switch which returns and implementation of the interface
+
+===== Factory Method =====
+**Scope is Class**
+when there's various families of objects that can be instantiated
+but each family needs to be created by a specific type of factory.
+Define factory method in base factory class.
+Concrete impl's of base factory then override this method.
+
+Interface for the objects to be created.
+Implementations of this interface
+Interface for factories which create the interface
+Implementations of this interface
+	Each factory implementation is a simple factory which uses the impl's of the objects to be created.
+All types of objects which can be created implement a single interface.
+
+From an article on DZone it says to consider this pattern when you want to control creation and management of objects or when there is an algorithm involved after the creation of the object.
+
+===== Abstract Factory =====
+**Scope is Object**
+A factory which creates a type of object which itself is a factory.
+It is a simple factory, but the objects it creates are factories themselves.
+
+I've seen another implementation of this! Where the AbstractFactory delegates parts of the creation, management to implementations. Like the Template Method pattern.
+
+===== My Thoughts =====
+Factory Method & Abstract Factory sound similar.
+	I think the difference is:
+		in a Factory Method the objects created all have the same interface 
+		where the Abstract Factory each factory implementation has the same interface but across factory implementations the interface of the objects create could be different.
+For a while this was my go to pattern but I'm beginning to see where to use it.
+	If there is any deviation in how the objects are created / what fields are set then don't use it
+Using them by default leads to extra, sometimes unnecessary code, and complexity.
+	Is there something simpler which could be used.
+	If I take the example of VmConnectionBuilder, ther builder pattern was much better suited than the factory
+
+
+===== When to use the pattern =====
+when you want to instantiate implementations of an interface based on a condition.
+Abstracts the instantiation based on the condition away from the end user.
+Control what is created.
+Multiple implementations of an interface. 

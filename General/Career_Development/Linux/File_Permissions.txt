@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-08-14T11:48:20+01:00
+
+====== File Permissions ======
+Created Monday 14 August 2017
+
+In directory permissions there is r,w,x and s
+
+**suid**
+
+s is a special type of file permission, suid (Set owner User ID up on execution)
+	when a user executes the file with s it uses the access permissions of the owner rather than the executor
+
+**sgid**
+s is a special type of file permission, suid (Set Group ID up on execution)
+	when a user executes the file with it uses the access permissions of the group rather than the executor

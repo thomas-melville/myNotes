@@ -1,0 +1,42 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-09T10:17:48+00:00
+
+====== 6. Observer Pattern ======
+Created Wednesday 09 November 2016
+
+GoF Definition: Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+
+Subject maintains a list of dependencies, called obersvers, and notifies them automatically of any state changes, usually by calling one of their methods
+Separation of objects that depend on each other.
+Subject's don't need to know anything about observers so any amount of new observers can be created.
+
+RSS Feed is an example.
+	I add a new feed to my feed reader.
+	Any time the RSS feed has an update, it will appear automatically in my reader.
+
+This pattern allows classes to be notified, and updated when other classes change.
+"When updates need to be done at multiple points (Observer) depending on changes in state at another place (Subject)"
+
+Distributed event handling systems
+
+java.util already has class Oberservable & interface Observer
+	Subject extends Observable & Observer impl's Observer
+
+
+==== Implementation ====
+Observer(s) are interested in the state of a Subject.
+Observer register it's interest in the Subject by attaching themselves.
+When something changes in the Subject that the observer may be interested in, a notify message is set, which calls the update method in each observer.
+Observer can detach
+
+Subject interface: attach, detach, notify
+	impl: has a list of observers
+			when the state changes execute notify, which calls update method on each observer.
+Observer interface: update
+	impl: executes action when state of subject changes
+	
+==== My Thoughts ====
+key part of the MVC architectural pattern
+can the Observer#update method take the subject?
+	Yes, the Observer interface in java.util has the Observable as a parameter of the method.

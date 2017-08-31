@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-04-20T08:43:47+01:00
+
+====== 5. State ======
+Created Thursday 20 April 2017
+
+https://dzone.com/articles/design-patterns-state
+
+Change the behaviour of an object depending on it's internal state.
+
+GoF Definition: Allows an object to alter its behaviour when its internal state changes. The object will appear to change its class.
+
+
+==== Implementation ====
+A State interface, which has a number of implementations.
+Each implementation encapsulates all the behaviour associated with that particular state. / Implements it's own implementation for the request.
+A Context class has an instance of state that changes.
+
+This is quite similar to the Strategy pattern, except the change happens at runtime instead of the client deciding.
+
+When to use:
+	when the behaviour of an object should be influenced by it's state.
+	complex conditions tie object behaviour to it's state.
+
+
+==== My thoughts ====

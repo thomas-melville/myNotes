@@ -1,0 +1,221 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-01-03T10:29:11+00:00
+
+====== 3. Networking ======
+Created Tuesday 03 January 2017
+
+==== Network Virtualization using Linux ====
+
+Single Linux bridge per physical compute host, attached to a single physical NIC
+Multiple VM's per bridge.
+VMs share single L2 broadcast domain with all other VMs and physical hosts.
+//Cloud is like a private network with 10.0.x.x addresses//
+All L3 routing occurs outsdie of physical hosts.
+
+=== Linux Bridge ===
+Same as bridge mode that I have enabled on the eircom router at home.
+"connect to Ethernet segments together in a protocol independent way. Forwarding done at L2 so no opening of segments to get IP addresses"
+More powerful than hardware bridging as it can filter and shape traffic.
+
+==== Single-Host Networking ====
+router which connects the VMs to the outside world is //Neutron //which runs on cloud-controller host.
+physical host which VMs run on is //nova-compute// host
+Single point of failure for cloud!
+
+==== Multi-Host Networking ====
+//Neutron //moves from cloud-controller to each physical compute host.
+Removes Single point of failure for entire cloud.
+Unique gateway IP's per compute host.
+
+=== +Ives ===
+1. removes Single Point of Failure on L3
+2. Independent Traffic
+3. Routing
+4. IP Address Management
+
+=== -Ives ===
+1. Complexity & additional load on each compute host
+2. Multi-host requires 2 physical NICs per compute node.
+
+==== Role of Network Managers ====
+
+Determine:
+1. L2 network layout of cloud
+2. L3 network Layout (single/multi-host networking)
+
+Managers:
+1. Flat Manager
+2. Flat DHCP Manager
+3. VLAN Manager
+4. Neutron (isolates network servie, provides plugins to external services)
+
+Capabilities
+1. Plugging instances into Linux Bridge
+2. Creating Linux bridges
+3. IP Allocation to instances
+	a. inject nw config into instances
+	b. provde dhcp services for instances
+4. Configure vlan interfaces on compute hosts
+5. traffic filtering
+6. provide external connectivity to instances
+
+==== IPs ====
+
+=== Fixed IPs ===
+Given to each instance on boot
+Private IP ranges
+Only got comms between instances and to external networks.
+Inaccessible from external network
+
+=== Floating IPs ===
+Allocated & associate to instances by cloud users
+Bunches of publicly routable IPs registered by cloud admins
+accessible from external networks
+
+floating IP is added as secondary address on eth1, which in a multi host networking setup is connected to external network.
+NAT rule created t redirect floating IP to fixed IP
+
+==== Neutron ====
+
+Separate compute from network, neutron was nova-network
+
+Introduce "logical" network components so a desired network topology can be described.
+separate networking in a different project with a public API layer
+
+=== Neutron Locgical Network Model ===
+1. L2 Network
+	a. isolated L2 segment, analogous to VLAN in physical networking.
+2. Subnet
+	a. block of v4/6 IP addresses
+	b. can hanve many:one relationship with networks
+3. Port
+	a. connection point for attaching a single device, such as NIC of a virtual server to a virtual network
+4. Router
+	a. Route between "local" networks
+	b. NAT between "local" and "external" networks
+
+=== Components ===
+
+1. Plugin
+	a. custom back-end impl of n/w'ing API 
+2. Agent
+	a. Daemon processes which service a variety of n/w'ing func.
+	b. e.g. dhcp, l3, ...
+
+=== Architecture ===
+
+Agents support L2, L3, and some L4 with LBaaS (Load Balancing as a Service)
+Neutron uses plugins to deal with hardware diversity & different layers of the OSI Model.
+
+Virtual networks delivered on top of datacenter hardware
+
+//Lots of pictures in the slides//
+
+== Linux Bridge under the hood ==
+eth0 of multiple vm connect to a TAP
+multiple TAPs connect to the bridge
+the bridge is connected to VLAN on eth1 of router
+
+== TAP ==
+Network TAP
+Simulated network device
+operates with L2 packets, ethernet frames.
+Used to create a network bridge
+
+=== OpenvSwitch plugin ===
+
+Leverages Open vSwitch software switch. Production quality multi layer virtual switch
+
+openvswitch daemon accepts calls from Neutron agent & reconfigures network
+
+Modes of operation:
+1. FLAT
+	a. networks share one L2 domain
+2. VLAN
+	a. networks separated by 802.1Q VLANS
+3. TUNNEL
+	a. traffic carried over GRE with different per-net tunnel IDs
+
+=== Modular Layer 2 plugin ===
+
+new modular Neutron core plugin.
+replaces existing monolithic plugins.
+supports existing L2 agents: openvswtitch, LinuxBridge, Hyper-V
+supports multiple layer 2 network-type: local, flat, VLAN, GRE, VXLAN
+
+=== Neutron Agents ===
+
+== L3 Agents ==
+
+IPAM is an IP address mgmt service, integrates DHCP & DNS (so that each is aware of the changes in the other)
+Routing & NAT required for instances to access external networks
+
+== DHCP Agents ==
+
+manage different DHCP backends
+provide DHCP service to Openstack instances
+
+== IPAM Steps ==
+
+1. Create a logical network
+2. Create a logical subnet
+3. Pair the subnet with a network
+4. Boot instances and throw them into the network
+
+=== Routing Steps ===
+
+1. Create a logical router
+2. plug different logical subnets/networks into a logical router
+3. Create default gateways for instances
+4. Provide L3 connectivity between logical networks
+
+== NAT Steps ==
+
+1. Create NAT-ed connections to external networks
+
+==== Neutron Distributed Network Nodes ====
+
+Neutron agent scheduling
+	Several nodes to run DHCP & L3 agent
+	Use cases:
+		HA
+		Different physical machines to route different tenants
+	implementation
+		random scheduling of routers
+		availability basedon heartbeat
+		scheduling only to available nodes
+
+Neutron L3 HA
+	migration of virtual routers between network nodes
+	Leverages keepalived for VRRP
+
+DVR: Distributed Virtual Routing
+	Network node provides North-south SNAT traffic
+	Compute node provides N-S DNAT (floating ip) traffic
+
+
+==== Neutron Network Services ====
+
+....
+
+
+==== Neutron LBaas ====
+
+Full load balancing API model + pluggable framework
+Basic impl based on HAProxy
+
+Features
+	load balancing for VMs within a tenant
+	Three load balancing methods:
+		round robin
+		least connections
+		source ip
+	health monitoring
+		ping
+		tcp connect
+		http
+		https
+	Connection limit
+	session persistence
+

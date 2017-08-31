@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-03T21:57:41+01:00
+
+====== 6. Optional Class ======
+Created Monday 03 October 2016
+
+A container object which is used to contain non-null objects
+Represents null with absent value.
+
+Instead of returning the object and checking if it is null, return the optional and check is there a null present.
+Reduces chances of NullPointerExceptions
+Similar to Guava Optional

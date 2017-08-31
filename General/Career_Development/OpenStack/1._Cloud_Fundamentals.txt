@@ -1,0 +1,36 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-12-23T09:01:48+00:00
+
+====== 1. Cloud Fundamentals ======
+Created Friday 23 December 2016
+
+===== Why OpenStack =====
+Nasa & Rackspace
+Opensource cloud platform for private & public clouds (IAAS)
+
+integrate compute, network & storage plugins
+
+==== Core Components ====
+
+=== Nova ===
+Scheduling, initiation of VMs, linux containers lxc, docker
+
+=== Cinder ===
+block storage for vms
+
+=== Glance ===
+Stores & retrieves images and metadata
+
+=== Neutron ===
+Network as a service
+assigning ip addresses
+isolation of tenants
+
+=== Horizon ===
+Web based UI
+
+=== Keystone ===
+Authentication & Authorization
+tracking
+

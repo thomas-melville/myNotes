@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-08-22T17:01:45+01:00
+
+====== xargs ======
+Created Tuesday 22 August 2017
+
+can use this to execute on multiple cores
+
+-P <no_of_cores>	the number of cores to use
+-I <identifier> the identifier to pass the output of the script before the | as
+-c <command> execute the command

@@ -1,0 +1,45 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-21T17:08:10+00:00
+
+====== 4. Command & Active Object Patterns ======
+Created Tuesday 21 March 2017
+
+https://dzone.com/articles/design-patterns-command
+
+GoF Definition: Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations
+
+The Command pattern is simple, execute a command using fields of the class set in the constructor.
+The Active Object pattern is an engine for Command Implementations.
+Useful for when we want to create a sequence of actions and execute them at a later time.
+Allows the requester of a particular action to be decoupled from the object that performs the action.
+Manages algorithms, relationships & responsibilities between objects.
+
+The interface is simple, one or two methods: execute() & possibly undo()
+	This simplicity belies complexity as there will be many small classes.
+	For every receiver class there will be one or more Command classes.
+
+Applications:
+	The Command Pattern could be used for a simple Scenarios implementation. **The more I learn about it the less I think it suits a simple scenarios implementation.**
+	Redo & Undo in an editor.
+	Table order in a restaurant would be a command, which would get queued for the kitchen staff
+	
+When to use:
+	A history of requests is needed. (Redo,Undo!!!)
+	you need callback functionality
+	requests need to be handled at variant times or in variant oders.
+	The invoker should be decoupled from the object handling the invocation.
+
+
+==== Implementation ====
+Declare an interface for all commands, one method execute(). Possibly a second, undo()
+Implementaton of interface asks a Reciever class to carry out an operation.
+The receiver has the knowldge of what to do to carry out the request.
+Invoker holds a command and can get the Command to execute a request by calling the execute method.
+Client creates command impl's and sets receiver for the command.
+
+==== My Thoughts ====
+According to the DZone article there's more classes involed than I thought. What's this receiver????
+	Reciever is the object to execute the command on!
+		The example has a Light object and a LightOn & LightOff Command
+

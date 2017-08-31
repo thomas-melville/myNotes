@@ -1,0 +1,33 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-03T11:36:19+01:00
+
+====== 2. Method References ======
+Created Monday 03 October 2016
+
+Help to point to methods by their names
+
+syntax: ::
+
+can point to static, instance and constructor methods
+
+System.out.println()
+
+System.out::println 
+
+names.forEach(System.out::println);
+
+System.out::println is a static method reference here.
+The element in names is passed to it each time.
+
+Same rules as normal apply for calling methods.
+Can't call non-static from static, ...
+
+===== Intermediate use =====
+Method references can be used to glue classes together
+
+Example: Bean and Factory classes.
+PersonFactory<Person> personFactory = Person::new; (This shows up as a lambda expression in IDE)
+Person person = personFactory.create("Peter", "Parker");
+
+No need for a factory implementation! Everything is glued together via constructor references

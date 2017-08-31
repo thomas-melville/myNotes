@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-12T08:49:46+01:00
+
+====== 9. Annotations ======
+Created Wednesday 12 October 2016
+
+Annotations are now repeatable
+
+User specific annotation needs to be declared @Repeatable
+
+Under the hood the repeating annotations are converted into an annotation with an array of annotations.
+	Needed for reflection

@@ -1,0 +1,237 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-21T08:55:00+00:00
+
+====== Slides ======
+Created Monday 21 November 2016
+
+==== Slide 1 ====
+I spent thursday pouring over a webpage on the oracle website, thanks Mihails, and I'd like to share what I learnt with you.
+
+==== Slide 2 ====
+Here's our agenda.
+When I got into this topic I quickly realized that in order to understand java byte code you first need to understand how the jvm stores objects at runtime. So we'll start with the Run-time data areas.
+With that understanding we'll jump into the types the jvm supports and the instructions.
+And we'll finish with some examples followed by some challenges for you, so keep those eyes and ears open.
+
+==== Slide 3 ====
+So, here's a picture of the run-time data areas
+The 3 main areas are:
+1. each threads own memory area
+2. the heap
+3. the method area
+
+Let's start from the bottom up:
+
+=== Slide 4 (Method Area) ===
+shared among all threads.
+Stores 3 per-class structures:
+1. Run-time constant pool
+	a. The run-time constant pool stores 2 types of things:
+		1. constants for each class, the constants can be of any type from a primitive to a class.
+		2. method and field references.
+2. field and method data
+3. compiled code for methods and constructors.
+
+=== Slide 5 (Heap) ===
+shared among all threads
+run-time data area from which memory for **all class instances and arrays is allocated. **
+Different threads can have references to the same object on the heap, which can lead to race conditions in concurrency (an instruction in the pc register which points to a single object in the heap)
+
+=== Slide 6 (Thread) ===
+A thread has 3 run-time data areas which are specific to each thread.
+1. Program Counter Register
+2. JVM Stack
+3. Native Method Stack
+
+Each one is created when the thread is created and destroyed when the thread is destroyed.
+
+Again, lets start from the bottom up.
+
+=== Slide 7 (Native method stack) ===
+Read the slides
+
+=== Slide 8 (JVM Stack) ===
+The Stack holds frames.
+LIFO Stack
+What LIFO means is frames get stacked up on the stack as the program executes. (JJ's analogy, plates in a press)
+We'll see more of this on the frames slide.
+
+=== Slide 9 (PC Register) ===
+PC stands for Program Counter
+At any point in time each thread is executing the code of a single method
+jvm can have many threads of execution at once.
+The Program Counter Register holds the address of the current jvm instruction being executed.
+	The address points to a location in the method area.
+
+
+=== Slide 10 (Frames) ===
+Let's talk a bit more about frames.
+
+4 responsibilities:
+1. Store data and partial results
+2. dynamic linking (won't cover this)
+3. return values for methods
+4. dispatch exceptions
+
+3 things:
+1. reference to run-time constant pool of the methods class
+2. array of local variables
+	a. an array with enough space to hold the method parameters and local variables for this method.
+	b. size is determined at compile time
+3. operand stack
+	a. the stack which the operands (arguments) for instructions are pushed onto before the instruction is called.
+	b. This stack is also a LIFO stack
+
+Let's jump into intellij to see it in action
+
+== Frame Example: ==
+**Only one frame is active at any point in the threads life.**
+Let's look at the debugger for the Frames class.
+We can see on the left in the Frames pane the **current frame** is the frame for the "main" method
+**A frame ceases to be the current frame when it calls another method or completes (either successfully or abruptly)**
+If we step into the Frames constructor the new frame "init" becomes the current frame. Special jvm method created by compiler.
+You can also see that the "main" frame is pushed up the stack.
+**Once a frame completes it is discarded and the previous frame becomes the current frame again.** 
+As we can see once the init method completes it returns control to the main method and it becomes the current frame.
+Now let's step into sayHello
+Notice the frames pane, the new current frame is sayHello and the main frame has been pushed up the stack
+Complete this method and the sayHello frame is discarded and the main frame again becomes the current frame.
+Next into the compute method.
+Again look at the frames
+jump into the add method
+Again look at the frames
+we see the compute frame has been pushed up the stack and the add frame is now the current frame
+
+Next time you are debugging unit tests, stop to have a look at the Frames pane and see all the frames in the stack.
+(Maybe open the cm library and debug some unit test)
+
+=== Slide 11 (Inner Loop) ===
+Let's start talking about the jvm and instructions
+I thought this was a nice pseudo code explanation of the jvm instruction execution
+Remember the PC Register, this will contain the address of the next instruction to execute.
+So get the instruction
+If it requires operands, fetch those from the operand stack.
+They need to be loaded onto the operand stack before this istruction
+Execute the instruction
+Look for the next instruction.
+
+=== Slide 12 (Instructions) ===
+Most instructions in the jvm have the type encoded into the instruction.
+For example for addition there is: iadd, dadd, fadd, ladd,
+Like methods instructions take 0 or more operands
+There are 2 groups of types, primitive & reference
+We're all familiar with primitives
+reference types hold a reference to an object, "pass by reference"
+References point to objects in the heap space.
+What we read in the byte code as instructions are actually mnemonics to make it easy for us
+The instructions are actually a single byte number.
+
+=== Slide 13 (Groupings) ===
+There are grouping of instructions, today we'll look at:
+1. Load/store
+2. Arithmetic
+3. Object creation/manipulation
+4. Control Transfer
+5. Method Invocation and Return
+
+Other ones are:
+1. Operand Stack Mgmt
+2. Type conversion
+3. Throwing exceptions
+4. Synchronization
+
+=== Slide 14 (Load / Store) ===
+Remember the local variable array and the operand stack?
+These instructions are all about moving values between the 2
+As I said intructions are typed so there is a load and store instruction for each type, 
+<T>const_<i> are a set of convenience instructions for loading values instead of bipush <i> for example
+load/store also have convenience methods
+
+=== Slide 15 (Arithmetic) ===
+Typed instruction for all arithmetic
+
+=== Slide 16 (Object creation / manipulation) ===
+Even though classes and arrays are both objects the jvm has different instructions for each
+
+=== Slide 17 (Control Transfer) ===
+All your normal conditional statements
+
+=== Slide 18 (Method Invocation and Return) ===
+virtual, invoke a method on an object
+interface, inoke a method on an interface searches for the implementing object
+special, invoke special method: constructor, private or superclass
+
+return is typed, ireturn, dreturn, ...
+To return an object areturn is used which returns a reference to the object in the heap area.
+
+=== Examples, Exercises and challenges ===
+
+So, who wants to see some byte code? :-)
+I found there are 2 ways to view byte code.
+1. Intellij plugin, ASM Bytecode Outline
+2. java have a command line utility to view the byte code of a class, javap
+
+Show the bytecode in ASM for Frames
+Show the bytecode in the console using "javap -c -p Frames.class"
+javap "Java Class File Disassembler"
+	loads of optional arguments
+
+If we flick down through it first we will see some instructions I mentioned:
+aload_0, invokespecial, astore_0, dadd, dsub, ...
+And there are other instructions I haven't mentioned!
+
+I'm going to stick with javap for this Brown Bag, ASM adds extra information I'm not sure of. And javap has some cool extra options to see everything
+
+I'll explain the output format:
+The first value is the offset of the instruction from the beginning of the method.
+The second value is the instruction
+the third value, if present, is an index into the runtime constant pool or the local variable array
+the comment corresponds to what is in the runtim constant pool at the index specified above.
+
+=== Walk through the Frames class ===
+MESSAGE, would be in the run time constant pool for this class.
+Frames Default Constructor. (even though we don't specify it the jvm creates it)
+	aload_0, load the reference at index 0 of the local array into the operand stack. In this case it is a reference to this
+	invokespecial, invoke the method at location #1 in the run time constant pool, which is the constructor for init.
+	return, finish the constructor and return to the method (frame) which called it.
+	To the program writer an empty method, to the jvm 3 instructions
+main
+	new, create a new object of the class which is at index #2 in the run time constant pool and pushes the reference to the created object on the heap back onto the operand stack.
+	dup, duplicate the top value on the operand stack and push it onto the operand stack. This is required because the next instruction invokespecial will consume the value on the operand stack and you may need this reference for subsequent instructions.
+	invokespecial, invoke the method at index #3 in the runtime constant pool, which is the constructor for the Frames class. Push the reference to the created Frames object back on the operand stack
+	astore_1, store the reference from the operand stack into the local array at index 1
+	aload_1, push the reference at index 1 of the local array into the operand stack
+	invokespecial, invoke method at index #4 of the runtime constant pool on the reference at the top of the operand stack, sayHello
+	aload_1, load (push) the reference at index 1 of the local array into the operand stack (reference to frames instance)
+	dconst_1, push a value of 1 of type double onto the operand stack
+	ldc2_w, push the long/double at index 5 of the runtime constant pool onto the operand stack. In this case a double of value 2.0
+		In this case the w stands for wide index as a long/double takes up 2 bytes in the runtime constant pool.
+	ldc, push the item at the index in the run time constant pool onto the operand stack. in this case a string "+"
+	invokespecial, invoke the method at index 8 in the runtime constant pool on the values in and reference in the operand stack.
+	dstore_2, store the double from the operand stack into the local array at index 2. This is the result of the compute method.
+	**All for 3 lines of code!**
+
+compute (ask on every line what they think the bytecode will be)
+	Line 15:
+		ldc2_w push the long/double at index 17 of of the runtime constant pool onto the operand stack
+		dstore, pop the double off the operand stack and store it in the local variable array index 6
+	line 16
+		aload, push the reference at index 5 of the local variable array onto the operand stack
+		ldc, push the constant at index 7 of the runtime constant pool onto the operand stack, in this case "+"
+		invokevirtual, invoke the method equals on the object at the reference in the operand stack with the parameter "+" and push the result onto the operand stack
+		ifeq, compare the value on the operand stack with 0.
+	line 17
+		aload,
+		dload
+		dload
+		invokevirtual
+		dstore
+		goto
+	line 18
+		aload
+		ldc
+		invokevirtual
+		ifeq
+
+[[~/Work/brown-bags/java-bytecode.pptx|Slides]]

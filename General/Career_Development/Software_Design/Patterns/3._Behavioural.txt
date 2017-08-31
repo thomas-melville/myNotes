@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-28T15:59:47+01:00
+
+====== 3. Behavioural ======
+Created Tuesday 28 March 2017
+
+Manage algorithms, relationships & responsibilities between objects.
+
+2 sub-categories again
+	Object - change relationships at runtime
+	Class - change relationships at compile time
+
+
+**How it behaves**
