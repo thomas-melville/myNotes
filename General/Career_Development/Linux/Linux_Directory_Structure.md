@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-08-24T16:41:42+01:00
+
+###### Linux Directory Structure ######
+Created Thursday 24 August 2017
+
+Dir			Description
+/				The directory called "root." It is the starting point for the file system hierarchy. Note that this is not related to the root, or superuser, account.
+[[/bin]]			Binaries and other executable programs.
+[[/boot]]			Files needed to boot the operating system.
+[[/cgroup]]		Control Groups hierarchy.
+[[/dev]]			Device files, typically controlled by the operating system and the system administrators.
+[[/etc]]			System configuration files.
+[[/home]]			Home directories.
+[[/lib]]			System Libraries.
+[[/lib64]]			System Libraries, 64 bit.
+[[/lost+found]]	Used by the file system to store recovered files after a file system check has been performed.
+[[/media]]		Used to mount removable media like CD-ROMs.
+[[/mnt]]			Used to mount external file systems.
+[[/opt]]			Optional or third party software.
+[[/proc]]			Provides information about running processes.
+[[/root]]			The home directory for the root account.
+[[/sbin]]			System administration binaries
+[[/srv]]			Contains data which is served by the system. such folders underneath can be www, ftp 
+[[/sys]]			Used to display and sometimes configure the devices and busses known to the Linux kernel.
+[[/tmp]]			Temporary space, typically cleared on reboot.
+[[/usr]]			User related programs.
+[[/usr/bin]]		Binaries and other executable programs.
+[[/usr/lib]]		Libraries.
+[[/usr/local]]		Locally installed software that is not part of the base operating system.
+[[/usr/sbin]]		System administration binaries.
+[[/var]]			Variable data, most notably log files.
+
+
+applications can follow a directory structure convention:
+bin
+etc
+lib
+logs
+
+or they can be split across the corresponding folders in the / directory
+
+#### LS Command output ####
+
+permissions | number of links | owner | group | file size | last modification | name |

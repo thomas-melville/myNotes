@@ -1,0 +1,110 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-27T11:58:48+01:00
+
+###### Go ######
+Created Thursday 27 July 2017
+
+https://golang.org/doc/
+
+dynamically typed language
+
+##### go tool #####
+
+command line tool to allow you to fetch, build and install Go packages and commands
+it requires you to organize your workspace in a particular way
+
+##### workspace #####
+all code is kept in a single workspace.
+	the workspace can have many version controlled repos
+	each repo can contain one or more packages
+	each package consists of one or more go source files in a single directory
+	**the path to a package's directory determines it's import path**
+"go" folder in home directory
+	under this is bin, pkg and src
+		the convention in go is to place all programs in separate folders under <scm>/<userid> under source, for example github.com/ethomev
+		**However, all folders under ethomev are separately versioned controlled repos**
+	go build, builds executable beside src
+	go install, install executable to bin folder
+
+
+##### environment variables #####
+
+#### GOPATH ####
+	path to workspace on your machine
+	add GOPATH/bin to the PATH for convenience
+	
+
+##### go code #####
+
+functions in go can be higher order, i.e. take functions as arguments
+
+it uses slicing of arrays like in python, e.g. [1:] give me everything after the first element to the end
+
+importing other packages is done inside a bracket if there are multiple
+e.g.
+import (
+	"..."
+	"..."
+)
+it's called a factored import statement
+you can also write each import individually
+
+for a go file to be executable from the command line it looks like it needs to have:
+1. package main
+2. func main
+
+install a file with a main and the executable goes to bin
+install a file without a main and the executable goes to pkg
+
+first statement in a go source file must be package //name//
+convention is that the package name should be the current folder name
+
+convention is that packages are lower case single word names
+
+case is important for fields and functions of a source file.
+starting with lowercase -> private / unexported to use go terminology
+starting with uppercase -> public / exported to use go terminology
+
+the var keyword can be used to declare a list of variables, type is last
+these variables can be initialized, type can be left out as it will be inferred
+
+:# "short assignment statement"
+	can be used in a function in place of var with implicit type
+	
+constants are declared using the "const" key word
+
+#### function signatures ####
+
+func <pointer> <name>(<parameters>) <returns> {
+
+#### function parameters ####
+x int, y int
+type comes after the variable name
+if mulitple parameters in a row have the same type only the last type specificuation is required.
+	the earlier ones will infer the type from the last one
+
+#### return values ####
+
+functions can return multiple values
+variables that returned values are assigned to are specified in a command separated list
+specify _ as the identifier for a particular returned value if you want to ignore it
+
+to return mulitple values from a function specify them as a command separated list
+
+you can also name the values to be returned
+specify their name along with the type in the function signature
+
+##### go compiled code #####
+
+the executables look to be quite large in size.
+that is because all required dependencies are compiled along side your code
+
+##### testing in go #####
+
+append test file with _test.go
+it should contain functions with signatures: func TestXXX(t *testing.T)
+
+##### go get #####
+for downloading remote packages
+go get <scm>/<import path>
