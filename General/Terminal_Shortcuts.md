@@ -1,25 +1,20 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-01-16T17:57:40+00:00
+# Terminal Shortcuts
 
-###### Terminal Shortcuts ######
-Created Monday 16 January 2017
-
-### Search through command history ###
+## Search through command history 
 ctrl+r interactive search back through command history
 ctrl+s move forward through command history
 
-### Traverse command history ###
+## Traverse command history 
 ctrl+p previous command
 ctrl+n next command
 
-### Move cursor through current command ###
+## Move cursor through current command 
 ctrl-a - move the cursor to the beginning of the current line
 ctrl-e - move the cursor to the end of the current line
 alt-b - move the cursor backwards one word
 alt-f - move the cursor forward one word
 
-### Delete from current command ###
+## Delete from current command 
 ctrl-k - delete from cursor to the end of the line
 ctrl-u - delete from cursor to the beginning of the line
 alt-d - delete the word in front of the cursor

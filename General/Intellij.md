@@ -1,6 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2015-08-19T17:41:27+01:00
-
-###### Intellij ######
-Created Wednesday 19 August 2015

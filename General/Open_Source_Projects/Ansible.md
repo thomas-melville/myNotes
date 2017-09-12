@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2015-12-15T12:38:34+00:00
-
-###### Ansible ######
-Created Tuesday 15 December 2015
+# Ansible 
 
 Automate application deployment
 Provision onto bare metal or into cloud
