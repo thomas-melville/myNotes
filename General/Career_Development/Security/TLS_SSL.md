@@ -1,11 +1,6 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-05-09T15:05:39+01:00
+# TLS SSL 
 
-###### TLS SSL ######
-Created Tuesday 09 May 2017
-
-https://dzone.com/articles/tlsssl-explained-examples-of-a-tls-vulnerability-a?edition#298008&utm_source#Daily%20Digest&utm_medium#email&utm_campaign#dd%202017-05-07
+https://dzone.com/articles/tlsssl-explained-examples-of-a-tls-vulnerability-a
 
 TLS & SSL are 2 separate protocols
 
@@ -16,18 +11,50 @@ Behind these protocols there is a complicated network of cryptographic functions
 
 Provide privacy and integrity, identification and perfect forward secrecy
 
-#### Privacy & Integrity ####
+There can be 1-way and 2-way SSL
+Minimize man in the middle attacks and eavesdropping
+SSL is standard security technology for establishing encrypted links between browsers and web servers
+**Encryption** uses a private/public key pair
+data can be encrypted by one key, but only decrypted by the other.
+This is refered to as Public Key Infrastructure (PKI) Scheme.
+Public key is shared while private key is kept locally
+**Trust** is achieve through the use of certificate trust.
+Chain that starts with Certificate Authority.
+Entity that issues SSL Certificates.
+Certificates can also be self signed, for testing purposes.
+
+## What is the difference between TLS & SSL
+SSL is older
+both are cryptographic protocols
+designed to provide communications security over a computer network
+SSL 3.0 served as the basis for TLS 1.0
+
+## 2 way SSL
+client verifies server identity, then vice-versa.
+also referred to as client or mutual authentication
+Establishing the encrypted channel using certificate-based 2-Way SSL involves:
+    A client requests access to a protected resource.
+    The server presents its certificate to the client.
+    The client verifies the server’s certificate.
+    If successful, the client sends its certificate to the server.
+    The server verifies the client’s credentials.
+    If successful, the server grants access to the protected resource requested by the client.
+
+## 1 way SSL
+client verifies the server identity, but server does not verify client identity
+
+## Privacy & Integrity 
 allows connection between 2 mediums to be encrypted. Ensures no third party is able to read / tamper with the data en route
 Unencrypted an attacker could see sensitive data if they intercepted it.
 
-#### Identification ####
+## Identification 
 Public key cryptyography provides identification between 2 mediums.
 This means both parties can know who they are communicating with.
 
-Once a secure connection is established, the server will send it's SSL cert to the client.
+Once a secure connection is established, the server will send its SSL cert to the client.
 The client will verify this against a trusted certificate authority, which will validate the servers identity
 
-#### Perfect Forward Secrecy ####
+## Perfect Forward Secrecy 
 In the event of a servers private key being compromised an attacker will not be able to decrypt any previous TLS communications.
 Diffie-Hellman ephemeral key exchange, new key for every session and only valid as long as the session is valid.
 
@@ -64,7 +91,7 @@ Popular ones are: AES, Blowfish, 3DES, DES, RC5
 An entity which issues TLS/SSL or Digital Certificates
 These authorities have their own certificate for which they user their private key to sign the issued TLS/SSL or Digital Certs
 	This is called the Root Certificate
-CA's Root certificate, and therefore public key is installed and trusted by default on browsers.
+CAs Root certificate, and therefore public key is installed and trusted by default on browsers.
 
 ##### Types of Certificates #####
 
@@ -72,7 +99,7 @@ CA's Root certificate, and therefore public key is installed and trusted by defa
 secures one hostname or subdomain
 
 #### Wildcard ####
-secures an entire domain and all it's subdomains
+secures an entire domain and all its subdomains
 
 #### Multi-domain ####
 does what it says on the tin
@@ -95,6 +122,6 @@ We first create a private key which will be used to decrypt our certificate and 
 ##### Establishing a TLS connection #####
 Handshake is the most important part of connection establishment
 exchange important info regarding properties
-It's a hybrid of asymmetric and symmetric encryption
+Its a hybrid of asymmetric and symmetric encryption
 
 https://dzone.com/articles/establishing-a-tls-connection-part-4

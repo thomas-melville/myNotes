@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-08-22T16:14:59+01:00
-
-###### Shit! I forgot to put a change in a previous commit ######
-Created Tuesday 22 August 2017
+# Shit! I forgot to put a change in a previous commit ######
 
 **N.B. This is only if the commits aren't on origin master**
 
