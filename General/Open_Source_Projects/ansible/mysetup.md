@@ -29,4 +29,4 @@ when executing on my reinstalled machine:
 	/etc/ansible/hosts
 		localhost and user and password to use, ethomev
 	oh no wait, I can configure it to be the local machine
-	ansible_connection=local
+	localhost ansible_connection=local
