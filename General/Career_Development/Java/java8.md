@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2016-09-30T08:41:50+01:00
-
-###### java8 ######
-Created Friday 30 September 2016
+# java8
 
 What's new?
 	lambda expressions

@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2015-11-17T20:21:02+00:00
-
-###### Docker ######
-Created Tuesday 17 November 2015
+# Docker
 
 Docker started as an API that isolates processes
 

@@ -1,14 +1,12 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-01-08T19:47:18+00:00
+# VI
 
-###### VI ######
-Created Sunday 08 January 2017
+### Normal Mode ###
 
-### Command Mode ###
+normal mode is for navigation and text manipulation, I used to call it command mode
+ESC	go from insert to normal mode
+I've changed mine to "rty"
 
-ESC	go from insert to command mode
-I've changed mine to "jj"
+. repeat last command
 
 ### Insert Mode ###
 
@@ -154,6 +152,7 @@ gg to move to the start of the file
 enter to search
 n to search for next occurance
 N to search for previous occurance
+* highlights all occurances of the word the cursor is on
 
 % to find matching closing bracket
 	cursor needs to be on opening bracket
@@ -172,7 +171,7 @@ prepend no to switch a setting off
 ### Executing external shell commands in VI ###
 
 :!<command>
-	command can any amount of arguments
+	command can take any amount of arguments
 	
 
 ### Writing to files ###
@@ -185,3 +184,17 @@ v, move the cursor, :w FILENAME
 	this selects text and saves it to a file
 	
 	in visual mode you can also copy or cut the text!
+
+
+### vimrc file
+
+nnoremap
+	change the operation of a key in normal mode
+	example:
+		nnoremap: <Up> <Nop>
+			change the operation of the up arrow key to no operation
+inoremap
+	change the operation of a key in insert mode
+	example:
+		inoremap: rty <esc>
+			change the operation of the sequence of keys rty to esc, which moves into normal mode
