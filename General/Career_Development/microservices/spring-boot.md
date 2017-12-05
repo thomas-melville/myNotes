@@ -2,12 +2,12 @@
 
 [Tutorial](https://dzone.com/storage/assets/4855140-microservices-for-java-developers.pdf)
 
-An opinionated Java framework for building microservices, based on the Spring Dependency injection framework.
+An opinionated Java framework for building microservices, based on the Spring Dependency Injection framework.
 
 Favours automatic, conventional configuration by default.
-Curates sets of popular starter dependencies for easier consumption
-Simplifies application packaging
-Bakes in application insight
+Curates sets of popular starter dependencies for easier consumption.
+Simplifies application packaging.
+Bakes in application insight.
 
 ## Starter Dependencies
 
@@ -22,7 +22,7 @@ Curated sets of libraries to enable some functionality:
 Convenient dependency descriptors you can include in your application to get some functionality.
 [List of starters](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter)
 
-Adding a submodule to your project brings in the required modules for that functionality, with the versions that known to work together
+Adding a submodule to your project brings in the required modules for that functionality, with the versions that are known to work together
 Versions of these dependencies are managed by spring for you in a BOM, spring-boot-dependencies
 	You can still override Springs provided version by specifying properties in your pom
 		if you are using the spring-boot-starter-parent 
@@ -94,7 +94,7 @@ spring init --build maven --groupId com.redhat.examples --version 1.0 --java-ver
 ### In allure-service
 Class annotated with @Configuration which extends ResourceConfig & @Paths annotation in generated interface
 
-Why? Is it because we are using raml?
+Why? Is it because we are using raml? No, it's because we are using jax-rs
 
 ## Externalize Configuration
 
@@ -116,6 +116,7 @@ and we use a yaml file instead of a properties file
 
 Starter package, actuator, makes it a breeze
 just add the dependency and the metrics end points are exposed
+you also have to expose the management http port in the application configuration file.
 
 ## Calling another service
 
@@ -151,6 +152,14 @@ To enable this you have to add the spring-boot-maven-plugin to your project
 	Marks a constructor, field, setter/config method to be autowired by Springs DI facilities
 	Basically @Inject + @ImplementedBy
 	But has the added advantage that it can inject an implementation based on the active profile
+@Configuration
+	This class contains variables which are mapped to properties.
+@Value
+	the value of the key in the properties which maps to this variable.
+@ComponentScan
+	Scan this class and recursively all it's fields to inject instance variables.
+@SpringBootApplication
+	convenience annotation which encompasses @Configuration, @EnableAutoConfiguration & @ComponentScan
 
 ## Structuring your code
 
@@ -158,7 +167,8 @@ No specific structure, but best practices
 
 * don't use the default package
 * Locate the main class in a root package above all other classes
-* use java based configuration, i.e. annotate with @Configuration. Usually the main class (but not in allure-service)
+* delegate execution of app in main class to SpringApplication#run
+* use java based configuration, i.e. annotate with @Configuration. Usually the main class (but not in allure-service, because @SpringBootApplication contains @Configuration)
 * No need to put all the configuration into one class
 * Add @EnableAutoConfiguration/@SpringBootApplication to allow to spring to automatically configure everything based on whats on the classpath.
 	* If you put in your own configuration the auto config will back off.
@@ -172,7 +182,7 @@ No specific structure, but best practices
 maven dependency to add developer tools to a running application.
 Only active in dev mode by default
 flag the dependency as optional to prevent transitive issues
-disable caching by default
+disables caching by default
 auto-restart app when it detects changes to files on the class path
 	This works for in IDE and mvn spring-boot plugin
 	resources are excluded as they don't require a restart
@@ -200,3 +210,13 @@ spring-boot automatically injects the properties from application.properties/yml
 {application} - maps to spring.application.name on client side, this means that the config-server can be used for multiple services
 {profile} - maps to spring.profiles.active on client side , this means the config-server can hold configs for multiple environments that a service is deployed in
 {label} - this is on the server side, versions of configs
+
+## packaging your code for production
+
+jars are self contained so they are suitable for cloud based deployment
+actuator dependency is recommended for health checks, ...
+
+## Spring Boot Features
+
+You can custumize the banner which is displayed on the console when you start the application
+create a banner.txt file, can be a picture or a gif
