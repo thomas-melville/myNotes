@@ -27,3 +27,14 @@ has useful arguments for skipping and max count
 ## describe
 
 describe a commit using the most recent tag reachable from it
+
+## log
+
+pickaxe feature
+	search for text in the changes in each commit, the text can be added or removed
+
+	git log -S <text to search for>
+
+## reflog
+
+history of local HEAD

@@ -154,12 +154,21 @@ To enable this you have to add the spring-boot-maven-plugin to your project
 	But has the added advantage that it can inject an implementation based on the active profile
 @Configuration
 	This class contains variables which are mapped to properties.
+@ConfigurationProperties
+	Indicate that this classes fields are available from configuration.
+	Annotation takes a value which is the prefix.
 @Value
 	the value of the key in the properties which maps to this variable.
+	It is combined with the value in @ConfigurationProperties
 @ComponentScan
 	Scan this class and recursively all it's fields to inject instance variables.
 @SpringBootApplication
 	convenience annotation which encompasses @Configuration, @EnableAutoConfiguration & @ComponentScan
+@Component
+	the annotated class is considered for auto-detection
+@Bean
+	indicates that a method produces a bean to be managed by the Spring container
+
 
 ## Structuring your code
 
@@ -220,3 +229,222 @@ actuator dependency is recommended for health checks, ...
 
 You can custumize the banner which is displayed on the console when you start the application
 create a banner.txt file, can be a picture or a gif
+When starting the application there is a **SpringApplicationBuilder** fluent api if you need to build an **ApplicationContext**
+You can register your own listeners for specific application events
+Your application can get access to the arguments passed when the application is started by creating a bean with **ApplicationArguments** in the constructor
+**ApplicationRunner** / **CommandLineRunner** can be implemented to run some code before your application starts up.
+You can specifiy the exit code which is sent when the application is exited using **ExitCodeGenerator**
+Properties are available to enable admin features
+
+## Externalize Configuration
+
+spring boot allows you to externalize the configuration of your environment so it's easy to deploy on any environment
+configuration can be stored in yaml, properties, env vars, command line args
+@ConfigurationProperties & @Value are the annotations to use
+Long list of configuration sources which are in a hierarchial order
+you van inject random values using the property ${random...} can be int, value, long, string,. ....
+you can change the default properties files names and the locations
+. separated and _ separated property names are interchangeable
+configuration properties can be profile specific application-{profile}.propeties
+properties can contain keys also
+
+**There is a lot in Configuration!!!**
+
+## Actuator, production-ready features
+
+monitor and manage your application in production
+HTTP, JMX, SSH, TELNET
+Auditing, health and metrics gathering can be automatically applied to your app
+just add the dependency spring-boot-start-actuator
+
+### endpoints
+
+actuator
+	discovery page for other endpoints (needs spring hateoas on the classpath)
+auditevents
+	audit event info
+	if spring security is enabled
+autoconfig
+	displays all auto-config candidates and why they were/not applied.
+beans
+	all beans in the app
+configprops
+	all configuration properties in the application, @ConfigurationProperties
+dump
+	performs a thread dump
+env
+	exposes properties from Springs @Environment
+flyway
+	flyway db migrations
+health
+	shows app health info
+	pulls information from HealthIndictors
+		you can implement your own by implementin the HealthIndicator interface
+info
+	arbitrary app info
+loggers
+	view and modify logger configuration at run time, change logging level
+	POST: {"configuredLevel" : "DEBUG"}
+liquibase
+	liquibase db migrations
+metrics
+	metrics for current app
+	counters (delta) & guages (single value)
+	There is also a PublicMEtrics interface you can implement to expose other metrics
+		or inject a CounterService into your bean and do some incrementing/setting
+	You can export your metrics to a source too, implement MetricWriter & Mark with @ExportMetricWriter
+		it will then be fed metrics every 5 seconds
+		You can export to Redis, Open TSDB, Statsd, JMX
+mappings
+	lists @RequestMappings
+shutdown
+	gracefully shutdown app
+trace
+	displays trace information, last 100 requests
+logfile
+	returns the contents of the log file, if it's stored on disk
+
+end points can be customized
+	disabled, security, id
+
+you can do global customized
+endpoints.enabled=false
+
+if Spring HATEOAS is on the class path and endpoints.hypermedia.enabled is enabled you have
+
+1. a nice discovery page for the end points
+2. hypermedia links in each response
+
+You can add custom endpoints by creating a @Bean of type Endpoint
+
+by default endpoints are secured
+	turn off with: management.security.enabled=false
+by default they are on the same port as the regular traffic
+
+## Deploying a Sprin Boot app
+
+### Deploying to the cloud
+
+PaaS, tend to be bring your own container
+
+Heroku & Cloud Foundry employ a buildpack approach.
+A buildpack wraps your deployed code in whatever it needs to get started
+	jdk, web server, ...
+	it should be minimal as your jar should contain most of the dependencies it needs.
+
+#### Cloud Foundry
+
+default buildpacks if none are specified
+java buildpack has excellent support for Spring
+command line client which allows you to push directly to your deployment.
+	make sure and log in first :-)
+metadata & service connection info are exposed to the app as environment variables, 12 factor-app config!
+
+#### Heroku
+
+Procfile in Heroku
+Recommends using git hooks to push code out to production
+
+#### OpenShift
+
+Redhat public & enterprise PaaS
+Recommends using git hooks used to trigger launching
+hooks provided by openshift
+service connection information provided as env vars again
+
+#### AWS
+
+Lots of options in AWS:
+	Elastic Beanstalk
+	Code Deploy
+	OPS Works
+	Cloud Formation
+	Container Registry
+
+Simplest model is Elastic Beanstalk
+Elastic Beanstalk environments run an nginx instance on port 80 to proxy the actual application
+
+#### Google Cloud
+
+Easiest option is App Engine
+app.yml file required in the repo and push jar using the maven plugin
+
+### Installing Spring boot applications
+
+as well being able to execute java -jar it is also possible to make a fully executable app for unix systems
+can be registered with init.d / systemd
+all it takes is an extra setting in the configuration section of the spring-boot-maven-plugin
+	<executable>true</executable>
+you can then run your jar like any script, ./application.jar
+tested on CentOS & Ubuntu
+
+symlink the jar to init.d to support start/stop/restart/status
+example: sudo ln -s /var/myapp/myapp/jar /etc/init.d/myapp
+
+the service is started as the user who owns the file
+pids are tracked
+writes console logs to /var/log/<myapp>.log
+
+be careful doing this, there are security implications
+ownership of jar file, shells in executing jar, ...
+
+startup script is totally customizable from the spring-boot-maven-plugin
+other information cab be customized in a .conf file beside the jar
+
+## Spring Boot Cli
+
+quickly develop with Spring boot application with groovy, bootstrap new applications, write your own commands
+
+<set environment variables> spring run <groovy script> -- arguments
+
+Spring can "grab" some dependencies based on what it sees in the groovy script you're running
+it can grab dependencies based on the name
+	refers to Springs own dependency tree for specific version
+it uses the .m2/settings.xml to resolve dependencies
+you can specify your own bom in the groovy script using the @DependencyManagementBom
+a lot of import statements can be left out
+for unit testing junit & spock are available by default so import statements aren't needed
+
+spring run, run one or more groovy script which are your app
+spring test, run the tests with the groovy script
+spring jar, to package your app into an executable jar
+spring init, create a new spring boot project
+	you can specify lots:
+		build tool
+		gav
+		spring-boot dependencies
+		java version
+spring shell, spring integrated shell to run commands
+spring install, you can add extensions to the cli for example spring cloud cli
+spring uninstall, uninstall the above extensions
+
+## Build Tool plugins
+
+for Maven & Gradle
+
+### Spring boot maven plugin
+
+provides spring support in maven
+package and run applications in place
+
+specify execution and goal, repackage, to make it run during the package stage
+
+once its included it will try to rewrite archives to make the executable
+your existing jar will be enhanced by spring during the package phase
+You can specify the main class 3 ways
+	configuration option
+	Main-class attribute in the manifest
+	let spring look for a static void main method
+
+if the jar is to be deployed in an external container then the dependency needs to be marked provided
+
+### Other build tool plugins
+
+gradle, provides the same support as the maven plugin
+AntLib, provides basic support for the Apache Ant build tool
+
+## Create your own ...
+
+### FailureAnalyzer
+
+intercept exceptions and turn them into human readable messages
