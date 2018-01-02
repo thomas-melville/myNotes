@@ -448,3 +448,9 @@ AntLib, provides basic support for the Apache Ant build tool
 ### FailureAnalyzer
 
 intercept exceptions and turn them into human readable messages
+
+### refer to build properties in spring properties
+
+maven: use @@ around the property
+	example: @project.version@ == ${project.version}
+	it includes properties in src/main/resources

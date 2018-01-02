@@ -48,7 +48,8 @@ every user is a member of at least one group, called their primary group
 
 ## changing permissions
 
-chmod mode file
+chmod mode file.
+This can be done recursively on all sub directories and files by adding the -R argument before the permissions
 
 2 ways to specify mode:
 
