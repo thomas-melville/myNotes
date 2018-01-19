@@ -7,7 +7,7 @@ git add <file>
 git commit --fixup HEAD~1 
 	This gives the commit the same subject line as the commit at HEAD~1 **prepended with "fixup!"**
 	This commit is temporary as it will be squashed up into the commit you want to add to
-git rebase -i --autosquash HEAD~<index_of_commit+1>
+git rebase -i --autosquash HEAD~<index_of_commit>
 	this command orders the rebase of commits
 	the commit at HEAD~<index_of_commit> is first
 	followed by any commits which start with squash! or fixup!, ...

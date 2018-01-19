@@ -1,5 +1,4 @@
 # xargs
-Created Tuesday 22 August 2017
 
 can use this to execute on multiple cores
 
@@ -10,7 +9,6 @@ can use this to execute on multiple cores
 	for example, use print0 with find and -0 with xargs to ensure inputs can be processed
 
 pipe the output of one command into another command which will be executed in parallel
-
 
 ## example
 

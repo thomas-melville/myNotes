@@ -1,0 +1,9 @@
+# 10 easy optimisation improvements
+
+
+1. Use StringBuilder instead of String concatenation
+    String concatenation is compiled into a StringBuilder
+    if you are concatenating a single string in multiple places uses a StringBuilder to reduce the overhead of creating an implicit StringBuilder every time
+
+2. Avoid regular expressions
+

@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2016-01-13T14:52:25+00:00
-
-###### IPv6 ######
-Created Wednesday 13 January 2016
+# IPv6
 
 The principle feature of ipv6 is the restoration of the e2e model on the back of which the internet was built in the first place.
 	e2e connectivity, security, QoS, node reachability, remote access for maintenance, n/w mgmt purposes.

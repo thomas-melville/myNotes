@@ -1,25 +1,22 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2016-09-23T08:41:12+01:00
-
-###### generics ######
-Created Friday 23 September 2016
+# generics
 
 Main benefit is compile time checks of types, so you don't end up with RuntimeExceptions which could be miles from the cause.
 
-##### Generic classes #####
-MyObject<//type parameter//> myObject # new MyObject<>();
+## Generic classes
 
-class MyObject<//formal type parameter//> {}
+MyObject<**type parameter**> myObject # new MyObject<>();
+
+class MyObject<**formal type parameter**> {}
 
 The invocation of a generic call is called a //parameterized type//
 
 Inheritance doesn't work as expected with type parameters of a generic class.
 If Foo is a subtype of Bar, and G is some generic class it is //not// the case that G<Foo> is a subtype of G<Bar>
+The simple rule is that the type of the variable declaration must match the type you pass to the actual object
 
 When a generic type is used without a type parameter it is called a raw type
 
-##### Wildcard #####
+## Wildcard
 Wildcard Type
 MyObject<?>
 
