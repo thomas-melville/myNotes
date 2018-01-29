@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-02-10T15:39:48+00:00
-
-###### ServiceLoader ######
-Created Friday 10 February 2017
+# ServiceLoader
 
 Load the implementation of an interface at runtime.
 file in META-INF/services specifies the implementation.

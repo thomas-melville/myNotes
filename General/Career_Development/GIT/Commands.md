@@ -8,6 +8,9 @@ when you type "git <command>" git will look for this script on the path
 in interactive mode there is another option: pick, squash **and fixup**
 fixup squashes the commit into the commit above it.
 
+before you branch is merged with master the history is malleable.
+Make the commit history a story about the work.
+
 ## pull
 can take an argument, -rebase, which tells it to rebase instead of merge
 
@@ -30,6 +33,11 @@ describe a commit using the most recent tag reachable from it
 
 ## log
 
+grep
+	you can grep the contents of the commit messages
+
+	git log --grep='what am I looking for'
+
 pickaxe feature
 	search for text in the changes in each commit, the text can be added or removed
 
@@ -38,3 +46,8 @@ pickaxe feature
 ## reflog
 
 history of local HEAD
+
+## blame
+
+find out in what commit each line of code was changed.
+(must be what Intellij uses for annotate)

@@ -31,6 +31,14 @@ Functions that take functions as arguments and can return functions
 the returned functions can be executed when required, Supplier which is used in withParameter in Scenarios
 enables lazy execution
 
+### Recursion
+
+In functional programming all looping is done through recursion.
+It avoids variable assignment, which is a side affect!
+And facilitates lazy evaulation
+As long as everytime the function is called the set of inputs is one less than the previous time.
+Otherwise it could end up in an infinite loop.
+
 ## Reactive Programming
 
 ### Reactive Manifesto
@@ -329,7 +337,12 @@ map the input events to a different output event
 
 flatMap(...)
 
-map the input event to multiple different output events
+map the input event to multiple different output events on the same stream.
+**OR**
+takes events from an Observable and maps each event to a separate observable, then flattens those observables into a single observable.
+
+An example would be recursively listing all files in a directory tree.
+each event can be a file, or a directory which will be expanded to a stream of files and directories.
 
 ### Scanning
 
