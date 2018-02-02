@@ -24,6 +24,13 @@ All the interfaces it has to the network.
 finding connections to and from the host
 find out what application is listening on a port
 
+netstat -nap | grep 80
+    find out the PID of the process listening on port 80
+
+lsof can achieve the same thing
+
+lsof -i :80
+
 ## nslookup
 
 find the hostname of an ip and vice versa

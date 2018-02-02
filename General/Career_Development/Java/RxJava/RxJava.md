@@ -12,7 +12,7 @@ https://realm.io/news/intro-to-rxjava/
 
 ### Pure Functions
 
-A pure function is a function which has no side affects.
+A pure function is a function which has *no side affects*.
 An example side affect would be changing the state of the object you're operating on.
 Which is in contradiction to Object oriented programming where objects maintain state.
 
@@ -442,7 +442,7 @@ combining streams
 
 ## Back pressure
 
-What exactly is it?
+It's a protocol in the reactive framework to stop the consumers getting over run with events
 
 ### Timing streams of events
 You can create an Observable that emits events at a regular pace.

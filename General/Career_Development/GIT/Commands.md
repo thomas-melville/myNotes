@@ -13,6 +13,7 @@ Make the commit history a story about the work.
 
 ## pull
 can take an argument, -rebase, which tells it to rebase instead of merge
+rebase on pull can also be set in your git config so you don't have to specify it every time.
 
 ## add
 you can add chunks of files to the staging area interactively, https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging
