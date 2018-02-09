@@ -1,6 +1,6 @@
 # docker-compose
 
-a tool for defininfg and running multi-container docker applications.
+a tool for defining and running multi-container docker applications.
 uses yaml
 
 3 step process:

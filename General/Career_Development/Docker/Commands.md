@@ -1,8 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-
-###### Commands ######
-Created Friday 30 September 2016
+# Commands
 
 ##### Docs #####
 https://docs.docker.com/engine/reference/commandline/docker/

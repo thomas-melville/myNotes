@@ -52,3 +52,72 @@ history of local HEAD
 
 find out in what commit each line of code was changed.
 (must be what Intellij uses for annotate)
+
+## stash
+
+temporarily store uncommitted changes
+stash actually creates a commit.
+
+### save
+
+git stash save "description"
+
+stash the current uncommitted changes
+**Deprecated in favour of git stash push**
+
+-u / --include-untracked: stash un-tracked files too
+
+### push
+
+git stash push "description"
+
+stash the current uncommitted changes
+
+-u include un-tracked
+-p select what to store in the stash
+
+### list
+
+git stash list
+
+List the current stashed changes
+
+### apply
+
+git stash apply <stash>
+
+apply the stashed change to the working tree
+keep the stash in the list
+
+### pop
+
+git stash pop <stash>
+
+apply the stashed change to the working tree
+delete it from the list
+
+### show
+
+git stash show <stash>
+
+show the files changed in the stash
+
+-p show all the changes within the files
+
+### branch
+
+git stash branch <name> <stash>
+
+creates a new branch and pops the stash onto it
+
+### clear
+
+git stash clear
+
+delete all stashes
+
+### drop
+
+git stash drop <stash>
+
+delete the specified stash
