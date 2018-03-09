@@ -1,68 +1,57 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-01-08T12:21:43+00:00
+# Python
 
-###### Python ######
-Created Sunday 08 January 2017
-
-##### Overview #####
+## Overview
 
 Object-oriented programming language
 all the normal features
-dictionaries #> map in java
+dictionaries ~> map in java
 supports exceptions
 strong and dynamically typed. Variable creation doesn't require a type, but once assigned if you try and do something specific to another type you'll get an exception
 
-Because it's dynamixally typed it's not clear at compile time if there will be an issue with the operations on a variable, Java being completely strongly typed will fail compilation if an illegal operation is attempted.
+Because it's dynamically typed it's not clear at compile time if there will be an issue with the operations on a variable, Java being completely strongly typed will fail compilation if an illegal operation is attempted.
 
-##### Python 2 or 3? #####
-
-##### Next Steps #####
-subprocess run un background!
-get mci-allure reviewed by someone in Thunderbee
-script for generated dependency tree
-
-##### Fundamentals of language #####
+### Fundamentals of language
 
 indentation is very important, 4 spaces! every time
 
-#### Commenting ####
-# for single line
+### Commenting
+
+/# for single line
 ''' for multi line (3 single quotes)
 
-#### Variables ####
+### Variables
+
 Type of variable figured out when it is assigned a value
 casting exists, similar to java
 
-#### Operators ####
+## Operators
 
-### Arithmetic ###
+### Arithmetic
 
- * # multiplication
- ** # to the power of
- / # division, include remainder
- // # division, floor (exclude remainder / rounds down)
+ * multiplication
+ ** to the power of
+ / division, include remainder
+ // division, floor (exclude remainder / rounds down)
 
-### Conditional ###
+### Conditional
 
 if, elif, else
 
 syntax: if condition:
 		first line of block indented 4 spaces, this is the convention, you can use 2/3/5 but the standard is 4
 
-
-#### Functions ####
+#### Functions
 
 syntax:
 
 def func_name():
 	# indent 4 spaces
 
+### Variable scope
 
-### Variable scope ###
 Python supports local & global scope
 
-### Loops ###
+### Loops
 
 range method, upper limit is less than
 
@@ -73,17 +62,16 @@ for a in <list>:
 while a < condition:
 	....(a)
 
+#### Types
 
-#### Types ####
+### String
 
-### String ###
 type(...)
 String is a list of characters in Python and can be treated that way
 can use array type indexing to get ranges of characters from strings: a[2:5]
 	use negative values to index from end of string
 
-
-#### Lists ####
+#### Lists
 
 Not arrays, python lists
 List element types can vary, not recommended though

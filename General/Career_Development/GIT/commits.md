@@ -1,5 +1,7 @@
 # commits
 
+https://blog.mocoso.co.uk/talks/2015/01/12/telling-stories-through-your-commits/
+
 ## commit size
 
 commits should be atomic

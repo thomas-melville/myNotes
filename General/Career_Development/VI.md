@@ -1,14 +1,14 @@
 # VI
 
-### Normal Mode ###
+### Normal Mode
 
 normal mode is for navigation and text manipulation, I used to call it command mode
 ESC	go from insert to normal mode
-I've changed mine to "rty"
+I've changed mine to "qqq"
 
 . repeat last command
 
-### Insert Mode ###
+### Insert Mode
 
 i		go from command mode to insert mode
 		on the cursor
@@ -21,15 +21,15 @@ o		go from command mode to insert mode
 O		go from command mode to insert mode
 		on a new line inserted above the line the cursor is on
 
+### Replace Mode
 
-### Replace Mode ###
 Overwrites the existing text as you type
 
 R		go from command mode to replace mode
 		on the cursor
 
+### Visual Mode
 
-### Visual Mode ###
 Allows you to highlight text
 
 v go from command mode to visual mode
@@ -39,18 +39,17 @@ you can then use any of the commands below to do what you want with the highligh
 v, move the cursor, :w FILENAME
 	this selects text and saves it to a file
 
-
-### Command Completion ###
+### Command Completion
 
 in command mode type a letter followed by CTRL+D and it will show you the list of options
 TAB to complete
 it can complete arguments also, filenames is all I've seen so far
 
-### Help ###
+### Help
 
 F1 / :help
 
-### Substitution ###
+### Substitution
 
 :s/a/b
 	replace the next occurance of a with b in the file
@@ -62,9 +61,7 @@ F1 / :help
 	replace every occurance of a with b in the file
 	add in the c to prompt whether to substitute each one
 
-
-
-### move the cursor around the text: ###
+### move the cursor around the text:
 
 :100
 	go to line one hundred
@@ -87,7 +84,7 @@ e
 
 **Enter a number before any of ther 2 commands above to jump that number of words**	
 
-### edit the text while in command mode: ###
+### edit the text while in command mode
 
 A way to think about the shortcut keys for editing is as follows:
 
@@ -126,7 +123,7 @@ ce
 	this command deletes the text to the end of the word and places you in edit mode
 	
 
-### Un ###
+### Un
 
 u
 	undo the last operation
@@ -134,8 +131,12 @@ u
 U
 	undo all operations on this line since moving to it
 
+### Redo
 
-### Cursor location & File Status ###
+Ctrl+r redo the changes you just undid
+
+
+### Cursor location & File Status
 
 CTRL+G
 	show location in file and file status
@@ -145,7 +146,7 @@ gg to move to the start of the file
 
 <number> + G to go back to the line you were on when you pressed CTRL+G
 
-### Searching ###
+### Searching
 
 / to start search query going forward
 ? to start a search query going backwards
@@ -168,13 +169,13 @@ prepend no to switch a setting off
 :Set noic for example
 	
 
-### Executing external shell commands in VI ###
+### Executing external shell commands in VI
 
 :!<command>
 	command can take any amount of arguments
 	
 
-### Writing to files ###
+### Writing to files
 
 :w (filename)
 	write the contents of the file to disk, optionally specifying the file name

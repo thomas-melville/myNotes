@@ -53,6 +53,7 @@ Dir			Description
                 each active process has it's own subdirectory with the PID as the directory name
                 entries in proc are often called virtual files, listed as having 0 bytes but contain information.
                 interrupts, meminfo, mounts, partitions give an up to date glimpse of the hardware
+                information is gathered when the files are inspected, 
 
 /root			The home directory for the root account.
 
