@@ -239,7 +239,6 @@ $scope.get(this).$on(event, this.function.bind(this));
 $scope.get(this).$broadcast(event);
 ```
 
-
 #### $rootScope
 
 This service allows a controller access to the root scope of the web application.
@@ -279,3 +278,15 @@ when you want to extract parameters from the url configure it:
     .when("/user/:username)
     get this param in the controller using $routeParams
         this makes them available as properties of the $routeParams object
+
+Another way to achieve routing is to use $state
+the only difference is step 3
+    instead of when, the chained method call is state
+
+    ```javascript
+    .state("...", {
+        url: "what to put in the address bar",
+        views: {"templateUrl": ...
+                    "controller": ...},
+        resolve: {objects and functions},
+    });
