@@ -7,6 +7,7 @@ Created Tuesday 28 March 2017
 
 IntelliJ Short cuts: http://www.shortcutworld.com/en/win/IntelliJ.html#link_3
 
+Ctrl+Shft+A search for a shortcut by name
 Shift+Shift	open dialog to search for any file. Similar to Ctrl+Shift+T/R
 alt+enter	bring list of options for error
 ctrl+alt+b	go to implementation
