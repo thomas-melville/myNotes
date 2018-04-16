@@ -1,8 +1,10 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-01-04T11:36:53+00:00
+# df
 
-###### df ######
-Created Wednesday 04 January 2017
+disk free.
+examines file system capacity and usage.
+show info about the file system on which each file resides, or all file systems by default.
 
-show info about the file system on which each file resides, or all file systems by default
+## arguments
+
+-h  human readable
+-T  show FS type

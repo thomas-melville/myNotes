@@ -91,6 +91,8 @@ ng-class        dynamically set the css classes on HTML elements
 
 ng-disabled     based on the condition disable a button
 
+ncy-breadcrumb  ask for the state chain from the breadcrumb service
+
 .... so many mores....
 
 there are also custom directives which have been open sourced for your use

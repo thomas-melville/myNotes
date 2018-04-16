@@ -1,6 +1,6 @@
 # Commands
 
-git commands are translated by git in git-<command> and it then looks for this script
+git commands are translated by git into git-<command> and it then looks for this script
 so... you can create a script name it git-<command> and place it on the path
 when you type "git <command>" git will look for this script on the path
 
@@ -8,7 +8,7 @@ when you type "git <command>" git will look for this script on the path
 in interactive mode there is another option: pick, squash **and fixup**
 fixup squashes the commit into the commit above it.
 
-before you branch is merged with master the history is malleable.
+before your branch is merged with master the history is malleable.
 Make the commit history a story about the work.
 
 ## pull
@@ -39,10 +39,18 @@ grep
 
 	git log --grep='what am I looking for'
 
+	-G 'regex'
+
 pickaxe feature
 	search for text in the changes in each commit, the text can be added or removed
 
 	git log -S <text to search for>
+
+--stat
+	what changed in each commit
+
+-c
+	the actual changes
 
 ## reflog
 

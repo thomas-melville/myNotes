@@ -50,3 +50,29 @@ user name space flags:
 * a: Append-only     can only be opened in append mode for writing. only super user
 * d: no-Dump         file is ignored when the dump program is run. Useful for swap and cache files that you don't want to backup
 * A: no atime update file will not modify it's access time record when the file is accessed but not modified.
+
+## making a filesystem
+
+mkfs is the name of the utilities
+this is just a front end for filesystem specific programs
+mkfs figures out the program to use from the filesystem
+
+mkfs -t <type> <options> <device_file>
+each file system type has their own options
+
+## checking for errors
+
+fsck
+again, it's just a front end for fs type specific programs
+
+journaling systems are much quicker to checker than older systems
+manually fix issues one by one by specifying -r
+or have them fixed automatically as best as the os can using -a
+
+## Network File System
+
+NFS is the most commonly used method for mounting remote FSs
+
+mounting a remote FS should be done with a timeout to handle occasions when the FS is not available, either down or no network.
+
+timeo=14
