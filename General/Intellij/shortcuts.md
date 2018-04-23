@@ -1,9 +1,4 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2017-03-28T12:23:10+01:00
-
-###### shortcuts ######
-Created Tuesday 28 March 2017
+# shortcuts
 
 IntelliJ Short cuts: http://www.shortcutworld.com/en/win/IntelliJ.html#link_3
 

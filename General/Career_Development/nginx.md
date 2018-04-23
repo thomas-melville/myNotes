@@ -9,9 +9,15 @@ uses event-driven async architecture
 
 run nginx with a conf file you have edited.
 
+### load balancing options
+
+* round-robin		default
+* least-connected	least number of active connections
+* ip-hash			use a hash function based on the clients ip address to get sticky sessions
+
 ### conf file structure
 
-nginx consists of modules which are controlled by directives specificed in the config file
+nginx consists of modules which are controlled by directives specified in the config file
 
 simple directive
 	key value pair separated by space and ending in ;
@@ -38,6 +44,7 @@ server {
 #### location
 
 location <path> {
+	proxy_set_header <header> <value>
 	root <where to send it to>
 	proxy_pass <url>
 	rewrite <src_path> <dest_path> break
@@ -56,3 +63,12 @@ if a request with api/reports comes in the it will go to api/reports not api
 
 rewrite allows you to change the uri which is passed onto the proxy
 you can use a regular expression and matching groups to take part of the src and add it to the dest path
+
+proxy_set_header allows you to set headers to be passed onto the backend
+ex: X-Forwarded-For $proxy_add_x_forwarded_for
+this adds the clients ip address so to the backend the request came directly from there, not through the nginx
+
+#### upstream
+
+optionally starts with the load balancing mechanism, by default it's round_robin
+a block directive which lists a number of ips addresses of multiple backends for load balancing

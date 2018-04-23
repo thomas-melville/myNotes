@@ -1,38 +1,39 @@
 # monitoring
 
 linux distros come with a number of monitoring tools
+
 most of the them make use of the psuedo file system /proc and /sys
 
 ## process and load monitoring tools
 
-top
-uptime
-ps
-pstree
-mpstat
-iostat
-sar
-numastat
-strace
+* top
+* uptime
+* ps
+* pstree
+* mpstat
+* iostat
+* sar
+* numastat
+* strace
 
 ## memory monitoring tools
 
-free
-vmstat
-pmap
+* free
+* vmstat
+* pmap
 
 ## i/o monitoring tools
 
-iostat
-sar
-vmstat
+* iostat
+* sar
+* vmstat
 
 ## network monitoring tools
 
-netstat
-iptraf
-tcpdump
-wireshark
+* netstat
+* iptraf
+* tcpdump
+* wireshark
 
 ## tuning the system
 
@@ -46,8 +47,11 @@ editing these files is the same as executing sysctl commands to change configura
 ## OOM Killer
 
 Out of memory killer, used by linux to kill processes when the system runs out of memory.
+
 each process has a badness score, in /proc/[pid]/oom_score.
+
 the order of killing is decided by this score.
+
 a user with root privileges can change this score using /proc/[pid]/oom_adj_score
 
 ## Disk bottlenecks
@@ -169,7 +173,11 @@ us      cpu time running user code
 
 ### dmesg
 
-get kernel messages
+print kernel ring buffer
+real time message buffer which eventually gets "persisted" to /var/log/messages
+
+-H      human readable format
+-L      colour the output
 
 ### iostat
 

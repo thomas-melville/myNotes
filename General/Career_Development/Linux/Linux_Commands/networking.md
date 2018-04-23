@@ -11,6 +11,7 @@ i ip address
 ## ping
 
 send packets to a host to verify:
+
 1. it is reachable
 2. the speed of the connection
 
@@ -30,6 +31,13 @@ netstat -nap | grep 80
 lsof can achieve the same thing
 
 lsof -i :80
+
+### arguments
+
+* n: show numeric addresses, instead of trying to determine symbolic host, port or user names.
+* t: tcp connections
+* l: show only listening sockets (these are omitted by default) 
+* p: show the pid and name of process to which each socket belongs
 
 ## nslookup
 
