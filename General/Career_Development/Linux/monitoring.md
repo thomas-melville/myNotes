@@ -178,6 +178,7 @@ real time message buffer which eventually gets "persisted" to /var/log/messages
 
 -H      human readable format
 -L      colour the output
+-w      continue printing messages as they come in
 
 ### iostat
 
