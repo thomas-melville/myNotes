@@ -68,7 +68,7 @@ sudo usermod <username>
 
 ### locked accounts
 
-linux ships with some sys accs which are locked
+linux ships with some sys accounts which are locked
 this means they can run programs but never login
 /sbin/login for shell in /etc/passwd file achieves this
 

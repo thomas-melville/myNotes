@@ -1,6 +1,5 @@
 # File Permissions
 
-
 ## ls command output
 
 first character reveals the type:
@@ -49,7 +48,7 @@ every user is a member of at least one group, called their primary group
 ## changing permissions
 
 chmod mode file.
-This can be done recursively on all sub directories and files by adding the -R argument before the permissions
+This can be done recursively on all sub directories and files by adding the -R argument before the permissions.
 
 2 ways to specify mode:
 
@@ -74,11 +73,39 @@ rwx
 110	6
 111	7
 
-chgrp
+chgrp group file
+change the group of the file to the specified group.
+
+you can change group in chown by doing **chown user:group file**
+-R can also be used in chgrp for recursive operations
 
 ## file creation mask
 
-umask
+The default permissions on files are 666 and directories are 777
 
-determines access file will be given on it's creation
+umask changes this when the file is created, restricting them
+
+determines the access the file will be given on it's creation
 when setting mask, numbers apply the opposite affect to chgrp/chmod
+so it specifies what access should be denied
+
+configurable: umask 0222
+
+-S lets you see/set the umask in symbolic form
+
+## ACL
+
+Linux contains a complete implementation of POSIX Access Control Lists (ACL)
+this extends the simpler user, group, world, r, w, x model.
+
+particular privileges can be granted to specific users or groups when accessing certain objects / classes of objects.
+files and directories can be shared without giving 777
+
+kernel enables ACL, it must be implemented in the FS
+
+### commands
+
+getfacl <file>
+	get the acl permissions for the file
+setfacl <options> <permissions> <file>
+	set the acl permissions for the file
