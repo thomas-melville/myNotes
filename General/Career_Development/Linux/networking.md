@@ -107,3 +107,78 @@ For each command objects there are a number of flags
 * add
 * set
 * ...
+
+## ifconfig
+
+sys admin utility long found in unix based systems
+configure, control and query network interfaces
+superseded by **ip**
+
+## NIC config files
+
+ip and ifconfig chages aren't persisted.
+A number of linux distro dep config files exist
+
+## Network Manager
+
+nmtui / nmcli for managing connections
+this is old school
+it's a lot more dynamic today
+
+## routing
+
+process of selecting paths in a n/w along which to send traffic
+routing table is a list of routes to other networks managed by the sys
+
+### commands
+
+route
+
+ip route
+
+default route is the way packets are sent when there is no other match in the routing table
+can be obtained dynamically by using DHCP
+
+static routes are used to control packet flow when there is more than one router or route.
+defined for each interface and can be persisted or non-persisted
+
+## Name resolution
+
+translating ip address to hostnames
+
+2 ways
+
+* static name resolution, /etc/hosts
+* Dynamic Name Resolution, DNS
+
+on the command line there are 3 ways to get the ip from a hostname
+
+* dig
+* host
+* nslookup
+
+/etc/hosts is checked before DNS
+should only contain mappings for small internal networks
+
+DNS is dynamic and consists of a network of servers
+which clients use to look up names
+service is distributed
+each one has it's own zone of authority
+
+## Network Diagnostic Utilities
+
+### ping
+
+send packets to host to see if it's contactable
+
+### traceroute
+
+display a network path to a destination
+
+### mtr
+
+combines the func of ping and traceroute and creates a continuously updated display, like top
+
+### dig
+
+useful for testing DNS functionality

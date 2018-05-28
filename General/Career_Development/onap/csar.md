@@ -1,6 +1,6 @@
 # csar
 
-cloud service archive
+cloud service archive format from ONAP
 
 container file using the zip file format
 A container file is an archive file which contains multiple files of possibly different file types
