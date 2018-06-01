@@ -296,6 +296,8 @@ to catch all use "Exception"
 
 you can get more information by putting the exception into a variable and printing it
 
+**raise** is Pythons word for throw from Java
+
 ## working with files
 
 built in method open("filename", "access modes")
@@ -459,13 +461,19 @@ from <filename_minus_extension> import <class_name>
 
 /* is used as a wildcard for imports in python too
 
+when defining a module the folder must contain an __init__.py file
+
+the root of the module should define a requirements.txt file to specify what versions of other modules it requires.
+This can lead to issues if you have multiple dependencies who depend on different versions of a dependency that don't overlap
+
 ## developing web apps in python
 
 django is one library
 flask is another
+sanic is yet another, python 3.5+ only!
 
 django tries to solve everything for you
-flask is minimalistic
+flask is a minimalist library
 	seven lines of code to serve a page!
 
 ## installing python packages

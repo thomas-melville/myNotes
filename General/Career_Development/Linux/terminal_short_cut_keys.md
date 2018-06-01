@@ -1,6 +1,6 @@
 # terminal short cut keys
 
-ctrl+u  delete the current command
+ctrl+u  clear command line
 ctrl+a  go to the start of the line
 ctrl+e  go to the end of the line (goes into ranger in my fish shell)
 ctrl+b  go back one character

@@ -182,3 +182,97 @@ combines the func of ping and traceroute and creates a continuously updated disp
 ### dig
 
 useful for testing DNS functionality
+
+## Firewalls
+
+a firewall is a network security system that monitors and controls all nw traffic
+applies rules on both incoming and outgoing network connections and packets
+builds flexible barriers depending on level of trust given to connection.
+Can be hw or sw based
+found in both routers and individual computers / network nodes.
+many firewalls having routing capabilities
+
+3 generations of firewalls
+
+* packet filtering
+* * contents of each packet inspected
+* stateful filters
+* * also examines the connection state of the packet
+* * new / existing / none
+* Application Layer Firewalls
+* * are aware of application and protocol
+
+### Packet Filtering
+
+intercepts packets at one or more stages/layers in the network transmission
+firewall establishes a set of rules by which each packet may be:
+
+* accepted/rejected
+* mangled
+* redirected
+* inspected for security reasons
+* ...
+
+### configuring a firewall
+
+command line:
+
+* iptables
+* firewall-cmd
+* ufw
+
+GUIs:
+
+* system-config-firewall
+* firewall-config
+* gufw
+* yast
+
+#### firewalld
+
+Dynamic Firewall Manager
+utilizes network/firewall zones which have defined levels of trust
+supports runtime and permanent changes to config
+configuration kept in **/etc/firewalld**
+
+command line version is firewall-cmd, 200 lines of help but args read like sentences
+
+##### zones
+
+each has a defined level of trust and certain known behaviour for traffic
+each interface belongs to a particular zone
+a zone can be bound to network interface and network addresses, use netmask
+any packet not associated with a zone goes to public
+
+* drop
+* * all incoming packets dropped with no reply
+* * all outgoing connections permitted.
+* block
+* * all incoming nw connections are rejected
+* * only permitted connections are those from within the system
+* public
+* * do not trust any computers on the network
+* * only certain consciously selected incoming connections are permitted.
+* external
+* * used when masquerading is being used
+* * usually in routers
+* * trust levels are the same as public
+* dmz
+* * used when access to some, but not all, services are to be allowed to public
+* * only particular incoming connections allowed
+* work
+* * trust, but not completely, connected nodes to be not harmful
+* * only certain incoming connections allowed.
+* home
+* * mostly trust the other network nodes
+* * only certain incoming connections allowed.
+* internal
+* * similar to work
+* trusted
+* * all network connections are trusted.
+
+You can get more fine grained and only allow particular services and ports in a zone
+
+firewall-cmd --zone=xxx --list-services / --add-service
+firewall-cmd --get-zones
+...
