@@ -1,5 +1,7 @@
 # VI
 
+VI focuses on editing text, not writing it.
+
 ## modes
 
 ### Normal Mode
@@ -7,6 +9,26 @@
 normal mode is for navigation and text manipulation, I used to call it command mode
 ESC	go from insert to normal mode
 I've changed mine to "qqq"
+
+Think about what operation you want to do on what object and take the first letter of each word,
+that will probably be the command
+ex: delete a word: daw
+
+operation:
+
+* delete
+* find
+* change
+* back
+* insert
+* append
+
+objects:
+
+* word
+* sentence
+* parentheses
+* tag
 
 . repeat last command
 
@@ -96,11 +118,12 @@ mode (number) action, when working within a line
 x
 	delete a character
 
-dw
+daw
 	delete a word
 
 de 
 	delete to the end of the current word
+	dw also deletes to the end of the current word, I think the difference is spaces
 	
 **Enter a number in the middle of the 2 above commands to delete that number of words**
 
@@ -149,6 +172,8 @@ gg to move to the start of the file
 <number> + G to go back to the line you were on when you pressed CTRL+G
 
 ## Searching
+
+f<character> find the next character on this line
 
 / to start search query going forward
 ? to start a search query going backwards

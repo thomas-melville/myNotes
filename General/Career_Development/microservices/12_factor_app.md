@@ -132,15 +132,15 @@ Export http as a service by binding to a port, and listen to requests coming in 
 In dev that would be localhost:<port>, in production a routing layer would handle routing requests from the public hostname to the port-bound web processes
 This is typically down by declaring a web server library as a dependency of the app (spring-boot webserver dependency for example which uses tomcat by default, but can be changed to use jetty or undertow)
 * the app itself defines and includes the web server it will use
-
-Apps aren't just web services, a service can listen on any port. Http is just the most common protocol.
-
-This enables apps to be backing services for each other.
-
-## Concurrency
-
-**Scale out via the process model**
-
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-differenceon any port. Http is just the most common protocol.
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-differenceher.
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
+https://searchsdn.techtarget.com/answer/NFV-vs-VNF-Whats-the-difference
 processes are a first class citizen
 take strong cues from the unix process model for running service daemons
 * processes should be managed, not just started up. service / upstart / ...
