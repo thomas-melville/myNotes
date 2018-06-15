@@ -59,6 +59,7 @@ Communicates with the VNFM
 ## NFVI
 
 Network Function Virtualization Infrastructure
+compute, network and storage
 
 ## VNFM
 

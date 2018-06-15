@@ -8,7 +8,7 @@ information is in a chart
 
 download a chart and deploy it, this results in a container in the cluster
 
-it has two parts of client (helm) and a server (tiller)
+it has two parts: client (helm) and a server (tiller)
 
 charts can be downloaded from the central repo.
 
@@ -19,6 +19,7 @@ Helm installs **charts** into Kubernetes, creating a new **release** for each in
 ### Chart
 
 is a helm package
+archive file which contains yaml files
 contains all the resource definitions necessary to run an application, tool / service inside a Kubernetes cluster
 
 ### Repository

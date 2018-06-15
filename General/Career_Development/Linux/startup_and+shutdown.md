@@ -74,6 +74,7 @@ after system boot and initial POST and BIOS stages the Boot loader menu is enter
 text / graphical view of possible images to boot
 
 you can hit enter on any image to boot the image.
+multiple OSs and multiple kernel versions
 
 you can do more,
 
