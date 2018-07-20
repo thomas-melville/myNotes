@@ -87,6 +87,7 @@ cgroups, namespaces and chroot from the linux kernel are used by docker, so it's
 Linux containers have been around for 10 years.
 cgroups was contributed by Google in 2008
 Docker simplified the user experience
+chroot was introduced to the linux kernel in 1979
 
 layered
 	images are layered one on top of another to provide additional functionality.

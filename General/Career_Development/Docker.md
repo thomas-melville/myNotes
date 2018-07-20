@@ -15,5 +15,5 @@ Expanding to tools to manage containers
 	
 	Docker Compose - Simply create multi container deployments
 	Docker Swarm - cluster docker containers into one manageable interface.
-	
-	
+
+the kernel version of a docker image must be compatible with the kernel version running on the host machine

@@ -15,6 +15,10 @@ send packets to a host to verify:
 1. it is reachable
 2. the speed of the connection
 
+### flags
+
+c<x> transmit x packets then stop
+
 ## ifconfig
 
 display the network config of the machine.

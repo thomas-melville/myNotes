@@ -120,7 +120,7 @@ For each element in the range 0 to 20 call the function and push the result into
 ### dictionaries
 
 similar to json
-It is a has table
+It is a hash table
 
 ```python
 student = {
