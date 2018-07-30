@@ -139,6 +139,20 @@ q       quit
 h/?     help
 k       kill
 r       renice
+p       track the process id specified
+
+handy trick:
+
+* execute your process as a back ground process
+* pipe the output to dev/null
+* then echo the pid
+* pass this into a call to top
+
+```bash
+
+top -p `{ <my_command> /dev/null & } && echo $!`
+
+```
 
 ### vmstat
 

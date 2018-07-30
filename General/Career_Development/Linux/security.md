@@ -188,3 +188,34 @@ Two modes:
   * this is also called learning mode
 
 Distros come with prepackaged profiles, which are installed by packages and others by arrarmor itself using **apparmor-profiles**
+
+## Local System Security
+
+no computer can every be absolutely secure.
+all we can do is slow down/discourage attackers.
+Security can be defined in terms of the systems ability to regularly do what it is supposed to do, integrity and correctness of the system, and ensuring that the system is only available to those authorized to use it.
+The biggest problem with security is finding the appropriate mix of security and productivity.
+The human factor is the weakest link in the security chain.
+
+4 areas:
+
+* physical
+* local
+* remote
+* personnel
+
+### security philosophies
+
+* anything not expressly permitted is denied
+* anything not expressly forbidden is permitted
+
+the first one is the most commonly used one
+the second assumes a lot of trust
+
+### advice
+
+* never put the current directory in your $PATH variable
+  * this is because a user could create a script with the same name as a common linux command with malicious intent and someone could unwittingly execute it
+* protect your BIOS with a password
+* secure the boot process with a password too
+* use the security features when mounting

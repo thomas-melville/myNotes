@@ -19,7 +19,7 @@ Releases are in 2 year phases
 Management And Organization
 Managing NFV
 Working Group within ETSI, which was closed in Nov 14
-It published the ETSI NFV Architectural Framework
+It published the [ETSI NFV Architectural Framework](https://www.etsi.org/deliver/etsi_gs/NFV-MAN/001_099/001/01.01.01_60/gs_NFV-MAN001v010101p.pdf)
 
 Many is broken up into 3 parts
 

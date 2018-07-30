@@ -4,9 +4,9 @@
 
 first character reveals the type:
 
-- regular file
-d directory
-l symbolic link
+* /- regular file
+* d directory
+* l symbolic link
 
 the next 9 characters are the permissions for user, group and other
 
@@ -29,11 +29,17 @@ This means an alternative access control method has been applied
 
 **suid**
 s is a special type of file permission, suid (Set owner User ID up on execution)
-	when a user executes the file with s it uses the access permissions of the owner rather than the executor
+
+* when a user executes the file with s it uses the access permissions of the owner rather than the executor
+* can be changed with setuid
+* For security reasons this is generally a bad idea, better to write a daemon program.
 
 **sgid**
 s is a special type of file permission, suid (Set Group ID up on execution)
-	when a user executes the file with it uses the access permissions of the group rather than the executor
+
+* when a user executes the file with it uses the access permissions of the group rather than the executor
+* can be changed with setgid
+* For security reasons this is generally a bad idea, better to write a daemon program.
 
 **sticky bit**
 prevent a user from deleting another users files even if they would normally have permissions to do so.

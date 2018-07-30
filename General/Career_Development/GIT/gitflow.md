@@ -6,14 +6,14 @@ There is a repo which is a set of git subcommands built for git-flow: https://gi
 these just make it easier to follow this model by giving one word commands instead of the individual git commands
 
 **What about the review process??????**
-
+ECM are using GitFlow & Gerrit, working quite well according to Santhosh
 
 ## branches
 
 ### master
 
 The HEAD of this branch always reflects a production ready state.
-Once all the commits from develop branch are merged back into master this is considered a release and tagged as such
+Once all the commits from the develop branch which are on the release branch are merged back into master this is considered a release and tagged as such
 this enables the possibility of a git hook script on the server to deploy the new release to a production server.
 
 ### develop
@@ -32,7 +32,7 @@ must merge back into develop
 * this keeps history of the feature and groups together all the commits that together make the feature
 * this can be seen using my alias **git lds**
 
-naming convention can be anything but master, developer, release-*, hotfix-*
+naming convention can be anything but master, develop, release-*, hotfix-*
 
 are used to develop new features for the upcoming or distant release
 
@@ -75,3 +75,14 @@ don't forget to bump the version after you've checked out the branch
 
 when the bug is fixed merge it into master and develop with the --no-ff tag
 If there is a release branch, it should be merged into that instead of the develop branch. It'll eventually make it back into the develop branch
+
+## versioning
+
+https://www.fredonism.com/a-practical-take-on-gitflow-and-semantic-versioning
+
+bump the version when branching from:
+
+* develop to release
+* master to hotfix
+
+Follow the semantic versioning rules, https://semver.org/
