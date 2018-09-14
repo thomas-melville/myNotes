@@ -105,3 +105,25 @@ once you have edited the chart directory use the **helm package** command to cre
 use **helm lint <my_chart>** to check your chart for formating or missing info
 
 **helm install** will then install the application in the cluster that kubectl is configured to talk to.
+
+## helm 3
+
+Helm has moved to the CNCF
+
+Provide an embedded scripting engine based on lua
+Which means changing from YAML to code for charts
+This enables the possibility of reusable libraries for defining charts
+YAML and Lua will co-exist in Helm 3
+It will be possible to dynamically update YAML charts using Lua
+
+Getting rid of Tiller
+It's goals can now be achieved in Kubernetes.
+
+1. using Custom Resource Definitions to store information
+   * This improves security as it is all delegated to Kubernetes
+2. with two new records for storing information about releases
+   * Release and ReleaseVersion
+
+and there's lots more: https://github.com/helm/community/blob/master/helm-v3/000-helm-v3.md
+
+No release date yet

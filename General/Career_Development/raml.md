@@ -36,6 +36,8 @@ Just go through the tutorials: https://raml.org/developers/raml-200-tutorial
 request and response bodies can be json schemas which generate POJOs!!!
 these schemas can be extracted and reused
 
+### schemas
+
 schemas:
 	myType: |
 	{
@@ -45,6 +47,8 @@ schemas:
 ...
 
 	type: myType
+
+### resource types
 
 resource types can create generic collection and collection-items which can be parameterized so they can be reused
 specify parameters using this construct: <<...>>
@@ -66,8 +70,10 @@ you can specify your own parameters and pass them into the resourceType when you
 
 in the resource type use it like the reserved parameters
 
+### includes
+
 you can extract raml to separate files and include them in the main file using !includes
-extracted files are treated as raw strings by RAML
+**extracted files are treated as raw strings by RAML**
 good for examples / schemas/ ...
 extract all resourceTypes / traits to a single file
 

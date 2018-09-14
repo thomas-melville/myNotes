@@ -9,22 +9,22 @@ https://labs.play-with-k8s.com/#
 Some important features are:
 
 * Resource scheduling
-* * ensures pods are distributed optimally across nodes
+  * ensures pods are distributed optimally across nodes
 * Auto-scaling
-* * with increasing load, the cluster can dynamically allocate additional nodes
-* * and deploy new pods on them.
+  * with increasing load, the cluster can dynamically allocate additional nodes
+  * and deploy new pods on them.
 * Self-healing
-* * cluster supervises containers and restarts them
-* * if required, based on defined policies
+  * cluster supervises containers and restarts them
+  * if required, based on defined policies
 * Service-discovery
-* * Pods and Services are registered and published via DNS
+  * Pods and Services are registered and published via DNS
 * Rolling updates/rollbacks
-* * support rolling updates based on sequential deployment of Pods and containers
+  * support rolling updates based on sequential deployment of Pods and containers
 * Secret/config mgmt
-* * supports secure handling of sensitive data like passwords and API keys
+  * supports secure handling of sensitive data like passwords and API keys
 * Storage Orchestration
-* * several 3rd party solutions are supported
-* * which can be used as external volumes to persist data
+  * several 3rd party solutions are supported
+  * which can be used as external volumes to persist data
 
 It is written in GoLang
 
