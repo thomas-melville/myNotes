@@ -440,6 +440,112 @@ separate schemas??
 very hard to retrofit greenfield patterns
 event sourcing and CQRS
 
+## Make microservices resilient
+
+### Why
+
+distributed architecture.
+more moving parts.
+any one of them could fail.
+the network is unreliable!
+fault tolerance is required.
+avoid cascading failures.
+avoid exhausting resource pools.
+
+#### Types of failures
+
+hardware.
+infrastructure.
+communication layer.
+dependencies.
+one of your own microservices.
+
+### Patterns and approach
+
+#### Timeouts
+
+every call to an external resource should have a timeout set
+timeout exception is thrown after timeout is exceeded instead of waiting forever for external resource to respond
+reduces chances of cascading failures
+do not rely on default value, the timeout value has to be just right!
+can be used with retries
+
+##### advantages
+
+avoid waiting forever
+threads aren't locked up
+allows you to handle the failure
+  degrade / default / bomb out back to user
+  depends on the criticality of the external resources func
+
+still a risk!
+Multiple threads can be blocked on timeout, next pattern will help with that
+
+#### Circuit Breakers
+
+used with the timeout pattern.
+when over usage is detected break the circuit.
+an object which wraps calls.
+monitors calls for failures.
+trip after reaching threshold.
+  returns an error without making the call.
+  no longer waiting for timeouts.
+thresholds can be different per exception from call.
+reset after x number of tries.
+test the water with a few calls before closing the circuit.
+  the number of calls before retrying is the reset parameter.
+you decide what to do when the circuit is open.
+use for all synchronous calls
+always report, monitor and log
+
+hystrix is mentioned as a recommended library
+thepollyproject.org is a .NET library
+
+#### Retry
+
+ideal for transient faults
+
+* momentary loss of connection
+* temporary unavailability of service
+* timeouts when service is busy
+* service throttles accepted requests
+
+allows faults to self correct
+
+Retry strategies
+
+* retry
+* retry after delay
+* cancel
+
+Log and monitor!!!!
+
+they all can be used together!
+3pps that handle all them
+
+#### Bulkhead
+
+High level design pattern when architecting your service.
+how do you contain and handle a failure.
+Separate failed components from the rest of the system.
+ensure degraded functionality.
+
+How?
+
+* Separate by criticality
+* isolated microservices
+* isolated databases
+* redundancy using load balancers
+* circuit breakers
+* Rejecting calls using load shedding
+
+#### approaches
+
+design for failures
+embrace failures
+fail fast
+degrade or default functionality
+
 ## Questions
 
 * When it's consumed by multiple consumers how does the message broker know to take it off the queue?
