@@ -354,3 +354,172 @@ Implemented by a Gateway Service or API Gateway
 * request enhancement
 * load balancer
 * different apis for different clients
+
+spring-cloud + netflix Zuul
+
+gateway service that provides dynamic routing, monitoring, resiliency, security & more
+
+* add dependency in dependencyManagement
+* add dependency in dependencies
+* in main app class as @EnableZuulProxy
+* * This app then becomes the gateway service
+* it can use Service Discovery the usual way
+* configure request routing
+* * default behaviour when service discovery is enabled is to route by service name
+* * by default the prefix is stripped from the request
+* * using properties you can configure more precise routing
+
+client side load balancer project from Netflix is called ribbon
+
+### filters
+
+different types:
+
+* pre
+* * before the request
+* route
+* * direct the request
+* post
+* * afteer the request
+* error
+
+extend and implement the abstract methods in the ZuulFilter class
+
+* run, what to actually do. the course just adds headers to it
+* shouldFilter, a boolean whether to run the filter or not
+* filterType, a string representing pre, route, post or error
+* filterOrder
+
+RequestContext object holds state information about the request
+
+Add your implementation to the App Context as a Bean
+
+## Load balancing
+
+two types
+
+* Server side
+* * service in front of instance which balances the load
+* * typically hardware based, but can be software
+* * additional hop
+* * support various algorithms
+* * happens outside the request process
+* * centralized / distributed
+* Client side
+* * client is aware of instances and balances the load
+* * software based
+* * support various algorithms
+* * happens inside the request process
+* * distributed
+
+Client side is a natural fit for cloud native apps
+
+Netflix Ribbon: "is a inter process communication (rpc) library with built in software load balancers"
+
+Spring cloud adds full integration with Ribbon in RestTemplate class
+RestTemplate will know how to balance requests across multiple instances of a service
+you can customize the algorithm
+round robin by default
+
+* add dependency mgmt on spring cloud
+* add dependency on spring cloud ribbon
+* New annotations
+* * @LoadBalanced
+* * * marks a RestTemplate to support load balancing
+* * * Do this on a bean in a configuration class
+* * @RibbonClient
+* * * used for custom configuration and when Service Discovery is absent
+
+This should be combined with Service Discovery
+
+restTemplate.get...("http://service-name/...")
+
+RestTemplate will resolve "service-name" to an ip and port from the service discovery and load balance it
+
+Without Service Discovery you need to define the Ribbon Client
+
+* Add annotation on main class, @RibbonClient(name = "some-service")
+* Add some properties with the prefix "some-service"
+* * <...>.ribbon.eureka.enabled=false
+* * <...>.ribbon.listOfServers=... , ...
+
+you then use the name of the ribbonclient in ther url for the rest template
+
+you can add more configuration to the RibbonClient annotation:
+    configuration=MyConfiguration.class
+The class should be outside the component scan base
+There are a number of beans you can specify in this configuration class
+
+* IClientConfig
+* IRule
+* * control load balancing strategy
+* * You can create your own but there are some existing impl
+* * RoundRobinRule, ResponseTimeWeightedRul, RandomRule, ZoneAvoidanceRule
+* IPing
+* * used to check the liveliness of a service
+* * You can create your own but there are some existing impl
+* * DummyPing, PingUrl, NIWSDiscoveryPing
+* ServerList<Server>
+* ServerListFilter<Server>
+* IloadBalancer
+
+## Self-healing services
+
+Netflix Hystrix & Turbine
+
+In a distributed system failure is inevitable
+
+hardware, networks, software
+more of everything
+process communication, is now over a network!
+
+cascading failures
+domino effect
+a failure in one causes all others to fail
+
+fault tolerance and gracefully degrade or fail fast
+resource overloading
+
+Hystrix is an implementation of the circuit breaker pattern
+wraps calls and watches for failures
+
+10 second rolling window
+20 request volume
+>= 50% error rate
+
+waits & tries a single request every 10 seconds
+failed requests can execute fallback methods
+all requests run in thread pools
+
+* add dependencyMgmt spring-cloud-dependencies
+* add dependencies spring-cloud-starter-hystrix
+* annotate method with @HystrixCommand
+* * add a field, fallbackMethod, and specify a method name
+
+be careful with hystrix timeouts
+ensure timeouts encompass caller timeouts & any retries, default 1000milliseconds
+
+### Hystrix Dashboard
+
+circuit state
+error rate
+traffic volume
+successful, rejected requests
+timeouts
+...
+
+Nice looking dashboard
+
+* add dependencyMgmt spring-cloud-dependencies
+* add dependencies spring-cloud-starter-hystrix-dashboard
+* Add annotation @EnableHystrixDashboard
+* start it up and enter what app you want to monitor, http://...:.../hystrix.stream
+
+Turbine, aggregate many hystrix streams into one
+
+* add dependencyMgmt spring-cloud-dependencies
+* add dependencies spring-cloud-starter-turbine
+* @enableTurbine
+* application.properties
+* * turbine.app-config= list of service ids
+* * turbine.cluster-name-expression=...(name cluster)
