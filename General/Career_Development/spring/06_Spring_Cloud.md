@@ -443,7 +443,7 @@ Without Service Discovery you need to define the Ribbon Client
 * * <...>.ribbon.eureka.enabled=false
 * * <...>.ribbon.listOfServers=... , ...
 
-you then use the name of the ribbonclient in ther url for the rest template
+you then use the name of the ribbonclient in the url for the rest template
 
 you can add more configuration to the RibbonClient annotation:
     configuration=MyConfiguration.class
