@@ -1,4 +1,4 @@
-# camunda
+# Camunda
 
 ## BPMN
 
@@ -7,7 +7,7 @@ A business process is a set of linked activities which accomplish a specific org
 Business Process Management is a systematic approach to making an orgs workflows more effective
 It has specific stages
 
-BPMN
+BPMN (Business Process Modeling Notation)
 
 Map processes and procedures to a flow/map
 so you can visualize it
@@ -22,6 +22,8 @@ OSS is shifting to Camunda as the orchestration workflow engine
 * ...
 
 ONAP use BPMN Workflows too
+
+According to JJ our customers want it too
 
 https://camunda.com/
 https://confluence-nam.lmera.ericsson.se/display/N4/Camunda
@@ -43,6 +45,7 @@ DMN:    Decision Model and Notation
 Model -> Execute -> Improve
 
 Camunda BPM is in the execute space
+Camunda Modeler is in the Model & Improve space
 
 Platform:
 
@@ -76,7 +79,7 @@ Platform:
 automate BPMN 2.0 process diagrams for micro service orchestration, human task flows or both.
 written in java
 REST and Java APIs for interacting with the engine
-the engine uses an Relational Database to ...
+the engine uses an Relational Database to store history of workflow execution, and I presume other stuff too
 It's integrated with Spring boot, add the camunda dependency and away you go
 
 * start process instances
@@ -96,8 +99,22 @@ Create Classes which implement JavaDelegate and put their fqdn in the BPMN workf
 engine supports two ways of executing service tasks
 
 * internal service task
-* * sync invc of code deployed along with process app
+* * sync invocation of code deployed along with process app
 * external tasks
 * * provide a unit of work in a list that can be polled by workers
 
 Second way is the external task pattern
+
+### using camunda in a spring boot app
+
+1. add the camunda engine dependency:
+    * camunda-engine-spring
+2. add the camunda starter dependencies:
+    * camunda-bpm-spring-boot-starter-[webapp/rest]
+3. add an annotation to the application class
+    * We have @EnableProcessApplication
+3. create your bpmn diagrams using Camunda modeler
+    * this generates xml
+    * put this in the src/main/resources folder of your project
+4. implement JavaDelegate interface to define the tasks in the diagrams
+    * we have these separated out into modules specific to the type of task

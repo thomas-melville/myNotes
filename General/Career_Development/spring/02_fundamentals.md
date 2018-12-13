@@ -178,7 +178,7 @@ Setter and constructor injection happens inside the method annotated with Bean, 
 ## Autowire
 
 Spring got a bad name for lots of xml / java configuration to wire beans together.
-To they implemented an attribute on bean elements and annotation which would trigger autowiring based on a policy
+So they implemented an attribute on bean elements and annotation which would trigger autowiring based on a policy
 
 Four options:
 
@@ -269,10 +269,11 @@ Setter injection can be replaced with Java annotation driven:
 
 ```java
 
-@Value("${my.property})
+@Value("${my.property}")
 private String ...;
 
 ```
+
 ### Java Config
 
 ```java

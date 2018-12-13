@@ -7,7 +7,6 @@ a process will generally have 3 file descriptors
     std_in, out and err
 
 any time a process opens a "resource" a file descriptor is created!
-    **need to verify this**
 
 File Descriptor points to the inode which points to the actual file on disk
 
