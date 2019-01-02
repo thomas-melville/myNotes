@@ -1,16 +1,12 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
+# DockerMavenPlugin
 
-###### DockerMavenPlugin ######
-Created Tuesday 07 March 2017
-
-##### Documentation #####
+## Documentation
 https://github.com/spotify/docker-maven-plugin
 
-##### Command line #####
+## Command line
 mvn clean package docker:build			//build an image with the above configurations by running this command.
 
-#### options ####
+## options
 '''
 	-DpushImage 		//push to registry
 	-DpushImageTag	//push only specific tags of the image

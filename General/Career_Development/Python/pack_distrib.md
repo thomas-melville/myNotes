@@ -6,7 +6,7 @@
 
 ```python
 import <filename_minus_extension>
-import <filename_minus_extension> as <new_name> 
+import <filename_minus_extension> as <new_name>
 from <filename_minus_extension> import <class_name>
 from <filename_minus_extension> import <class_name> as <new_name>
 ```
@@ -108,3 +108,8 @@ and the executable file is created
 
 the tool he uses is only on windows
 
+### 20. building a whl file
+
+The setup.py script is used to create the whl file.
+The naming of the whl file is as follows: <name>-<version>-<python-version>-<abi-tags???>-<architecture>.whl
+This is enforced, if you try and install a file with a different name pip fails

@@ -110,6 +110,12 @@ It is a daemon, deployed as a Kubernetes POD, that watches the apiservers /ingre
 When there is any updates it reloads the nginx configuration file, which holds the forwarding information to services.
 The nginx configuration is stored on the IngressController POD
 
+### Service Account
+
+Provide an identity for processes which run in a Pod to access the Kubernetes API Server.
+There is a default service account, default, assigned to every pod.
+Each service account has a token / secret associated with it which is placed in each pod in the namespace. /var/run/secrets/kubernetes.io/serviceaccount/token
+
 ### MetaData
 
 All objects have metadata
