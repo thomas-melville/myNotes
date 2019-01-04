@@ -20,7 +20,7 @@ you can add chunks of files to the staging area interactively, https://git-scm.c
 git add -i
 	this allows you to stage whole or parts of files to add to the commit
 	making your commits smaller and more focused.
-	
+
 **--patch is an argument to lots of GIT commands to allow you to decide what changes to work with**
 
 ## rev-list
@@ -129,3 +129,21 @@ delete all stashes
 git stash drop <stash>
 
 delete the specified stash
+
+## worktree
+
+https://git-scm.com/docs/git-worktree
+
+have multiple "working trees" of a single repo on your machine
+instead of cloning multiple times and checking out different branches you can clone once and create linked working trees of other branches
+you can then work on each branch independently
+It is lighter weight than doing a clone as it uses hard links to the main working tree
+The .git folder in the linked worktree just links to the .git folder in the main working tree
+
+### add
+
+git worktree add ../some-other-folder some-existing-branch
+
+**Note:** The branch can't be the one you are currently on
+
+### remove

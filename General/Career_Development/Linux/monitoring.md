@@ -52,7 +52,9 @@ each process has a badness score, in /proc/[pid]/oom_score.
 
 the order of killing is decided by this score.
 
-a user with root privileges can change this score using /proc/[pid]/oom_adj_score
+a user with root privileges can change this score using /proc/[pid]/oom_score_adj, value can range from -1000 to 1000
+there is also /proc/[pid]/oom_adj, it's value can range from -16 to 15
+  -17 indicates that this process should never be killed by the oom killer
 
 ## Disk bottlenecks
 
