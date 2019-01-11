@@ -26,3 +26,8 @@ http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.1/csprd01/TOSCA-Si
 
 A rendering of TOSCA which aims to provide a more accessible syntax as well as a more concise and incremental expressiveness of the TOSCA DSL
 It is a subset of the TOSCA v1.0 XML spec
+
+## interaction with VNFM
+
+The tosca file is parsed by the VNFM
+This information is used to instantiate an instance of the product. Resources, files and lifecycle operations, ...

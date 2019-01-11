@@ -39,6 +39,7 @@ This method involves two distinct cryptographic keys, Private Key & Public Key
 The public key is used for encryption and the private key for decryption.
 Data encrypted by a public key can only be decrypted by it's corresponding private key
 The public key is shared with everyone who receives the digital certificate.
+The digital certificate ensures the public key belongs to the user in question
 
 ## 2 way SSL
 client verifies server identity, then vice-versa.

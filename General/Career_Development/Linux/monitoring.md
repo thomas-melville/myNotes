@@ -248,3 +248,19 @@ Idle            3
 -c      class
 -n      priority, priority can range from 0 - 7. 0 is the highest
 -p      pid
+
+### tcpdump
+
+tcpdump [arguments] "filter"
+
+#### arguments
+
+-vv   make output verbose
+-nn   don't resolve IP addresses to hostname or Ports to service Names
+-i    the interface to listen on
+
+filter decides what packets are displayed
+
+* number of hops
+* message types
+* protocol IP / UDP

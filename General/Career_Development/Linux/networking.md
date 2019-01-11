@@ -174,6 +174,18 @@ send packets to host to see if it's contactable
 ### traceroute
 
 display a network path to a destination
+by default it sends 3 packets, use -q 1 to only send one
+
+It uses the TTL header and an ICMP message to get the hops.
+When TTL is 0 the packet is discarded and an ICMP message it returned to the sender, with the ip address of the current router.
+
+* traceroute starts with a TTL of 1.
+* router receives packet,
+* decrements tutorials
+* sees the value is 0
+* discards the packet and returns an ICMP message
+*We now have the first hop*
+* It repeats this process incrementing the starting TTL every time until it reaches the destination
 
 ### mtr
 

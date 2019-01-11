@@ -211,7 +211,7 @@ operators: eq, neq, gt, lt, gte, lte, cont, ncont
 allow the API consumer to decide which attributes it wants contained in the response.
 attributes can be marked for inclusion or exclusion
 for omitted attributes, a link to a resource may be returned where the info can be fetched from. HATEOAS
-These links will be in a _links object at the same level as the omitted attribute
+These links will be in a \_links object at the same level as the omitted attribute
 
 query parameters:
 
