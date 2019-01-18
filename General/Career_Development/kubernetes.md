@@ -84,6 +84,27 @@ An **Ingress** is a set of rules that allow inbound connections to reach cluster
 
 A **NetworkPolicy** isolates groups of pods from one another. An example would be isolating test environments from production environments.
 
+#### Service Account
+
+Provide an identity for processes which run in a Pod to access the Kubernetes API Server.
+There is a default service account, default, assigned to every pod.
+Each service account has a token / secret associated with it which is placed in each pod in the namespace. /var/run/secrets/kubernetes.io/serviceaccount/token
+You can have this token auto-generated when you create the service account
+
+#### Roles & Role Bindings
+
+Kubernetes uses RBAC to regulate access to computer or network resources.
+
+A **Role** contains rules that respresent a set of permissions.
+Rules are additive, there are no deny rules. If you don't have the permission you can't do it.
+A role can be defined within a namespace or cluster wide with a **ClusterRole**
+K8S provides a default cluster role with full access, cluster-admin
+
+A **RoleBinding** grants the permissions defined in a role to a user or set of users.
+It holds a list of subjects (users, groups, service accounts) and a reference to the role
+Again it can be namespaced or cluster wide, **ClusterRoleBinding**
+A RoleBinding links a Role & a Service Account (for example) so that there is a separation and a role can be reused
+
 ### Controllers
 
 Higher level abstractions that build on basic objects and provide additional func.
@@ -109,12 +130,6 @@ An **IngressController** monitors an **Ingress** object and forwards any incomin
 It is a daemon, deployed as a Kubernetes POD, that watches the apiservers /ingresses endpoint for updates to the ingress resource
 When there is any updates it reloads the nginx configuration file, which holds the forwarding information to services.
 The nginx configuration is stored on the IngressController POD
-
-### Service Account
-
-Provide an identity for processes which run in a Pod to access the Kubernetes API Server.
-There is a default service account, default, assigned to every pod.
-Each service account has a token / secret associated with it which is placed in each pod in the namespace. /var/run/secrets/kubernetes.io/serviceaccount/token
 
 ### MetaData
 
