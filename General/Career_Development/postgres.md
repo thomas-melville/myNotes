@@ -30,3 +30,10 @@ psql command line tool to connect to a database instance
 It's SQL based, the syntax is very similar to what I'm used to in MYSQL
 
 I'm sure there's some fancy stuff it can do but I'll leave that until I need it.
+
+## Data types
+
+String
+Integer
+Date Time
+and many more ...

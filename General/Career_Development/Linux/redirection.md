@@ -1,4 +1,11 @@
-# redirection
+# redirection & pipes
+
+## pipes
+
+done using |
+pipe redirects the output of one command into the input of the next
+
+## redirection
 
 done using >
 
@@ -10,9 +17,9 @@ done using >
 each one has a FileDescriptor
 	a FileDescirptor is a number that represents an open file
 
-> redirect output to file (overwriting contents)
->> redirect output to file (appending to file)
-< redirect input
+\> redirect output to file (overwriting contents)
+\>> redirect output to file (appending to file)
+\< redirect input from a particular location, rather than stdin
 
 put the FileDescriptor number before the number to specify
 
@@ -20,5 +27,5 @@ put the FileDescriptor number before the number to specify
 	if you just redirect 1 to a file you may miss some information on 2
 
 redirect output nowhere!!!
-	>/dev/null
+	\>/dev/null
 	i.e. ignore the output

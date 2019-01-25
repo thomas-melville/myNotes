@@ -7,3 +7,5 @@ the user must be allowed to do this
 
 -S  read the password from the standard input
 -s  run the specified shell
+
+sudo !! to execute the previous command

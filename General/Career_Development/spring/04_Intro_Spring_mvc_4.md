@@ -135,9 +135,42 @@ Controllers are more lightweight and added features for more REST based Controll
 
 ## Repository
 
+An abstraction that provides access to many different data stores.
 Get's a little complicated with the java config
 There are different types of repositories if you are using Spring Data JPA
-Convention over Configuration will save you a lot of time
+Convention over Configuration will save you a lot of time.
+Proxies are generated for each interface, that proxy contains func based on the names of the methods in the interface and the generic type of the repository
+
+```java8
+  public interface ChartRepository extends JpaRespoitory<Chart, Long> {}
+```
+
+Chart is specific to my domain
+Long is the type of the primary key
+
+You can also add methods to your interface and the proxy will try to convert it to an SQL statement to access the database
+
+```java8
+  public interface ChartRepository extends JpaRespoitory<Chart, Long> {
+    List<Chart> findByName(String name);
+  }
+```
+
+The proxy will try to query the table for entries in the name column
+
+All the classes which map to entities in the database should go in a model package
+
+```java8
+  @Entity
+  @Table(name = "charts")
+  public class Chart{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+  }
+
+```
 
 ## Views
 
