@@ -17,3 +17,13 @@ find . -type f -print0 | xargs -0 sed "s/=/#/g"
 list of the files in this directory and subdirectories
 pipe them into xargs
 execute sed "/s=/#/g" on each file
+
+
+kubectl get nodes -o wide | awk '{print $6}' | xargs -I {} scp retagged-images.tar {}:/home/eccd
+  get all the information about the worker nodes
+  awk out the ips
+  scp a file on each ip
+
+
+awk '{print $6}' <(cat nodes.txt) | xargs -I {} ssh {} sudo docker load -i retagged-images.tar;
+  had to output the node information to file so I could delete the entries which didn't have valid ips
