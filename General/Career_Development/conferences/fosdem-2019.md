@@ -247,7 +247,7 @@ He is working on open metrics.
 
 Presenter: Tom Wilkie
 
-Promethus, but for logs.
+Prometheus, but for logs.
 log aggregation, using alot of the existing prometheus functionality.
 super early stages.
 different direction to elastic.

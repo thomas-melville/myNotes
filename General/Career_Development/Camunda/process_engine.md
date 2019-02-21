@@ -131,4 +131,38 @@ If available the value is injected through a public setter method following the 
 
 ### Execution Listener
 
-https://docs.camunda.org/manual/7.5/user-guide/process-engine/delegation-code/#execution-listener
+Execute external java code, a script or evaluate an expression when a certain events occur.
+
+* start/end process instance/activity/gateway/intermediate events
+* taking a transition
+* ending a start event or starting an end event
+
+Implement the ExecutionListener interface.
+
+### Task Listener
+
+Not really interested in user tasks so I'll skip for now.
+
+## Expression Language
+
+Camunda BPM supports Unified Expression Language (EL), specified as part of JSP 2.1(JSR-245).
+Uses the [JUEL](http://juel.sourceforge.net/) implementation.
+Can be used in BPM to evaluate small script like expressions.
+Methods can be called on beans in the Spring Container and variables passed into them from the workflow
+Input/Output parameters can be mapped using this language
+
+## Scripting
+
+Camunda BPM supports scripting with JSR-223 compatible script engine implementations.
+
+* Groovy
+* JavaScript
+* JRuby
+* Jython
+
+To use one you need to add the dependency to the classpath.
+The first time the engine is needed it's brought up, then cached for subsequent requests.
+
+## Templating
+
+https://docs.camunda.org/manual/7.5/user-guide/process-engine/templating/
