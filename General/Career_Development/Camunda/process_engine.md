@@ -72,6 +72,7 @@ Lastly used for waiting for external triggers
 ### TaskService
 
 Manages tasks which need to be performed by human users
+A workflow can be made interactive and allow user intervention with user tasks by setting the isInteractive execution variable to true
 
 ### IdentityService
 

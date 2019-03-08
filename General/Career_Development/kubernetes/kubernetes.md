@@ -26,7 +26,8 @@ Some important features are:
   * several 3rd party solutions are supported
   * which can be used as external volumes to persist data
 
-It is written in GoLang
+It is written in GoLang.
+Configuration information is stored in JSON, and written in YAML normally
 
 ## understanding Kubernetes
 
@@ -37,15 +38,21 @@ it's the brains, a collection of services:
 
 * the API server, our point of entry for everything. It's over REST so we could write our own client to communicate with it.
 * core services, scheduler / controller manager for example
-* * scheduler decides on what node pods will be spun up.
+  * scheduler decides on what node pods will be spun up.
+    * it uses the PodSpec to decide this.
 * * controller manager manages the threads which report the actual state of the cluster
+    * also signals the controllers to update the actual state when it doesn't match the desired state
 * etcd, a distributed highly available keystore. the db of kubernetes
+  * b+tree, key/value store
+  * no entry is edited, values are always appended to the end, previous copies are then marked for future removal by a compaction process
+* cloud-controller-manager, a relatively new manager which interacts with cloud providers
 
 **Nodes** in a cluster are the machines (VMs, physical servers, etc) that run our apps. The master controls each node.
 A node needs a **container runtime**. Docker is the most popular with Kubernetes. It supports rkt also and will support any engines which conform to the Open Container Initiative reference spec.
-has kubelet, the node-agent
-and kube-proxy, a necessary network component which allows user traffic into the node.
+has kubelet, the node-agent, talks with the container engine to ensure all containers that should be running actually are.
+and kube-proxy, a necessary network component which allows user traffic into the node. It does this using iptables, but that may have been superceded by ipvs
 It has a built in load balancer
+Supervisord monitors the kublet and docker engine processes and restarts them if there are crashes.
 
 **Minikube** is a Kubernetes distribution, which enables us to run a single node cluster inside a VM on a workstation for dev & test
 The **Kubernetes API** provides and abstraction of the Kubernetes concepts by wrapping them into objects / resources
@@ -69,8 +76,10 @@ Every object consists of two parts, the object spec and the object status
 #### Basic Objects
 
 A **Pod** is a basic unit that Kubernetes deals with.
-It encapsulates one or more closely related containers, storage resources, a unique network IP and configurations
-Represents a single instance of an application
+It encapsulates one or more closely related containers, storage resources, a unique network IP and configurations.
+Typically, one container runs an application, while any other containers support the primary container.
+The containers start in parallel so there's no way to determine which one will be ready first.
+Represents a single instance of an application.
 
 A **Service** is an abstraction which groups together logical collections of Pods, and defines how to access them.
 Services are an interface to a group of containers so that consumers do not have to worry about anything beyond a single access location
@@ -131,6 +140,8 @@ It is a daemon, deployed as a Kubernetes POD, that watches the apiservers /ingre
 When there is any updates it reloads the nginx configuration file, which holds the forwarding information to services.
 The nginx configuration is stored on the IngressController POD
 
+There are many other controllers for managing the resources in a cluster, and you can create your own.
+
 ### MetaData
 
 All objects have metadata
@@ -152,6 +163,8 @@ Some optional ones are:
 * * K/V pairs too
 * * not used to identify objects
 * * hold information about the respective object
+* * can't be used in k8s commands
+* * could be used by 3rd party agents or tools
 
 #### labels
 
@@ -170,6 +183,17 @@ spec:
     <...>
 
 ```
+
+## standardization
+
+K8S is part of the CNCF (Cloud Native Computing Foundation)
+K8S is standardizing on the CNI (Container Network Interface) spec.
+K8S is standardizing on the CRI (Container Runtime Interface) spec.
+  goal is to allow easy integration of container runtimes with kubelet
+  docker-cri is done
+  cri-o, rktlet & frakti are works in progress (Maybe they're done by now)
+  rkt is part of CNCF, announced by CoreOS in 2014
+  cri-o is part of K8S
 
 ## affinity
 
@@ -214,6 +238,10 @@ there is also the option **all** to get information about everything in the clus
 
 execute a command on a container / pod, ...
 like docker exec you can start an interactive shell to the container
+
+```bash
+kubectl exec -it <pod_name> -- /bin/bash
+```
 
 #### logs
 
@@ -275,3 +303,27 @@ cordon node and remove all pods from it
 4. create an ingress to the service
 5. create an ingress controller to forward requests from a rule to a service
 6. create any daemon sets for monitoring / logging
+
+## multi container pods
+
+kind of goes against the idea of decoupling as much as possible, but there are certain needs in which a 2nd/3rd container in the pod makes sense
+
+### sidecar
+
+add some functionality not present in the main container.
+Rather than bloating the main container with functionality that may not be required in all deployments.
+Examples of sidecar containers are:
+* logging (fluentd)
+* monitoring (prometheus)
+
+### adapter
+
+modify data, either on ingress or egress, to match some other need.
+
+### ambassador
+
+allow access to the outside world without having to implement a service or ingress
+* proxy local connection
+* reverse proxy
+* limits http requests
+* re-route from the main container to the outside world
