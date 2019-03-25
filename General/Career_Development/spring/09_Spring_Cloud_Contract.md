@@ -79,6 +79,9 @@ response
   must contain a http status code
   may contain headers, cookies and body
 
+priority
+  a number which defines the priority of a contract, 1 is highest
+
 urlPath
   takes a string
   and is a closure

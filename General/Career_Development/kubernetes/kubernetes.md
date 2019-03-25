@@ -228,6 +228,11 @@ create a deployment with the specified configuration
 each pod will only have one instance of a single image.
 If your app has multiple images then you'll need to define it in a yaml file and use the create command
 
+##### arguments
+
+--record
+  records a history of the changes to the deployment
+
 #### get
 
 get information about particular types of API objects in the cluster
@@ -274,9 +279,24 @@ history
 show the history of changes to a deployment, daemonset or statefulset
 To see more information create the API object with the --record flag
 
-undo
+##### arguments
 
-undo the last change in the history
+pause
+resume
+undo
+  undo the last change in the history
+
+--to-revision=x
+  roll back to a previous revision, need to run the deployment with the --record flag
+
+#### scale
+
+scale the number of replicas in a deployment or replica set
+
+#### edit
+
+edit a particular object in a text editor.
+The changes are applied to the cluster when the file is saved.
 
 #### label
 
@@ -291,6 +311,11 @@ useful for node downtime
 #### drain
 
 cordon node and remove all pods from it
+
+#### proxy
+
+create a local service to access a ClusterRole.
+Useful for troubleshooting or development work.
 
 ## typical workflow
 
