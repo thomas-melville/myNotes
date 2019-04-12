@@ -239,6 +239,15 @@ get information about particular types of API objects in the cluster
 deployments, pods, services, ...
 there is also the option **all** to get information about everything in the cluster
 
+you can change the format of the output using ther -o argument
+
+wide            print more info
+json            print all the information in JSON
+custom-columns  print only selected fields under headers you define
+                  =header:jsonPath,...
+jsonPath        print a specific field from the output
+                  you can do a lot with this!
+
 #### exec
 
 execute a command on a container / pod, ...
@@ -314,8 +323,15 @@ cordon node and remove all pods from it
 
 #### proxy
 
-create a local service to access a ClusterRole.
+create a local service to access a Cluster.
 Useful for troubleshooting or development work.
+
+#### explain
+
+print of the specification of any resource
+you can get sub parts of the resource by chaining
+
+for example: kubectl explain pod.spec
 
 ## typical workflow
 

@@ -3,7 +3,9 @@
 An Operator is an application-specific controller that extends the K8S API to create, configure and manage instances of complex stateful applications on behalf of a K8S user.
 Builds on the basic K8S resource and controller concepts but includes domain or app specific knowledge to automate common tasks.
 
-The stateful above is important.
+*The stateful above is important.*
+It is easy to manage stateless deployments (replica sets to scale out and in) as all you need to do is spin up more instances.
+When state is involved it becomes more complicated.
 This is about embedding knowledge about how to correctly scale, upgrade and reconfigure apps while protecting against data loss or unavailability.
 
 Two example operators: Etcd operator & the prometheus operator.
@@ -33,3 +35,6 @@ leverage built in primitives when possible.
 A component of the Operator Framework.
 Simplifies building operators
 also for testing & packaging
+
+https://github.com/operator-framework/operator-sdk/blob/master/doc/helm/user-guide.md
+Steps to install the operator SDK

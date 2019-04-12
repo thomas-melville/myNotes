@@ -60,9 +60,52 @@ If you create a service without a selector the endpoint is not created.
 When a pod is running on a node kubelet adds a set of env vars for each active Service.
 {SVC_NAME}_SERVICE_HOST & {SVC_NAME}_SERVICE_PORT
 
-https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services
+This implies an ordering requirement, if the service isn't up when the Pod is started then it won't get the env vars.
 
 #### dns
+
+An optional, but strongly recommended, cluster add-on is a DNS server.
+The DNS server watches the Service resource and creates new DNS records for each.
+If DNS has been enabled throughout the cluster then a Pod should be able to do name resolution of Services.
+
+From within the name space use the service name.
+From another namespace qualify it with the namespace
+  my-service.other-ns
+
+K8s also supports DNS SRV (service) records for named ports.
+If a service has a named port then it can be looked up
+  \_http_.\_tcp.my-service.other-ns
+
+##### A Records
+
+Normal Services are assigned a DNS A record for a name of the form: my-svc.my-namespace.svc.cluster.local.
+This resolves to the Cluster IP address of the Service
+
+Headless Services are assigned a DNS A record of the same form as normal.
+This resolves to the set of IPs of the pods selected by the service.
+Clients handle the selection and load balancing algorithm.
+
+##### SRV records
+
+Create for named ports which are part of Servces of the form: \_my-port-name.\_my-port-protocol.my-svc.my-namespace.svc.cluster.local
+
+When enabled Pods can be given records in the DNS also: pod-ip-address.my-namespace.pod.cluster.local
+A pods hostname is taken from it's metadata.name value. The Pod spec has an optional hostname.
+
+##### Pod DNS Policy
+
+It is possible to define one of many dns policies per pod
+
+* Default
+  * inherits from node
+* ClusterFirst
+  * any dns query which does not match the configured cluster domain suffix is forwarded to the upstream nameserver inherited from the node
+  * **This is the default policy if none is provided**
+* ClusterFirstWithHostNet
+  * for pods running with host network
+* None
+  * ignore all settings from k8s
+  * need to provide settings in dnsConfig of Pod spec
 
 
 
