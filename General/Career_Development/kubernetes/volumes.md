@@ -52,7 +52,7 @@ There are several phases to persistent Storage
   * begins when the bound volume is mounted into the Pod
   * continues as long as the Pod requires
 * Releasing
-  * when ther Pod is done with the volume and an API request is sent, deleting the PVC.
+  * when the Pod is done with the volume and an API request is sent, deleting the PVC.
 * Reclaim
   * 3 options:
     * Retain

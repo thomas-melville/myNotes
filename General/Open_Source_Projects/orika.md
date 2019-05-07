@@ -30,3 +30,26 @@ If you have a mapping which is not supported out of the box then you can impleme
 Extend CustomConverter and implement the convert method.
 This is a single direction conversion, there is another class for implementing a bi-directional custom converter. **BidirectionalConver<T, U>**
 These can be registered with the MapperFactory through, getConverters.register(...)
+
+## In Spring
+
+Create a Configuration class with a method annotated with @Bean(name = mapperFactory)
+In this method configure what classes map to what classes, how to map fields with different names, what fields to exclude
+A second bean in the config class, MapperFacade, which gets it's instance from the mapper factory
+
+In a Service class inject an instance of the MapperFacade
+and call map on what every bean you want to map with the class of the bean you want to map to.
+
+1. dependency
+2. Configuration bean
+  * 2 methods
+    * getMapperFactory
+      * build default factory
+      * add classMap
+        * the two classes to map
+        * any fields that differ
+        * by default
+        * exclusions
+        * register
+    * getMapperFacade
+      * get it from the mapperFactory

@@ -127,3 +127,16 @@ It's goals can now be achieved in Kubernetes.
 and there's lots more: https://github.com/helm/community/blob/master/helm-v3/000-helm-v3.md
 
 No release date yet
+
+## hooks
+
+Allows chart developers to intervene and perform operations at certain points in a releases lifecycle.
+Declared as an annotation in the metadata section of the manifest.
+The resource it's on contains what to do at that hook.
+It could be a:
+* Job
+* ConfigMap
+* Secret
+Hooks can be weighted which determines execution order when there are multiple resources for a single hook
+
+There are many hook points: https://github.com/helm/helm/blob/master/docs/charts_hooks.md#the-available-hooks
