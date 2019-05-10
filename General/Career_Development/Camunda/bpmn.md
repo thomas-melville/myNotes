@@ -218,6 +218,30 @@ The main use case is to have reusable process definitions
 Visualized the same way as a collapsed embedded process, but with a thick border
 The sub process can be deployed independently.
 The calledElement attribute in the call activity element contains the process definition key, this means the latest version is always called.
-you can pass variables in and out of the subprocess, we pass all.
+you can pass variables in and out of the subprocess, we pass all. A subset of variables can be passed into the subprocess also.
+variables are also passed out when a boundary error event is thrown.
 
-https://docs.camunda.org/manual/7.5/reference/bpmn20/subprocesses/call-activity/#variable-output-on-bpmn-error-event
+### event subprocess
+
+A subprocess that is triggered by an event.
+The event used to trigger an event subprocess is configured using a start event.
+none start events are not supported.
+supported events are:
+* message
+* error
+* signal
+* timer
+* compensation
+The subscription to the start event is created when the scope hosting the event subprocess is created.
+The scope hosting the event subprocess can be a process instance or another subprocess.
+subscription is removed when the scope ends.
+the event subprocess may be interrupting or non interrupting.
+interrupting cancels any executions in the current scope. and can only be triggered once
+non interrupting spawns a concurrent execution. can be triggered multiple times
+can't have any incoming or outgoing sequence flows
+visualized as an embedded process with a dotted outline
+interesting use for error events, the event subprocess is still in the scope of the triggering process so the variables are all available.
+
+### transaction subprocess
+
+group multiple activities to a transaction (a logical unit of work which allows grouping of individual activities so that they either succeed or fail collectively)
