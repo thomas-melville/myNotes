@@ -348,10 +348,12 @@ for example: kubectl explain pod.spec
 ## multi container pods
 
 kind of goes against the idea of decoupling as much as possible, but there are certain needs in which a 2nd/3rd container in the pod makes sense
+There are two types of multi container pods, single node and multi node.
 
 ### sidecar
 
-add some functionality not present in the main container.
+add some functionality not present in the main container. extend and work with primary container.
+Best used when there is a clear difference between a primary container and any secondary tasks that need to be done to it.
 Rather than bloating the main container with functionality that may not be required in all deployments.
 Examples of sidecar containers are:
 * logging (fluentd)
@@ -359,12 +361,31 @@ Examples of sidecar containers are:
 
 ### adapter
 
-modify data, either on ingress or egress, to match some other need.
+modify/transform data, either on ingress or egress, to match some other need.
+transform output of primary container into output that fits the standards across your applications.
+**Would this be a case for ETSI problemDetails**
+normalize the monitoring interface is an example given.
+Would adding headers we another example?
 
-### ambassador
+### ambassador/proxy
 
+simplify the access of external services for the main app, acts as a service discovery layer
 allow access to the outside world without having to implement a service or ingress
 * proxy local connection
 * reverse proxy
 * limits http requests
 * re-route from the main container to the outside world
+The main app uses the external service on localhost.
+ambassador container takes care of connecting, re-connecting and updating configuration.
+
+### multi node pods
+
+#### leader election
+
+replication is great to share load, but in some cases all those replicas need a leader / leaders
+
+#### work queue pattern
+
+#### scatter/gather pattern
+
+split up request among a number of containers and gather the response into one.

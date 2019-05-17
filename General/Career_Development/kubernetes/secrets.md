@@ -9,6 +9,7 @@ kubectl get secrets
 kubectl create secret ...
 ```
 
+As with mose K8S objects a secret is tied to a namespace.
 You can define it in a yaml file too.
 
 K8S automatically creates a secret for the default service account in a namespace to allow it access to the API server (read only)
