@@ -251,16 +251,45 @@ Idle            3
 
 ### tcpdump
 
+command-line packet analyzer
+timstamp is taken from os kernel, and is to 100ms
+
+https://hackertarget.com/tcpdump-examples/
+
 tcpdump [arguments] "filter"
 
 #### arguments
 
 -vv   make output verbose
--nn   don't resolve IP addresses to hostname or Ports to service Names
+-nn   don't resolve IP addresses to hostname or Ports to service Names. Name resolution slows down the process
 -i    the interface to listen on
+-w    write the output to a standard pcap file. Allows it to be imported to tools, wireshark
+-s    size of the packet to capture, set to 0 for unlimited. I need to do this for binary!
+-c    run until the specific number of packets has been reached
+-A    print body in ASCII format
+-l    make stdout line buffered, this allows you to pipe the output on. tcpdump -l | tee tcpdump.txt
+
+you can specify the protocol to capture, either specify the protocol or use proto [number] (each protocol has a number)
+you can specifc the host to capture the traffic going from and to by adding host [host]
+you can use src/dest to only capture traffic going one way
 
 filter decides what packets are displayed
 
 * number of hops
 * message types
 * protocol IP / UDP
+
+example filters:
+
+only capture POST requests:
+  1. sudo tcpdump -s 0 -A -vv 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354'
+      before the = determintes the location of the bytes we are interested in (after TCP header) and then selects the 4 bytes we wish to match against.
+      The hexadecimal matches the ascii for POST
+  2. sudo tcpdump -s 0 -v -n -l | egrep -i "POST /|api/v1/packages"
+      grep the output for POST requests to api/v1/packages
+
+
+when it completes it will print 3 things:
+* total number of packets captured
+* total number of packets which matched filter
+* total number of dropped packets

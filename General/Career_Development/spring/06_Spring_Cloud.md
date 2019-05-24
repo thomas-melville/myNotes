@@ -120,7 +120,7 @@ A service and be a service and a client of the same discovery server
 * * * you get the full list.
 * * **by default apps use the spring.application.name as their virtual hostname when registering**
 
-```java
+```
 
 //...
 
