@@ -77,3 +77,13 @@ declared in the dependencies section, installed and managed like any other chart
 and there's lots more: https://github.com/helm/community/blob/master/helm-v3/000-helm-v3.md
 
 alpha release will be out soon
+
+## other changes
+
+templating engine to lua from jinja
+not create namespace if it doesn't exist
+change defaults on commands
+  --purge is now default on delete
+change command names
+  delete -> uninstall for example
+release is now only unique to namespace

@@ -27,7 +27,7 @@ Adding a submodule to your project brings in the required modules for that funct
 Versions of these dependencies are managed by spring for you in a BOM, spring-boot-dependencies
 
 * You can still override Springs provided version by specifying properties in your pom
-* * if you are using the spring-boot-starter-parent 
+* * if you are using the spring-boot-starter-parent
 * * if using spring-boot-dependencies you can't do this, you need to specify the dependency with the updated version
 
 You can depend on sensible default by using spring-boot-starter-parent
@@ -147,7 +147,7 @@ Use @ConfigurationProperties to externalize the host & port of the other service
 
 Use RestTemplate to do the invocation of the remote service.
 
-* a convenient wrapper abstraction which handles all connection, (un)marshalling results 
+* a convenient wrapper abstraction which handles all connection, (un)marshalling results
 * It's generic so you can give it the class of the object you want to return
 
 [Complete Reference Guide](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
@@ -199,6 +199,9 @@ To enable this you have to add the spring-boot-maven-plugin to your project
 
 * the value of the key in the properties which maps to this variable.
 * It is combined with the value in @ConfigurationProperties
+* one thing to note is when the value for the field gets initialized.
+  * the class is instantiated
+  * then the fields value is set to the property value from the annotation (using reflection???)
 
 @ComponentScan
 
@@ -275,7 +278,7 @@ use spring.profiles.active to activate profiles, this overrides any other profil
 
 * For example a profile set in the application.propeties file will be overridden by a profile set on the command line
 
-use spring.profiles.include to add more profile(s) on top of whats already there. 
+use spring.profiles.include to add more profile(s) on top of whats already there.
 
 profile specific properties/yml files can be created:
 

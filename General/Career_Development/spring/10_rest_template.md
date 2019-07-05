@@ -2,6 +2,9 @@
 
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html
 https://www.baeldung.com/rest-template
+https://www.baeldung.com/spring-rest-template-interceptor
+https://www.baeldung.com/spring-rest-template-error-handling
+https://www.baeldung.com/spring-rest-template-interceptor
 
 Synchronous client to perform Http requests, exposing a simple, template method API over underlying HTTP Client libraries.
 Default is the JDK Http library, you can use Apache Http, ...
@@ -88,3 +91,11 @@ Once created you can see a number of objects in it, to overwrite the default beh
   * There's a number of these: ByteArray, String, Resource, Source, AllEncompassingForm, ...
 * RequestCallback
 * ResponseExtractor
+
+## error handling
+
+3 exceptions can be thrown by RestTemplate
+
+* HttpClientErrorException
+* HttpServerErrorException
+* UnknownHttpStatusCodeException

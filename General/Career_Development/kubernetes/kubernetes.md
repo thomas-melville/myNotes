@@ -264,7 +264,11 @@ get the logs for a pod, particular container within a pod or a group of containe
 ```bash
 kubectl logs <pod>  # will return the logs of the first container in the pod
 kubectl logs <pod> -c <container> # will return the logs of the specified container
+kubectl logs -l <label> # will return the logs for all pods which have the label
 ```
+
+add the -f argument to follow the logs, like tail
+add --max-log-requests X if you get an error following multiple pods
 
 #### expose
 
