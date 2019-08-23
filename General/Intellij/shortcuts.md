@@ -42,3 +42,5 @@ ALT+F format the code
 
 Do all GIT Work in Intellij!!!!
 Right click -> revert to undo specific change!!
+
+CTRL+SHIFT+T when in a class to switch to it's test class and back again

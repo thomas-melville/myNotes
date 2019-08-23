@@ -1,4 +1,4 @@
-# Ansible 
+# Ansible
 
 Automate application deployment
 Provision onto bare metal or into cloud
@@ -20,6 +20,8 @@ Integrations:
 	RedHat
 	Windows
 	Vagrant
+	kubectl
+	...
 
 Playbooks are a level above integrations so they can be run on any of the integrations
 Ansible can model containers and non-containers
@@ -29,7 +31,7 @@ No agent running on deployment
 	load modules
 	execute
 	delete modules
-	
+
 	Or as another guy describes it
 		ssh to server
 		run configured task
@@ -56,6 +58,7 @@ what hosts to execute against.
 Selected from hosts file in /etc/ansible/hosts
 hosts can be grouped.
 And individual hosts can be configured, ssh port, user, ...
+it can also be a script that generates the host information
 
 ## Facts
 
@@ -63,6 +66,7 @@ Ansible gathers all the information required by a playbook for execution, this i
 It gathers loads of information about the target host.
 It is all stored in facts and they can be accessed like any other variable.
 A special type of variable
+it runs a setup module to get all this information about the remote nodes
 
 ## Modules
 
@@ -107,3 +111,15 @@ variables can be overridden at runtime using the --extra-vars command line argum
     y
     z
   {{ item }}
+
+## using the output of one task in the next
+
+- name: task 1
+	...
+	register: old_files
+- name: task 2
+	...
+	with_items: >
+		{{
+			old_files.files
+		}}

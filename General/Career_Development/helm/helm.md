@@ -118,3 +118,19 @@ It could be a:
 Hooks can be weighted which determines execution order when there are multiple resources for a single hook
 
 There are many hook points: https://github.com/helm/helm/blob/master/docs/charts_hooks.md#the-available-hooks
+
+## plugins
+
+helm supports plugins, on the client side.
+Don't have to be written in Go.
+
+### examples
+
+* helm-diff
+  * https://github.com/databus23/helm-diff
+  * show the changes that helm will apply to a release
+* helm-secrets
+  * https://github.com/futuresimple/helm-secrets
+  * integrates with helmfile
+  * encrypted chart values files are decrypted locally
+  * using a key from AWS,GCP KMS service!

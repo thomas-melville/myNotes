@@ -152,7 +152,7 @@ Scripts are database dependent. This means different databases require their own
 * * they must be in src/main/resources
 * * first script must be v2, as flyway baselines at version 1
 * * v2__{outcome_of_script}.sql
-* when the app starts the migration scripts are automatically run 
+* when the app starts the migration scripts are automatically run
 * add a property to application.properties:
 * * flyway.baseline-on-migrate=true
 * turn off a hibernate feature which would auto pick up the flyway ddl files and try and create the tables
@@ -213,6 +213,7 @@ Change unit test to integration test:
 * @RunWith(SpringJUnit4ClassRunner.class)
 * @SpringApplicationConfiguration, and provide main class to annotation
 * autowire class under test instead of instantiating it
+* Use @MockBean to inject the mock instance into the application context
 
 ### web integration testing
 

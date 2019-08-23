@@ -87,3 +87,4 @@ change defaults on commands
 change command names
   delete -> uninstall for example
 release is now only unique to namespace
+uninstall will delete pvc

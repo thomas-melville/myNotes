@@ -75,6 +75,29 @@ There are two parts to the Controller:
 2. Reconcile it.
   * Each controller has a reconcile loop
   * The loop is passed the reconcile argument, which is used to look up the primary object.
+  * and ensure the actual state matches the desired state
+
+A watch consists of 3 parts:
+
+1. The resource type to watch
+2. A handler
+    * map the events on the watched type to one or more instances to call the reconcile loop on
+3. A predicate
+    * further filter the events to a specific level.
+
+Reconciliation cycle
+
+1. retrieve the interested CR instance
+2. manage instance validity
+    * syntactic and semantic
+    * syntactic validation can be done using OpenAPI validation rules
+    * semantic validation can be done using a webhook and ValidationAdmissionConfiguration
+      * Which I think is called by an AdmissionController
+      * this was talked about in the workshop.
+3. manage instance initialization
+4. manage instance deletion
+5. manage controller business logic.
+    * It is still recommended to do semantic validation in the controller in case the admission controller is not running
 
 ## Lifecycle Manager
 
@@ -85,3 +108,7 @@ Create the ClusterServiceVersion manifest for the:
 * ... there's a lot in the example file.
 
 https://github.com/operator-framework/getting-started
+
+## best practices
+
+https://blog.openshift.com/kubernetes-operators-best-practices/
