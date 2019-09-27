@@ -234,7 +234,9 @@ A specialization of @Component allowing for implementation classes to be autodet
 
 @Repository
 
-Inject by Spring and is a stereotype for the persistence layer
+Injected by Spring and is a stereotype for the persistence layer
+Catch persistence specific exceptions and rethrow them as Spring unified unchecked exceptions.
+*PersistenceExceptionTranslationPostProcessor* does this by adding an advisor to any bean annotated with Repository.
 
 ## Structuring your code
 

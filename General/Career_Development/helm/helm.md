@@ -82,6 +82,21 @@ you can pipe the value returned into functions to format it
 
 {{ .Values.<mine> | lower | quote}}
 
+you can write your own functions and store them in the \_helpers.tpl file.
+To use them you specify the template key word.
+
+{{- template "my_function" }}
+
+This places the output of the functions into the kubernetes yaml
+
+If you want to do something with the output of the function use the include keyword
+
+{{- include "my_function" $value | indent 2}}
+
+This template passes $value to the function and then passes the output to indent
+
+The tpl keyword allows you to process text and external files as go templates.
+
 ### Repository
 
 The place where the charts can be collected and stored
