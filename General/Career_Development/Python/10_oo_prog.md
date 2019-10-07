@@ -47,6 +47,19 @@ MyClass.my_method(my_class, 'hello')
 
 ```
 
+#### instance comparison
+
+Python uses the same OO techniques as java,
+
+```python
+
+	def __hash__(self):
+		# ...
+
+	def __eq__(self, other):
+		# ...
+```
+
 ### dynamic typing
 
 A variable of a type can be reassigned to a subtype.
@@ -107,7 +120,7 @@ When accessing a class field python doesn't look in the class scope so you have 
 
 **There are no access modifiers in python.**
 Back to its philosophy, you should know what you are doing and not do stupid shit!
-If you want to hide fields of a class prepend them with '__'
+If you want to hide fields of a class prepend them with '\__'
 Pycharm won't see it but if you know it you can use it
 
 ### inheritance
