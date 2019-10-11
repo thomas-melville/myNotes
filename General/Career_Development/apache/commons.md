@@ -251,16 +251,91 @@ ArchiveOutputStream
     closeArchiveEntry
   finish
 
+### text
+
+focused on algorithms working on strings
+
+StrBuilder
+  a replacement for StringBuffer
+StringSubstitutor
+  substituting variables within a string
+  can replace system properties
+  looks like syntax is ${}
+  You can build your own using createInterpolator()
+StringLookup
+  Looks up a string key for a string value
+  Quite a lot of subclasses.
+StringLookupFactory
+  A Factory class to get StringLookup implementations
+  base64 en/decoder
+  Date
+  dns
+  env
+  file
+  java
+  ...
+StringTokenizer
+  a replacement for java StringTokenizer
+  split a string based on a token
+  there is a quote matcher for specifying the quote character
+  trimmer matcher for getting rid of blank space
+  ignored matcher for ignoring certain characters
+StringEscapeUtils
+  contains methods to (un)escape java, javascript, htlm & xml
+CaseUtils
+  toCamelCase
+    based on a delimiter
+WordUtils
+  helper methods on words.
+  (un)capitalize
+
+#### text.similarity
+
+various mechanisms of calculating "similarity" scores as well distances between Strings
+  Cosine Distance
+  Hamming Distance
+  Jaccard Distance
+  ...
+  Cosine Similarity
+  Fuzzy score similarity
+  ...
+
+#### text.diff
+
+do diffs between strings
+
+Command class implementations which will transform the first text into the second one.
+  Delete
+  Insert
+  Keep
+
+### VFS
+
+A single API for accessing various different file systems
+  local disk
+  http server
+  zip archive
+  ftp
+  ...
+It caches file objects to reduce i/o
+
+VFS
+  open/close instace of FileSystemManager
+FileSystemManager
+  provides access to common VFS.
+  can resolve files from any supported source
+FileObject
+  represents a found file
+Authenticator
+  authenticate before making the request
+  more secure
 
 http://commons.apache.org/
 
 Math
-
-Compress
 Configuration
 CSV
 Numbers
 RNG (Random Number Generators)
 Statistics
-Text
 VFS (Virtual File System)
