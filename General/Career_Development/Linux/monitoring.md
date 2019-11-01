@@ -156,6 +156,13 @@ top -p `{ <my_command> /dev/null & } && echo $!`
 
 ```
 
+you can also get information about a specific pid
+
+top -p <pid>
+
+-H shows the threads within the process.
+threaddump shows the pid in hexadecimal, map to decimal to track in top
+
 ### vmstat
 
 displays info about memory, paging, i/o, processor activity and processes

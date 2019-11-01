@@ -31,6 +31,7 @@ https://codewords.recurse.com/issues/two/git-from-the-inside-out
 	points at the tree graph
 		the hash is for the tree object that represents the root of the repo.
 		This is linked to all other blobs and trees at that point in time.
+		It's called a merkle tree(https://en.wikipedia.org/wiki/Merkle_tree)
 		If the blob tree didn't change then the new tree points to the obj from the previous commit
 	If it's not the first commit it points to it's parent tree object, i.e. the tree graph of the previous commit
 	the last line is the commit message

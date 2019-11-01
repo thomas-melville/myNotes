@@ -1,14 +1,10 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2015-08-12T19:37:42+01:00
-
-###### Threading & Concurrency ######
-Created Wednesday 12 August 2015
+# Threading & Concurrency
 
 A thread in java is a thread of execution in a program / light weight process
 JVM allows an application to have multiple threads running concurrently
 Threads have priority
 Threads can also be marked as daemon
+	They run until the jvm exits
 JVM starts with a single daemon thread - which typically calls main
 extends Thread / implements Runnable
 
@@ -32,4 +28,23 @@ Java Memory Model
 
 Interrupts
 	an indication that a thread that it should stop what it's doing and do something else.
-	
+
+## Thread lifecycle
+
+1. New
+	new Thread() has been called
+2. Runnable
+	thread.start() has been invoked
+3. Running
+	start() is running
+4. Suspended
+	temporarily disabled, can be resumed by another thread.
+5. Blocked
+	waiting for a lock to be released
+6. Terminated
+	start() has completed.
+
+## Runnable
+
+Implement Runnable to loosen coupling and increase flexibility
+pass the runnable instance to the Thread constructor
