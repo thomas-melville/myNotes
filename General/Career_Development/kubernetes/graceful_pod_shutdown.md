@@ -7,7 +7,7 @@ What happens when a pod is removed from a cluster?
 3. endpoints controller will remove the pod from the list of valid endpoints
 
 kubelet on node invokes preStop hook in the pod.
-once the hook completes issue TERM signal
+once the hook completes issue SIGTERM signal
 wait for grace period, default 30 seconds
 if the container hasn't shut down issue a SIGKILL
 

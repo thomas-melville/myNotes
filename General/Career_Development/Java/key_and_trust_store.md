@@ -1,6 +1,7 @@
 # keystore V truststore
 
 https://www.baeldung.com/java-keystore-truststore-difference
+https://dzone.com/articles/differences-between-keystore-amp-truststore
 
 we need these when our app needs to communicate over SSL/TLS
 i.e. we are a server and want to communicate over HTTPS
@@ -19,11 +20,11 @@ we can use these to prove the integrity of messages and the authenticity of the 
 During the SSL handshake, the server looks up the private key from the keystore, and presents the corresponding public key and certificate to the client.
 The client can also have a keystore.
 
-javax.net.ssl.KeyStore / KeyStorePassword / KeyStoreType
+javax.net.ssl.KeyStore / KeyStorePassword / KeyStoreType / KeyManager
 
 ## truststore
 
-holds onto certificates that identify others.
+holds onto certificates from trusted CAs that identify others.
 we use it to trust the 3rd party we are about to communicate with.
 If the certificate or certificate authorities from the sender is not in the truststore we get an SSLHandshakeException
 java has bundled a truststore called cacerts in JAVA_HOME/jre/lib/security
@@ -31,4 +32,4 @@ java has bundled a truststore called cacerts in JAVA_HOME/jre/lib/security
 It contains default, trusted CAs
 You can use keytool to see the contents.
 
-javax.net.ssl.TrustStorePassword / TrustStoreType
+javax.net.ssl.TrustStorePassword / TrustStoreType / TrustManager

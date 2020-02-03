@@ -142,6 +142,8 @@ h/?     help
 k       kill
 r       renice
 p       track the process id specified
+M       sort the list by memory usage
+P       sort the list by cpu usage
 
 handy trick:
 

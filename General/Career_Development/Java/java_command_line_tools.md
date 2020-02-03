@@ -1,4 +1,4 @@
-c# java command line tools
+# java command line tools
 
 ## jconsole
 
@@ -25,3 +25,27 @@ examples: find all the class of a certain type.
 
 I'm sure there's more complex stuff that could be done.
 Like returning all the maps which contain a certain value???
+
+## jps
+
+print running jvms on the system
+experimental and unsupported
+
+-l display FDN of main class
+-d display arguments to jvm
+-m display parameters passed to app
+
+## jinfo
+
+generate java config information about a specified java process
+
+system properties, vm flags and vm arguments
+
+## jmap
+
+print class related data about a jvm
+requires certain arguments to be provided to the jvm on startup
+
+## jstack
+
+print threads of a jvm

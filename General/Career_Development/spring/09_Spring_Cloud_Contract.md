@@ -146,3 +146,10 @@ you can use bodyMatchers for two reasons
 
 lots of ways
   by...()
+
+## messaging
+
+Message contracts can be written using SCC too!
+https://cloud.spring.io/spring-cloud-contract/reference/html/project-features.html#features-messaging
+
+It also supports stub generation! :-)
