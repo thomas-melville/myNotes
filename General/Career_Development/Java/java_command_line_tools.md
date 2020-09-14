@@ -1,5 +1,7 @@
 # java command line tools
 
+https://docs.oracle.com/en/java/javase/11/tools/jdeps.html#GUID-A543FEBE-908A-49BF-996C-39499367ADB4
+
 ## jconsole
 
 monitor a running jvm process
@@ -49,3 +51,7 @@ requires certain arguments to be provided to the jvm on startup
 ## jstack
 
 print threads of a jvm
+
+## jdeps
+
+Show package/class level dependencies of a class/jar

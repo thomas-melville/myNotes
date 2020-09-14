@@ -58,6 +58,8 @@ They have one document per reference point
 * IFA012:   NFVO - OSS/BSS  Os-Ma-nfvo
 * IFA013:   NFVO - OSS/BSS  Os-Ma-nfvo
 * IFA014:   NS Descriptor
+* IFA029:   Enhancements of NFV arch towards Cloud-native & PaaS
+* IFA040:   Reqs for service interfaces for OS container management & orchestration
 
 VIM n/b interfaces
 ...

@@ -1,5 +1,7 @@
 # gracefully shutdown pods in a k8s cluster
 
+https://twitter.com/danielepolencic/status/1280087657968627713?s=09
+
 What happens when a pod is removed from a cluster?
 
 1. kubelet starts the shutdown sequence

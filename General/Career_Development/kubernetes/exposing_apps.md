@@ -64,10 +64,25 @@ This implies an ordering requirement, if the service isn't up when the Pod is st
 
 #### dns
 
-An optional, but strongly recommended, cluster add-on is a DNS server.
+An optional, but strongly recommended, cluster add-on is a DNS server, CoreDNS
 The DNS server watches the Service resource and creates new DNS records for each.
 If DNS has been enabled throughout the cluster then a Pod should be able to do name resolution of Services.
+kubelet configures each Pods /etc/resolv.conf to use the coredns pod as the nameserver
 
+```bash
+
+bash-4.4# cat /etc/resolv.conf
+nameserver 10.96.0.10
+search tom.svc.cluster.local svc.cluster.local cluster.local rnd.gic.ericsson.se
+options ndots:5
+
+
+```
+
+nameserver: where queries are forwarded to
+search: search pattern for a particular domain
+ndots: threshold value of number of dots in a query name to consider it as a fully qualified domain name
+        capped to 15, and 5 is the kubernetes default
 From within the name space use the service name.
 From another namespace qualify it with the namespace
   my-service.other-ns

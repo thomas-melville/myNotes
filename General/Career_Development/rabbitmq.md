@@ -55,3 +55,12 @@ Declare a queue on the *Channel*
   since we don't need the name we can let Rabbit generate it
 On the *Channel* bind the queue to the exchange.
   Once bound any messages sent to the exchange will be forwarded to the queue
+
+### consumers
+
+Consumers listen directly to queues, they don't use exchanges.
+
+In spring the annotations @RabbitListener and @RabbitHandler are used
+@RabbitListener specifies the queue to listen to, it can specified on the class or method level.
+@RabbitHandler specifies the payload to consume, there must be no ambiguity. it can only specified on the method level.
+If the method has a return type it is sent as message to the queue defined in the "replyTo" header of the incoming message

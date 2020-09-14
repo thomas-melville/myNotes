@@ -25,3 +25,5 @@
 4. none
   no setup from docker
   allows you to set up custom networking
+
+## multi host container networking

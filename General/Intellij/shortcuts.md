@@ -17,6 +17,8 @@ ctrl+alt+f extract to field
 ctrl+alt+p extract to parameter
 ctrl+alt+m extract to method
 
+ctrl+e open pane of most recent files
+
 alt+shift+up/down move the line of code up or down
 ctrl+shift+up/down move the block of code up or down, this will move a whole method if you are on the method signature line
 
