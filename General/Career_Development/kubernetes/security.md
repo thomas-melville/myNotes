@@ -93,6 +93,8 @@ spec:
 To automate the enforcement of security contexts you can define PodSecurityPolicies
 Cluster level rules which define what a pod can do.
 
+It is an AdmissionController which checks the pod before allowing it into the cluster.
+
 ## Network Security Policies
 
 By default, all pods can reach each other, all ingress & egress traffic is allowed.
