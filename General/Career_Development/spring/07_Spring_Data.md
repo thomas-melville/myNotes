@@ -53,3 +53,11 @@ packages: model & repository
 have repository in class name
 leave jpa out, in case we want to change
 no need for repository annotation when extending the jparepository interface
+
+You can also write methods in the repository interface which Spring will try to convert to SQL commands.
+
+find/read/get By <field> ( And <field>)
+
+this would translate to select * from ... where ... and ...
+
+It can do loads!! dates between, numbers less/greater than, lists is in, ...

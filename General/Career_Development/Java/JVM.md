@@ -36,7 +36,7 @@ integral types:
 floating point types:
 	float
 	double
-	
+
 returnAddress:
 	values are pointers to the opcodes of jvm instructions
 
@@ -127,6 +127,49 @@ constructed when the class/interface is created.
 ### native method stacks
 jvm impl may use conventional stacks, called C stacks, to support native mthods.
 
+### memory vocabulary
+
+committed
+	address ranges which have been mapped
+reserved
+	total address range which has been pre-mapped
+resident
+	OS memory pages which are in physical ram
+	code, stacks, memory pools
+virtual
+	the sum of all virtual address mappings
+
+### rss
+
+https://blog.arkey.fr/2020/11/30/off-heap-reconnaissance/?s=09
+
+Resident Set Size
+the total number of space used, heap + off-heap
+
+```bash
+
+ps o pid,rss -p $(pidof java)
+
+```
+
+### jvm parameters
+
+Xms, initial heap size
+Xmx, max heap size
+\*RAMPercentage
+	will compute the actual values from the cgroup
+
+-XX:NativeMemoryracking=summary, produces an overview of the memory usage of the components of the jvm
+
+jcmd can be used to see actual values.
+
+```bash
+
+jcmd $(pidof java) VM.flags | tr ' ' '\n'
+jcmd $(pidof java) VM.native_memory
+
+```
+
 ## Frames
 Is used for:
 1. Store data and partial results
@@ -209,7 +252,7 @@ do {
 
 most instructions encode type information about the operations they perform
 	iload loads the contents of a local variable, which must be an int
-	
+
 i - int
 l - long
 s - short
@@ -281,10 +324,10 @@ same instruction syntax
 Although both class instance and arrays are objects, the jvm creates and manipulates class instances and arrays with different instructions
 
 new class instance
-new com/../..///ClassName	
+new com/../..///ClassName
 
 new array
-newarray, anewarray, multianewarray 
+newarray, anewarray, multianewarray
 
 access fields of class and instance
 get/setfield, get/setstatic
