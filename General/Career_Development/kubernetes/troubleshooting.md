@@ -3,6 +3,7 @@
 k8s is sensitive to network issues. The standard Linux tools and processes are a great help, I've lots of notes on these.
 If your pod doesn't have a shell, consider deploying one that does (busybox)
 dig, tcpdump, ...
+or installing the tools on the fly, all our images are SLES based which uses zypper
 
 Monitoring is not a core part of K8s so you'll have to include a 3pp
 * Heapster, which is now retired

@@ -6,6 +6,8 @@ https://labs.play-with-k8s.com/#
 1. open source system for the automated deployment, scaling and management of containerized apps.
 2. system for orchestration of containerized apps across a cluster of nodes, including networking and storage infrastructure
 
+Declarative way to define what you want and Kubernetes makes it so
+
 Some important features are:
 
 * Resource scheduling
@@ -28,6 +30,28 @@ Some important features are:
 
 It is written in GoLang.
 Configuration information is stored in JSON, and written in YAML normally
+
+### why?
+
+Accelerate Developer onboarding
+elimiate app conflicts
+Environment consistency
+ship software faster
+
+Orchestrate containers
+zero-downtime deployments
+self-healing
+scale containers
+
+emulate production locally
+move from docker compoase to k8s
+create an end to end testing environment
+ensure app scales properly
+ensure secrets/configs are working properly
+performance testing
+workload scenarios
+learn how to leverage deplotment options
+help devops create resources and solve problems
 
 ## understanding Kubernetes
 
@@ -55,8 +79,11 @@ It has a built in load balancer
 Supervisord monitors the kublet and docker engine processes and restarts them if there are crashes.
 
 **Minikube** is a Kubernetes distribution, which enables us to run a single node cluster inside a VM on a workstation for dev & test
+**DockerDesktop** can install a kubernetes cluster
+**kind** you can run kubernetes in docker
 The **Kubernetes API** provides and abstraction of the Kubernetes concepts by wrapping them into objects / resources
 **kubectl** is a command-line tool, we can use it to create, update, inspect and delete API objects
+  interacts with api-server on master node
 
 ### architecture
 
@@ -76,8 +103,12 @@ Every object consists of two parts, the object spec and the object status
 #### Basic Objects
 
 A **Pod** is a basic unit that Kubernetes deals with.
-It encapsulates one or more closely related containers, storage resources, a unique network IP and configurations.
+It encapsulates one or more closely related containers, storage resources, a unique network IP (clusterIP address) and configurations.
 Typically, one container runs an application, while any other containers support the primary container.
+containers in the pod share the same network namespace
+  have the same loopback network interface, localhost
+  this means containers need to bind to different ports in the pod
+Pod never spans a worker node
 The containers start in parallel so there's no way to determine which one will be ready first.
 Represents a single instance of an application.
 
@@ -119,11 +150,35 @@ A RoleBinding links a Role & a Service Account (for example) so that there is a 
 Higher level abstractions that build on basic objects and provide additional func.
 
 A **Deployment** controller provides declarative updates for Pods and ReplicaSets.
+wrap and simplify ReplicaSet
 We describe the desired state in the Deployment object and the Deployment Controller changes the actual state to the desired.
 This is the recommended controller to use over replica sets, as it encompasses replica sets and you can change the spec and Kubernetes can do a rolling update/grade of all the containers, history and rollback.
 the labels and selectors between the deployment and the replica set must match.
+zero downtime upgrading by creating new pods before destroying old
+  Rolling updates
+    create new pod with new version before deleting old one
+    default
+  blue-green deployments
+    a/b
+    multiple environments with different versions
+  canary deployments
+    a small amount of traffic goes to new versions
+  rollbacks
+    something went wrong so we roll back
+rollback
+
+minReadySeconds
+  wait 10 seconds to make sure container doesn't crash
 
 A **ReplicaSet** ensures that a specified number of Pods replicas are running at any one time
+a declarative way to manage pods
+self healing mechanism
+ensure requested number of pods are available
+provide fault tolerance
+can be used to scale pods
+no need to create Pods directly
+used by deployments
+unqiue name of replica set will follow through to pod name, with another identifier to make the pod unique
 
 With **StatefulSet**, we can run stateful apps.
 Impl apps with unique nw id or persistent storage and guarantee, ordered graceful deployment, scaling, deletion, termination as well as orderd and automated rolling updates.
@@ -173,13 +228,15 @@ They are used to group, identify and select any of the API objects.
 
 ### yaml
 
+a text file composed of maps and lists
+
 ```yaml
 
 apiVersion: <version>
 kind: <the api object to create>
-metadata:
+metadata: # metadata about the pod
     <...>
-spec:
+spec: # blueprint for the object
     <...>
 
 ```
@@ -205,6 +262,15 @@ NoExecute is stricter, it evicts any running pods in the node
 
 ## kubectl
 
+version
+cluster-info
+get
+run - simple way to create a deployment for an image
+port-forward
+expose - port of a Deployment/pod
+create - create a resource - fail if it already exists
+apply - create/modify a resource
+
 Command line tool for interacting with Kubernetes cluster
 
 ```bash
@@ -221,8 +287,15 @@ Source this in your bashrc file to get auto completion of kubectl commands
 
 create the API object, pod, replica set, controller, ... specified by the file
 can only take one file at a time
+Will fail if any resources already exist
+
+--save-config
+  store current properites in resources annotations
+  when it comes to apply later it will use this to compare with whats already there.
 
 #### run
+
+kubectl run [podname] --image=...
 
 create a deployment with the specified configuration
 each pod will only have one instance of a single image.
@@ -247,6 +320,15 @@ custom-columns  print only selected fields under headers you define
                   =header:jsonPath,...
 jsonPath        print a specific field from the output
                   you can do a lot with this!
+
+--show-labels     show all labels associated with a resource
+
+-l              show resources matching the label
+
+#### describe
+
+information about the pod
+including events, useful for troubleshooting
 
 #### exec
 
@@ -306,10 +388,16 @@ undo
 
 scale the number of replicas in a deployment or replica set
 
+--replicas=5
+
 #### edit
 
 edit a particular object in a text editor.
 The changes are applied to the cluster when the file is saved.
+
+#### patch
+
+update a single property on a resource
 
 #### label
 
@@ -336,6 +424,10 @@ print of the specification of any resource
 you can get sub parts of the resource by chaining
 
 for example: kubectl explain pod.spec
+
+#### port-forward
+
+kubectl port-forward [podname] <external_port>:<internal_port>
 
 ## typical workflow
 

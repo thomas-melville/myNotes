@@ -37,7 +37,7 @@ List.of(...)
 
 List.of()
 List.of(E e1)
-List.if(E e1, E e2)
+List.of(E e1, E e2)
 overloads all the way up to 10 elements!
 List.of(E... elements)
   then the varargs method kicks in
