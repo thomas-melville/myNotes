@@ -11,13 +11,33 @@ The CSI is standardizing how containers interface with storage systems.
 
 Create a PersistentVolume, which is claimed by a Pod using a PersistentVolumeClaim.
 A PersistentVolume is a storage abstraction used to retain data longer then the Pod using it.
+Cluster-wide storage unit provisioned by an administrator with a lifetime independant of the pod
 A Pod defines a volume of type PersistentVolumeClaim with various parameters.
 The cluster then attaches the PVC to the PV.
-
+The PV is backed by the Storage
 Two Api Objects exist already to pass data to Pods.
 * Secrets
 * ConfigMaps
 
+```yaml
+
+apiVersion: v1
+...
+spec:
+  volumes:
+    - name: html
+      emptyDir: {}
+    - name: docker-socket
+      hostPath:
+        path: /path/on/host
+        type: Socket
+  containers:
+    volumeMounts:
+      - name: html
+        mountPath: /mnt/www/html
+        readOnly: true
+
+```
 A Pod spec can declare one or more volumes, each requires a name, type & mount point.
 The same volume can be made available to multiple containers in a pod.
 A volume can be made available to multiple pods, with each given an access mode.
@@ -27,9 +47,11 @@ A volume can be made available to multiple pods, with each given an access mode.
 The cluster groups volumes with the same mode together, then sorts volumes by size, from smallest to largest.
 The claim is checked against each in that access mode group, until a volume of sufficient size matches.
 There are three access modes:
-* RWO (ReadWriteOnce)   allows r-w by a single node
+* RWO (ReadWriteOnce)   allows w by a single node
 * ROX (ReadOnlyMany)    allows r by multiple nodes
 * RWX (ReadWriteMany)   allows r-w by multiple nodes
+
+RWO & ROX can be combined on the PV!
 
 When a volume is requested, kubelet:
 * map the raw devices
@@ -64,13 +86,30 @@ There are several phases to persistent Storage
 emptyDir
 * create a directory in the container
 * but not mount any storage
+* transient, it shares the pod lifetime
 
 hostPath
 * mounts a resource from the host node filesystem
 * There is an option to create the directory if it doesn't exist!
+* easy to setup
+* but if worker node goes down data could be lost
+* or if pod is re-scheduled on a different worker node the data would be inaccessible
+  node affinity would need to be setup
+* many types
+  * DirectoryOrCreate
+  * Directory
+  * FileOrCreate
+  * File
+  * Socket
+  * CharDevice
+  * BlockDevice
 
 NFS
 * Good for multiple readers scenarios.
+
+ConfigMap/Secret
+* special types of volumes
+* provide a pod with access to k8s resources
 
 rbd, CephFS, GlusterFS
 * good for multiple writers scenarios.
@@ -80,4 +119,14 @@ Cloud providers have their own specific volume types.
 ## StorageClass
 
 Provides a way for administrators to describe the classes of storage they offer.
+Acts as a storage template
+Dynamically provision storage, so you don't have to manually create the PV
 quality of service levels, backup policies, ...
+PVC references StorageClass
+
+```yaml
+
+    provisioner
+    volumeBindingMode: WaitForConsumer (Wait until first pod comes up, default is Immediate)
+
+```

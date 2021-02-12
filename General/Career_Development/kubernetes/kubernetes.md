@@ -113,7 +113,14 @@ The containers start in parallel so there's no way to determine which one will b
 Represents a single instance of an application.
 
 A **Service** is an abstraction which groups together logical collections of Pods, and defines how to access them.
+You can't rely on a pods ip address as they are ephemeral
 Services are an interface to a group of containers so that consumers do not have to worry about anything beyond a single access location
+Labels are used to associate a pod with a service
+kube-proxy create a virtual IP for a service
+layer 4
+Endpoints created behind services which sit between pod and service
+load balances
+when browsers connect they use the same connection to go to same pod everytime
 
 Using **Volumes**, containers can access external storage resources for persistence. Also share files between containers.
 
@@ -347,6 +354,7 @@ get the logs for a pod, particular container within a pod or a group of containe
 kubectl logs <pod>  # will return the logs of the first container in the pod
 kubectl logs <pod> -c <container> # will return the logs of the specified container
 kubectl logs -l <label> # will return the logs for all pods which have the label
+kubectl logs -p <pod> # will return logs for a previously running container
 ```
 
 add the -f argument to follow the logs, like tail
@@ -369,10 +377,20 @@ it defaults to true. So if you delete a deployment you'll delete the replica set
 
 #### rollout
 
+rollout status deployment my.deployment
+
+show the status of a rollout
+
 history
 
 show the history of changes to a deployment, daemonset or statefulset
 To see more information create the API object with the --record flag
+
+undo
+
+rollback to a previous revision
+by default rolls back to previous
+--to-revision to specify revision to go to
 
 ##### arguments
 

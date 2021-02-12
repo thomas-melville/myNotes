@@ -10,12 +10,16 @@ Types of services:
   * IP range is defined via an API server startup option
 * NodePort
   * expose a static IP address & port
+  * worker node ip
+  * node proxies the allocated port
   * great for debugging
   * Port range is defined in cluster config
 * LoadBalancer
   * created to pass requests to a cloud provider
   * private cloud solutions may also implement this service type, if there is a plugin
   * Even without the plugin the address is made public and packets are spread among the Pods in the deployment automatically.
+  * Services are exposed as NodePort and LoadBalancer balances between them.
+  * As LoadBalancer may be provided externally by the cloud provider
 * ExternalName
   * newer service, and a bit different
   * no selectors, ports or endpoints
@@ -23,6 +27,12 @@ Types of services:
   * Redirection happens at DNS level
   * Redirect traffic to outside the cluster
   * but then can easily be changed to inside the cluster when the time comes.
+
+
+
+## port-forwarding
+
+can be used with pod, deployment & service
 
 ### services diagram
 

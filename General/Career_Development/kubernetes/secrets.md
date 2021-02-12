@@ -3,6 +3,10 @@
 Secrets are used to make sensitive data available to Pods, passwords for example, in a secure way.
 i.e. not plain text.
 
+can be mounted into pods as volumes or environment variables
+
+Secrets are stored to the etcd store
+
 ```bash
 kubectl get secrets
 
@@ -35,11 +39,34 @@ A secret can be used as an environment variable in a pod
         name: mysql
         key: password
 
+volumes:
+  - name: secrets
+    secret:
+      secretName: dbpasswords
+
+container:
+  volumeMounts:
+    - name: secrets:
+      mountPath: /etc/passwords
+      readOnly: true
+
 ```
 
 A secret is limited to 1MB in size.
-They are stored in the tmpfs storage on the host node.
+They are stored in the tmpfs storage on the host node, so not written to disk
 
 Secrets can also be mounted as files using a volume definition in a pod manifest.
 
 imagePullSecret is a way to pass a secret that contains a Docker image registry password
+
+--from-literal
+--from-file
+
+## secret types
+
+generic
+
+tls
+  from a key pair
+  --cert
+  --key
