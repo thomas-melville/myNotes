@@ -8,6 +8,12 @@ As of v1.8 there are 25 volume types.
   anything from rbd to NFS & everything in between.
 
 The CSI is standardizing how containers interface with storage systems.
+Container Storage Interface
+before it the storage plugin code was in the k8s repo!
+That's why the interface and spec was put together, and all code pulled out of k8s repo
+CSI not specific to k8s, for docker swarm also.
+abstraction between storage & k8s
+
 
 Create a PersistentVolume, which is claimed by a Pod using a PersistentVolumeClaim.
 A PersistentVolume is a storage abstraction used to retain data longer then the Pod using it.
@@ -53,12 +59,16 @@ There are three access modes:
 
 RWO & ROX can be combined on the PV!
 
+not all storage types support all modes.
+As a rule block storage does not support RWX, but file storage does
+
 When a volume is requested, kubelet:
 * map the raw devices
 * determine and make the mount point for the container
 * create symbolic link on host node FS to associate storage to the container
 * If a particular StorageClass is requested: the API Server makes a request for the storage to the StorageClass plugin
     The specifics depend on the plugin used.
+    each database veondor must provide their own plugin
 
 If no StorageClass is requested then access mode & size are the only consumed parameters.
 The volume could come from any of the storage types available
@@ -77,8 +87,8 @@ There are several phases to persistent Storage
   * when the Pod is done with the volume and an API request is sent, deleting the PVC.
 * Reclaim
   * 3 options:
-    * Retain
-    * Delete
+    * Retain, unbind it, but keep it around in a state where no other PVC can bind to it. Preserve the data in case you want access to it after
+    * Delete, delete the PV & the volume on the storage back end. Depends on the plugin
     * Recycle
 
 ## Volume types
@@ -124,9 +134,52 @@ Dynamically provision storage, so you don't have to manually create the PV
 quality of service levels, backup policies, ...
 PVC references StorageClass
 
+Following annotation states that this one is default on cluster, if SC is not specified in PVC
+
 ```yaml
 
-    provisioner
-    volumeBindingMode: WaitForConsumer (Wait until first pod comes up, default is Immediate)
+storageclass.kubernetes.io/is-default-class: "true"
+
+```
+
+```yaml
+
+    provisioner: ... # defines the plugin
+    volumeBindingMode: WaitForConsumer # Wait until first pod comes up before creating backend volume & PV, default is Immediate
+      # so that PVC is in same region/zone as the pod
+    parameter:
+      ... # specific to storage backend
+
+```
+
+## Advanced Volume Features
+
+### volumeMode
+
+volumeMode: block
+
+binds the pvc to a raw block volume
+like a brand new unformatted disk drive
+you then format it with a file system to use it
+and some databases write to raw volumes
+
+mounts into a pod slightly differently:
+
+volumeDevices:
+- devicePath: /dev/block
+  name: ...
+
+### clones
+
+in a PVC specify a datasource under spec.
+
+```yaml
+
+...
+spec:
+  ....
+  dataSource:
+    kind: PersistentVolumeClaim
+    name: ...
 
 ```

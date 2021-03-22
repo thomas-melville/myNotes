@@ -14,6 +14,8 @@ Logging is another cross cluster concern
 
 ## basic troubleshooting steps
 
+web ui dashboard is a good start, if it's deployed
+
 if the pod is running execute 'kubectl logs pod-name' to view the std out of the container.
 next is networking, including DNS, firewall and general connectivity.
 Node logs for errors
@@ -31,6 +33,12 @@ describe the troublesome pod
 
 collect metrics from infra & apps.
 Prometheus is part of the CNCF, as a K8s plugin it can collect metrics from all the resources in the cluster.
+
+metrics-server, cluster-wide aggergator of resource usage data.
+installed by default
+
+kube-state-metrics, listens to k8s api server and generates metrics about the state of objects.
+
 
 ## Logging
 

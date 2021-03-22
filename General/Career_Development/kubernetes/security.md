@@ -8,7 +8,43 @@ To perform any action in a K8S cluster, you need to access the API and go throug
 * Authorization (ABAC or RBAC)
 * Admission Control
 
+Two types of users, external users & applications
+external users authenticate with the API server with user accounts, managed outside k8s. Certificates
+
 The action can come from a human user or a pod (service account)
+Service Accounts are managed inside k8s, it's like a user account for a pod
+
+#### Service Account
+
+Provide an identity for processes which run in a Pod to access the Kubernetes API Server.
+There is a default service account, default, assigned to every pod.
+It's assigned to the pod by the AdmissionController, the default service account is created in each namespace by the ServiceAccountController
+Each service account has a token / secret associated with it which is placed in each pod in the namespace. Mounted into /var/run/secrets/kubernetes.io/serviceaccount/token
+You can have this token auto-generated when you create the service account
+
+```bash
+
+kubectl describe sa default
+
+...
+Image pull secrets: ... # any image pull secrets which can be mounted by a pod with this service account
+Mountable secrets: ... # any secrets in this list can be mounted by a pod who has this service account, if it's empty any secrets in the namespace can be mounted
+
+```
+
+#### Roles & Role Bindings
+
+Kubernetes uses RBAC to regulate access to computer or network resources.
+
+A **Role** contains rules that respresent a set of permissions.
+Rules are additive, there are no deny rules. If you don't have the permission you can't do it.
+A role can be defined within a namespace or cluster wide with a **ClusterRole**
+K8S provides a default cluster role with full access, cluster-admin
+
+A **RoleBinding** grants the permissions defined in a role to a user or set of users.
+It holds a list of subjects (users, groups, service accounts) and a reference to the role
+Again it can be namespaced or cluster wide, **ClusterRoleBinding**
+A RoleBinding links a Role & a Service Account (for example) so that there is a separation and a role can be reused
 
 ## Transport Security
 
@@ -16,6 +52,8 @@ Communication with the cluster is on port 443.
 The API server presents a certificate. It is often self-signed so the user config typically contains the root certificate for the APIs server cert.
 
 ## Authentication
+
+From a security perspective all trying to give minimum privilege
 
 *Authentication* is handled by any Authentication modules that have been configured.
 

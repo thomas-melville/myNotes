@@ -65,3 +65,17 @@ rollout a deployment, but only a small amount of traffic goes to it using the se
 Create a new deployment with a fraction of the number of replicas
 with the same label so the service picks it up
 add an extra label to distinguish stable from canary deployment
+
+## Blue green deployments
+
+run two versions at the same time
+new version is only used for testing purposes
+similar to canary
+active + idle environment
+
+strategy for checking the viability of a deployment before making it publicly available
+run two identical deployments, bar version. same replicas
+
+only route to green once all checks have passed
+and then remove the blue deployment
+and finally the green deployment becomes the next blue deployment
