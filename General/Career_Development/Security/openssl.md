@@ -290,3 +290,18 @@ $ openssl ca -selfsign \
     -in root-ca.csr \
     -out root-ca.crt \
     -extensions ca_ext
+
+## s_client
+
+allows you to connect to a secure server.
+You will see the certificate information and chain up to the root.
+
+```bash
+
+openssl s_client -crlf \
+-connect www.feistyduck.com:443 \
+-servername www.feistyduck.com
+
+```
+
+add -showcerts to show all the certificates in the chain

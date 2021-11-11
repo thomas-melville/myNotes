@@ -157,7 +157,15 @@ The SSL Handshake involves three steps:
   * Server can make sure the clients cert is valid using a CA
   * Server responds with some SSL Certificate information
 * server verification
+  * client ensures certificate is not expired
+  * and the domain name/ip match
   * Client makes sure a valid certificate authority (CA) has validated the certificate
+  * Server certificate is most likely not signed directly with a Root CA.
+  * Client can trust any number of intermediate CAs,
+      as long as the trust chain eventually leads back to one of the clients trusted root certificates.
+  * For each intermediate certificate the client completes the same process
+      issuers name matches the certificate owners name
+      uses the signature and key to verify that the cert is properly signed
 * transfer of keys
   * Clients uses the server public key to generate a pre-master key
   * Clients sends this pre-master key to the server
