@@ -4,7 +4,7 @@ https://docs.camunda.org/manual/7.5/user-guide/process-engine/
 
 A java library responsible for executing BPMN 2.0 processes.
 A lightweight POJO core with an RDB for persistence.
-ORM mapping is provided by the MyBatis mapping framework
+ORM mapping is provided by the MyBatis mapping framework. Do they support flyway and liquibase too?
 
 ## bootstrapping
 
@@ -42,7 +42,7 @@ An execution can be imagined as a token moving through the process instance.
 The runtime state of a process instance is represented by a tree of executions.
 Executions are heirarchial and span a tree from the root, the process instance itself.
 Executions can execute in parallel.
-Executions are variable scopes. Thery hold the variables which have been added, variables can shared across tasks using the execution
+Executions are variable scopes. Thery hold the variables which have been added, variables can be shared across tasks using the execution
 
 ### Activity instances
 
@@ -147,7 +147,7 @@ Not really interested in user tasks so I'll skip for now.
 ## Expression Language
 
 Camunda BPM supports Unified Expression Language (EL), specified as part of JSP 2.1(JSR-245).
-Uses the [JUEL](http://juel.sourceforge.net/) implementation.
+Uses the [JUEL](http://juel.sourceforge.net/) implementation. JUEL = Java Unified Expression Language
 Can be used in BPM to evaluate small script like expressions.
 Methods can be called on beans in the Spring Container and variables passed into them from the workflow
 Input/Output parameters can be mapped using this language

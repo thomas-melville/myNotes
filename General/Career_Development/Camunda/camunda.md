@@ -4,8 +4,8 @@
 
 A business process is a set of linked activities which accomplish a specific org goal.
 
-Business Process Management is a systematic approach to making an orgs workflows more effective
-It has specific stages
+Business Process Management is a systematic approach to making an orgs workflows more effective.
+It has specific stages.
 
 BPMN (Business Process Modeling Notation)
 
@@ -13,21 +13,13 @@ Map processes and procedures to a flow/map
 so you can visualize it
 Standard
 
-OSS is shifting to Camunda as the orchestration workflow engine
-
-* DO
-* EAI
-* ENM
-* RM
-* ...
+We are shifting to Camunda as the orchestration workflow engine
 
 ONAP use BPMN Workflows too
 
-According to JJ our customers want it too
+Apparently our customers want it too
 
 https://camunda.com/
-https://confluence-nam.lmera.ericsson.se/display/N4/Camunda
-https://play.ericsson.net/media/t/1_q9zdx4m0
 
 platform for workflow and decision automation
 
@@ -50,36 +42,36 @@ Camunda Modeler is in the Model & Improve space
 Platform:
 
 * BPMN Workflow Engine
-* * for microservice orchestration and human task management
-* * Remote REST service or embed in java app
+  * for microservice orchestration and human task management
+  * Remote REST service or embed in java app
 
 * DMN Decision Engine
-* * executes business driven decision tables
-* * pre-integration with workflow engine
+  * executes business driven decision tables
+  * pre-integration with workflow engine
 
 * Modeler
-* * app for editing BPMN process diagrams and DMN decision tables
+  * app for editing BPMN process diagrams and DMN decision tables
 
 * Tasklist
-* * web app which allows end users to work on tasks assigned to them
+  * web app which allows end users to work on tasks assigned to them
 
 * Cockpit
-* * monitor workflows and decisions in production to discover, analyse and solve technical problems.
+  * monitor workflows and decisions in production to discover, analyse and solve technical problems.
 
 * Admin
-* * manage apps, grant permissions, ...
+  * manage apps, grant permissions, ...
 
 * Optimize
-* * create beautiful reports and arrange them in a dashboard
-* * configure alerts for performance goals missed
-* * advanced analytics to identify process bottlenecks
+  * create beautiful reports and arrange them in a dashboard
+  * configure alerts for performance goals missed
+  * advanced analytics to identify process bottlenecks
 
 ## BPMN Workflow engine
 
 automate BPMN 2.0 process diagrams for micro service orchestration, human task flows or both.
 written in java
 REST and Java APIs for interacting with the engine
-the engine uses an Relational Database to store history of workflow execution, and I presume other stuff too
+the engine uses a Relational Database to store history of workflow execution, and I presume other stuff too
 It's integrated with Spring boot, add the camunda dependency and away you go
 
 * start process instances
@@ -90,6 +82,8 @@ The engine is stateless which makes horizontal scaling easier.
 
 External Task Pattern allows you to develop and operate your microservice completely decoupled from the engine
 and let them pull the work via REST whenever it suits them
+The BPMN contains a task of type External, which points to a topic on a message bus.
+The External task service registers with the engine
 
 Workflows are described in BPMN which is basically xml, you can visualize it using the Modeler
 Create Classes which implement JavaDelegate and put their fqdn in the BPMN workflow to link them when the workflow is executed

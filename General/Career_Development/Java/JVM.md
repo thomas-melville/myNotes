@@ -127,6 +127,41 @@ constructed when the class/interface is created.
 ### native method stacks
 jvm impl may use conventional stacks, called C stacks, to support native mthods.
 
+### mapping to computer hardware
+
+CPU have registers, which are essentially in-CPU memory. Fastest memory for the CPU
+there is a cpu cache memory
+Some are designated to a cpu, others are shared across cpus
+then RAM
+
+CPU will typically read an area of RAM into Cache or Register
+CPU will flush values out to cache, then eventually flush that out to RAM
+	typically happens when the CPU needs to store something else in the cache
+	cache can be updated in cache_lines, i.e. small parts can be updated
+
+hardware does not distinguish between thread stack and heap.
+Both are located in main memory, RAM
+Parts can be reads into cache/register when requried.
+
+This can lead to issues:
+1. visibility of thread updates to shared objects
+2. race conditions
+
+#### visibility of shared objects
+
+object in register/cache may not be written back to memory for other thread in time.
+Other thread could have own copy of object in it's cache/register
+
+volatile keyword will ensure the variable is always read from main memory and written back to main memory.
+
+#### race conditions
+
+two threads sharing an object, and one or more updates, race condition may occur.
+
+synchronization will solve this issue, ensuring only one thread gets access to the shared object at a time.
+Improvements to this are Locks in Java.
+ReentrantReadWriteLock for instance, allows multiple readers but only one Writer, and the Writer locks the object
+
 ### memory vocabulary
 
 committed

@@ -88,7 +88,7 @@ Message start events are only supported in top-level processes.
 
 A message intermediate catching event can be used to pause a process until a specific message is received.
 A receive task can be used for this purpose also and can be combined with boundary events.
-Combine this with a event based gateway.
+Combine this with an event based gateway.
 
 Message boundary event can be used to wait for a message from an activity.
 Can be interrupting or non-interrupting.
@@ -105,9 +105,10 @@ They can be used as
 They are only fired when the JobExecutor is enabled.
 They are configured using the ISO 8601 time format.
 They can be a:
-* fixed time & date
-* duration
-* repeating interval
+* fixed time & date (Date)
+* duration (Duration)
+* repeating interval (Cycle) - ISO 8601 time definition
+These are seen in the Timer Definition Type in the properties model of the bpmn timer object
 The values can be pulled into the event from process variables.
 
 #### error events
@@ -117,9 +118,14 @@ A BPMN error is meant for business errors, java exceptions are technical excepti
 You need to define the error first, it consists of an id, errorCode and name.
   (You can also set the errorCode to be the package and class name of an exception)
 then an activity in the process can specify it as an end event.
-The JavaDelegate can then throw the error.
+The JavaDelegate can then throw the error. BpmnError with the error code which matches what is in the bpmn
 
 An error start event can only be used to start a sub-process.
+
+#### compensation events
+
+An intermediate boundary event.
+are connected to compenstation tasks through association, not through sequence flows.
 
 ## Tasks
 
@@ -151,6 +157,14 @@ Specify the script and script format.
 Script format must be compatible with JSR-223.
 you need to add the corresponding engine onto the classpath.
 the DelegateExecution object is available to the script so it can pull in variables from the process
+
+### Receive Task
+
+https://docs.camunda.io/docs/reference/bpmn-processes/receive-tasks/receive-tasks/
+
+A task which waits for the corresponding message to arrive.
+Creates a message subscription.
+Process instance stops at this point and waits for the message.
 
 ## gateways
 

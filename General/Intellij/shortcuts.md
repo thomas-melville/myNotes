@@ -1,5 +1,7 @@
 # shortcuts
 
+Double click CTRL - open a menu to "run anything"
+
 IntelliJ Short cuts: http://www.shortcutworld.com/en/win/IntelliJ.html#link_3
 
 Ctrl+Shft+A search for a shortcut by name
