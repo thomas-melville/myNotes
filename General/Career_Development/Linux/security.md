@@ -219,3 +219,19 @@ the second assumes a lot of trust
 * protect your BIOS with a password
 * secure the boot process with a password too
 * use the security features when mounting
+
+## chroot
+
+chroot() system call will change the apparent root directory of a process.
+The root user is the only user allowed to make the chroot system call.
+The new root environment is called the Chroot Jail.
+The jail can be used for many purposes:
+1. Building Software
+* When building software it can eliminate dependency poisoning.
+* every build can have the exact dependencies needed.
+2. Securing Network Daemons
+* Suspect system daemons can be run in a jail
+* thus limiting the damage any security breach may cause.
+* Repair systems can bootstrap and chroot into a broken system.
+3. Testing Software
+* Installing and testing software in a jail will protect the parent system from the outcome of bugs.

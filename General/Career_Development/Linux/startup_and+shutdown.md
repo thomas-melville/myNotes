@@ -140,7 +140,7 @@ configuration files:
 
 * /etc/hostname         hostname
 * /etc/vconsole.conf    default keyboard mapping and console font
-* /etc/sysctl.d/*.conf  drop-in dir for kernel sysctl params
+* /etc/sysctl.d/\*.conf  drop-in dir for kernel sysctl params
 * /etc/os-release       distribution ID file
 
 systemctl is the only utility you need for managing services
@@ -152,6 +152,18 @@ most of the time you can omit .service
 list, start, stop, status, enable, disable
 
 enable/disable auto start the service on system start
+
+service configuration files can be in one of a number of places.
+
+1. vendor/package supplied unit files
+    /usr/lib/systemd/system/<service>.service
+    /lib/systemd/system/<service>.service
+2. Optional or dynamically create unit files
+    /run/systemd/system
+3. Optional user unit files
+    /etc/systemd/system
+4. Optional user drop-in files
+    /etc/systemd/system/service.d
 
 ### SysVinit
 

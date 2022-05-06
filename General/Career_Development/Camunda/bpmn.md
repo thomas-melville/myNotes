@@ -141,9 +141,13 @@ used to invoke services
   * 4 ways of declaring how to invoke java logic:
     1. Specify a class that implements JavaDelegate / ActivityBehaviour
       * The package and class of the implementation
+      * the engine instantiates these delegates
+      * don't use JavaClass, use 2. DelegateExpression instead
     2. Evalute an expression that resolves to a delegation object
       * ${className}
       * This is how we do it.
+      * It uses Spring/CDI to look up the bean
+      * This enables mocking in unit tests!
     3. invoke a method expression
       * ${className.doWork()}
     4. evalute a value expression
@@ -170,12 +174,16 @@ Process instance stops at this point and waits for the message.
 
 Gateways work as routers based on input(s)
 No decision is made in the router, that is made in the activity before hand and passed on to the gateway.
+The gateway then passes execution to the flows which meet the criteria
 A gateway without an icon defaults to an exclusive gateway.
 You can also leave out a gateway and connect an activity directly to two subsequent activities and both will execute in parallel.
+  but will not wait for each other before continuing to the next tasks.
+  Which results in two instances of the same task!
 You can put a condition on each condition which is evaluated independent of the other connections.
 All gateways and tasks can have a default flow.
 It's defined by the default attribute on the gateway / connector.
 You can see this in the modeler with a / on the line to the default flow
+Gateways can be inflows and outflows. Which can wait or not for all tasks.
 
 1. parallel gateway
   * split the process into two parallel flows.

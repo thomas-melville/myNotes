@@ -1,56 +1,137 @@
 # networking
 
-ipv4 and ipv6
+## osi model
 
-## ipv4 address types
+Open Systems Interconnection model, standardizes language used to describe networking protocols.
+Each layer only communicates with the layer directly above/below it.
+Not all layers are used all the time.
 
-* unicast       associated with a specific host
-* network       an address whose host portion is entirely zeros
-* broadcast     an address to which each member of a network will listen
-* multicast     an address to which appropriately configured nodes will listen
+7 layers
 
-### special address ranges
+Physical
+  Light, electric puleses, ...
+Data link
+  MAC
+Network
+  IP, ICMP, ...
+Transport
+  TCP, UDP, SCTP
+Session
+  reliable socket, ..
+Presentation
+  Data conversion, SSH
+Application
+  HTTP, FTP, DNS, ...
 
-127.x.x.x           loopback (local system)
-0.0.0.0             used by systems which yet don't know their address, DHCP and BOOTP
-255.255.255.255     generic broadcast private address, reserved for internal use
+### Physical
 
-other special ranges
+Signals are converted into information the system can use.
+* electric pulses over copper cable
+* laser pulses over fibre optic cable
+* freq modulation over radio waves
 
-10.0.0.0 -> 10.255.255.255
-172.16.0.0 -> 172.31.255.255
-192.168.0.0 -> 192.168.255.255  local communication within a private network
-...
+Lowest layer
 
-historically IP addresses were defined in classes
-Classes A, B, C, ... are used to distinguish the network portion of the address
-a netmask is used per class
+USB, Wifi, Bluetooth
 
-A   8   24
-B   16  16
-C   24  8
-D   Multicasting
-E   not used
+A unit of data is a frame
 
-network address is achieved by doing a logical && on the IP address and the netmask
-This defines a local network which consists of a collection of nodes connected via the same media
+### Data link
 
-## ipv6 address types
+Accepts data from the hw in layer one.
+prepends an address to all inbound packets as it accepts them.
+Address number is 6 bytes, 3 bytes for manufacturer and 3 random bytes assigned to adapter.
+Known as the MAC address, Media Access Controll address.
 
-* unicast       a packet is delivered to one interface
-                **Link-Local**  auto-configured for every interface to have one
-                **Global**  dynamically or manually assigned
-* multicast     a packet is delivered to multiple interfaces
-* anycast       a packet is delivered to the nearest of multiple interfaces
-* IPv4-mapped   an IPv4 address mapped to IPv6
-* loopback
+Deals with transferring data between network nodes using the MAC address.
+In this layer IP address and MAC address associatd using the ARP Protocol. Address Resolution Protocol.
 
-hostname, just a label to identify a networked device, easier than remembering the ip.
-and the ip could change over time.
+A broadcast is initiated to find the MAC address of the IP address that is required.
 
-you can get/set the hostname using the **hostname** command. This does not persist across reboots though
-to get it to persist use the **hostnamectl** command
-hostname is stored in /etc/hostname
+#### Bridge
+
+At this layer a bridge can be created, accepts packets on one side of the bridge and passes them through to the other side. also bi-directional.
+Have been in the kernel for a long time, can be seen when you are creating containers or vms on a machine.
+Often DHCP services are associated with a bridge.
+A number of tools available:
+* iproute2
+* bridge-utils
+* netctl
+* systemd-networkd
+* NetworkManager
+* Applications that create virtual environments
+
+### Network Layer
+
+Routing and forwarding packets to the next hop.
+This is the backbone of the internet.
+
+Some protocols at this layer:
+* IPv4/6
+* ICMP, Internet Control Message Protocol
+* IGRP, Interior Gateway Routing Protocol
+
+### Transport Layer
+
+Responsible for end to end communication protocols. Data is properly multiplexed by defining source and dest port numbers.
+Also deals with reliability by adding checksums, repeat requests and avoiding congestion
+
+TCP, UDP and SCTP are common protocols at this layer
+
+Servers use a fixed port number and clients use random port numbers.
+
+Three different port types:
+1. Well known ports
+    0-1023
+    Assigned by IANA
+    ex: 22-ssh, 80
+    require super user priviliges to be bound
+2. Registered ports
+    1024-49151
+    assigned by IANA
+    ex: 1194 TCP/UDP, OpenVPN 1293
+    don't require super user priviliges
+3. Dynamic/Ephemeral ports
+    49152-65535
+    used as source ports for client side of TCP/UDP
+
+### Session Layer
+
+Layer 5 is used for establishing, managing, synchronizing and termination of application connections between local and remote machines.
+If a connection is lost or disrupted this layer may try to recover the connection.
+If a connection is not used for a long time this layer may close and reopen it.
+Two types of sessions:
+* connection-mode service
+* connectionless-mode service
+Session options
+* Simplex or duplex communication
+* Transport layer reliability
+* checkpoints on data units
+Session services may be involved in:
+* authentication to Transport Layer
+* Setup and encryption initialization
+* support for streaming media
+* support for smtp, http and https protocols
+* SOCKS proxy
+
+RPC-type protocols depend on this layer:
+* NetBIOS
+* RPC
+* PPTP
+
+### Presentation layer
+
+Commonly rolled up into a different layer, 5 or 7.
+Ex: HTTP Protocol has methods for converting character encoding.
+
+### Application Layer
+
+Common protocols at this layer:
+* HTTP
+* SMTP
+* DNS
+* FTP
+* DHCP
 
 ## network devices
 
@@ -87,7 +168,8 @@ There are 5 types of names that devices can be given
 
 ## ip
 
-**ip** is the preferred command line utility as compared to **ifconfig**
+**ip** is the preferred command line utility as compared to **ifconfig**.
+part of the iproute2 package.
 more versatile and efficient because it uses **netlink** instead of **ioctl**
 can be used to configure, control, query devices and i/f parameters, manipulate routing , policy-based routing and tunnelling
 
@@ -121,7 +203,8 @@ A number of linux distro dep config files exist
 
 ## Network Manager
 
-nmtui / nmcli for managing connections
+is a daemon with a D-bus for communication to applications.
+nmtui / nmcli / mngui for managing connections
 this is old school
 it's a lot more dynamic today
 
@@ -288,3 +371,59 @@ You can get more fine grained and only allow particular services and ports in a 
 firewall-cmd --zone=xxx --list-services / --add-service
 firewall-cmd --get-zones
 ...
+
+## NTP
+
+Network Time Protocol. Keep time consistent across the network.
+NTP time sources are divided into 4 strata.
+
+strata 0 - clock is a special purpose time device (atomic clock, GPC radio, etc)
+strata 1 - a NTP server which is connected directly to a strata 0 source (over serial or the like)
+strata 2 - a NTP server which references a strata 1 server using NTP
+strata 3 - a NTP server which references a strata 2 server using NTP
+
+NTP may function as a
+* client - acquire time from a peer
+* server - provides time to a client
+* peer - syncs time between other peers.
+
+## HTTP
+
+### Caching
+
+help reduce perceived lag, network utilization and may improve performance of web apps.
+Can also be used as a filtering proxy, restricting access to certain sites or resources.
+Two flavours.
+
+* Forward cache
+  * speed up HTTP access in a network.
+  * When multiple browsers hit the same cache for the same content, it will be returned instead of going all the way to the original source.
+  * squid, tinyproxy, apache.
+* Reverse cache
+  * speed up perceived lag from a HTTP app server to a client.
+  * squid, nginx, tinyproxy, apache.
+
+#### Proxy SSL
+
+When a browser fetches a https:// resource, one of the following happens:
+* a CONNECT method request is made to the proxy server, and traffic is transparently forwarded to the destination.
+* browser bypasses ther proxy and goes directly to the destination.
+* Sslbump peek and splice - makes bumping decisions after the origin server is known.
+
+#### Cache hierarchy
+
+further extends the cache idea. Groups of cache servers working in concert can increase cache efficiency, route the traffic to the best link and support a higher number of clients.
+Two types:
+* Peer to Peer
+  * ask all or some of their peers if they already have the cached content
+  * if not the cache server requests the content itself.
+* Parent/Child
+  * asks a parent if it has the content
+  * parent then fetches the content on behalf of the child.
+
+These two types can be intermixed.
+
+## DMZ
+
+Demilitarized Zone.
+Special purpose network housing business critical servers which need access to a large untrusted network.
