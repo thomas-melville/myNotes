@@ -81,3 +81,18 @@ GRUB file will be updated to include the new version
 ## rpm2cpio
 
 copy files from the rpm to a cpio archive and extract them
+
+## rpmbuild
+
+create and manipulate source and binary packages
+
+## rpm package structure
+
+### spec file
+
+Header section of key value pairs.
+All identifiers are prepened with %
+* %description - text description of the package
+* %prep - shell script to unpack source code and apply patches
+* %changelog
+* ...

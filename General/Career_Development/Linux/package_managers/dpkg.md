@@ -10,13 +10,13 @@ only knows whats installed on the system and what it's given on the command line
 
 ## package file names
 
-<name>_<version>_<rev_num>_<arch>.deb
+<name>\_<version>\_<rev_num>\_<arch>.deb
 
 a debian package consists of at least 3 files
 
 * upstream tar ball
 ** unmodified source from package maintainers
-**.tar.gz
+** .tar.gz
 * description file
 ** package name. meta data such as arch & dependencies.
 ** .dsc
@@ -37,3 +37,8 @@ a debian package consists of at least 3 files
 -i <pack_file>  install or upgrade package file
 -r <package>    remove all of a package bar config files (--remove) will fail if other packages depend on this package
 -P <package>    remove all of a package including the config files (--purge)
+
+## package contents
+
+Way more files than rpm packages.
+Utilities exist to create these files, debuild, cdbs

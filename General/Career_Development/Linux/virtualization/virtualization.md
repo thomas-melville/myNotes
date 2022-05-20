@@ -71,6 +71,19 @@ VMWare
 Microsoft Hyper-V
 LXC
 
+## LXC
+
+Linux Containers (LXC) are an OS type of virtualization.
+Uses the linux facilities of cgroups and namespaces.
+This allows virtualization of CPU, memory, block I/O and networks, etc.
+Virtual LXC environments are more similar to chroot with higher security than some of the other hypervisor.
+
+Linux containers operate in a separate namespace from the default system isolating many of the OS constructs, IPC, network, process table, etc.
+
+The installation of a linux container is to a directory that becomes the LXC containers root filesystem.
+Within the rootfs directory is only the essential programs and data files that are required.
+LXC Containers use the same kernel and devices as the OS
+
 ## libvirt
 
 toolkit to interact with virtualization technologies.
