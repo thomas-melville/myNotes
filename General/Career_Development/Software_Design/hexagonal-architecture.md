@@ -1,9 +1,14 @@
 # hexagonal architecture
 
 https://fideloper.com/hexagonal-architecture
+https://www.youtube.com/watch?v=AOIWUPjal60
+https://jmgarridopaz.github.io/
 
 Instead of layers from top to bottom the architecture is a hexagonal shape with your core business and domain logic are at the core
 There are layers around this for communicating with external systems and supporting tools.
+There is the driving side, and the driven side.
+  driving side, what drives the application.
+  driven side, what the application drives.
 
 Layers of code responsibility, decoupling between layers
 
@@ -20,6 +25,8 @@ The number of sides is arbitrary, the point is it has many sides.
 each side represents a "port" into/out of our application
 
 a port is a way to accept data into our application
+"An access port for a kind of a protocol" Two way communication!
+Ports collect a kind of a protocol, with requests and responses.
 any protocol is a port, Rest, message, etc.
 connecting to a database is a port
 
