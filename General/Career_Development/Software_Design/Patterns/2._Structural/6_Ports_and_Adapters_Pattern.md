@@ -71,3 +71,48 @@ Driven ports is an interface for functionality needed by the app.
 SPI (Service Provider Interface)
 
 ### Adapters
+
+Actors interact with hexagon ports through adapters using a specific technology.
+There can be many adapters for one port.
+Adapters are outside the application.
+
+For each port there should be at least two adapters.
+1. for the real driver
+2. for testing the behaviour of the port
+
+What an adapter does in the end is convert an interface into another, so we could use the Adapter design pattern to implement it.
+
+Which adapter to use is configured at app startup, this enables mock adapters to be put in for testing.
+
+### Composition Root
+
+This component runs at startup and builds the whole system
+* initializes and configures the env: dbs, servers, ...
+* for each driven port, it chooses the adapter and creates an instance of it.
+* creates an instance of the application injecting the driven adapters
+* for each driver port
+  * it chooses the adapter and creates an instance
+  * runs the driver adapter instance.
+
+### Overall structure
+
+He is recommending different maven modules.
+One for the hexagon, one module for each adapter and one module to start the whole project.
+The hexagon should only expose ports, so in java you would end up using the Java Module system to only expose the ports.
+If the language doesn't support only exposing ports then the hexagon would have to be split into ports and implementation(business logic) modules.
+
+## pros and cons
+
+### pros
+
+Testability improvement
+Maintainability improvement
+Flexibility
+apps immune to tech evolution
+delay tech decisions
+
+### cons
+
+Complexity
+Build process performance
+indirection and mappings

@@ -101,3 +101,39 @@ This boundary separates our application as a whole from everything else.
 Use cases/command are strict definitions of how the outside world can communicate with our application.
 Essentially classes which name actions that can be taken
 *****
+
+## Designing process
+
+1. Identify actors
+2. Identify ports
+3. Add adapters
+4. The whole picture
+5. Driver ports
+
+This would result in a diagram showing the components of the system: Hexagon (with ports) actors and adapters.
+Driver ports in detail.
+Driven ports not defined in detail yet.
+
+### Identify actors
+
+1. Draw a hexagon
+2. Put driver actors outside the hexagon, on the left and upper side.
+3. Pur driven actors outside the hexagon, on the right and lower side.
+
+### Identify ports
+
+#### Driver ports
+
+For each driver port, ask yourself: what purpose does the driver actor want the app for?
+  The answer will be the name of the port.
+  for <action verb> <noun>
+
+### Add Adapters
+
+For each port create two adapters:
+1. Mock adapter
+    use this in testing
+      on the driver side it's the test automation tool
+      on the driven side it's a mock
+2. Real adapter
+    use this in production
