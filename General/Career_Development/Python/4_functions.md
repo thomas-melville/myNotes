@@ -65,3 +65,14 @@ this way you could create a truly private method in Python, will only work if th
 ## Variable scope
 
 Python supports local & global scope
+
+To get access to a variable at the global scope prepend with the global keyword
+
+```python
+
+my_global = 1
+
+def my_func():
+	global my_global
+
+```

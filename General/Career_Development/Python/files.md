@@ -6,6 +6,7 @@ returns a file object
 access modes
 
 * a	append
+* x exclusive access, fails if it already exists
 * r	read
 * * if the file doesn't exist it throws an exception
 * w	write, will overwrite existing data. It's called clobbering

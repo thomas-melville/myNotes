@@ -7,6 +7,24 @@ I'm nearly certain I use CPython, will this hinder our concurrency efforts?
 
 https://www.tutorialspoint.com/python/python_multithreading.htm
 
+multi threading runs one instance of python on one process, in one core.
+multi processing runs an instance of python for each process on a separate core.
+
+## thread lifecycle
+                          running
+                            yield
+new Thread --- start ---> Runnable  <---> Not Runnable
+                              |
+                              | the run method terminates
+                              |
+                            Dead
+
+Not Runnable
+  The OS needs resources so asks Python to free up resources
+  Python puts the thread into the Not Runnable state
+  our code can't
+
+
 ## thread module
 
     very low level
@@ -31,10 +49,19 @@ http://chriskiehl.com/article/parallelism-in-one-line/
 
 ### GIL affect
 
+Only from accessing CPython code. For example import python code.
 only one thread will be executing at a time due to GIL, the code is concurrent but not parallel.
 It can still be faster than sequential if it is an IO task, the majority of time is spent waiting for the network.
 
-## map & pool from multiprocessing
+## multiprocessing
+
+unlike multi threading, each process has its OWN copy of Python!
+Therefore there is no GIL degradation
+
+Hard/Impossible to have one process interact with another process.
+They are completely separate instances of Python.
+
+### map & pool from multiprocessing
 
 The multiprocessing module builds on top of the threading module.
 
@@ -64,3 +91,31 @@ with Pool() as p:
 
 # done
 ```
+
+each thread will run in the same python instance
+each process can run on separate python instances
+
+python -o argument when running a module.
+  optimizes execution for threads
+
+## locks and rlocks
+
+Python has locks and rentrant locks
+
+locks can be used in "with" statements so that the lock is automatically released
+
+## semaphores
+
+When more than one thread can access to the resource at one time, however there is a limit to the number of threads that can access it concurrently.
+When creating a semaphore you specify the number of concurrent threads allowed
+
+## async, await and coroutines
+
+the word coroutine has come to be overloaded in python.
+conventional coroutines
+coroutine is a decorator
+in python generators are coroutines
+they can yield more than one value
+
+modern python lets us manage asynchronous code using 'async' and 'await'
+if we async we must use await or something similar

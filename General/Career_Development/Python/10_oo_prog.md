@@ -31,7 +31,11 @@ class Student:
 
 ```
 
-double underscores signifies special methods in python
+double underscores signifies special methods in python.
+It's called mangling, you mangle the name to make it hard to access.
+Making it impossible to directly access the mangled property
+
+dunder - double underscore!
 
 self refers to the instance of the class.
 is this the same as this in java? **Yes**
@@ -59,6 +63,10 @@ Python uses the same OO techniques as java,
 	def __eq__(self, other):
 		# ...
 ```
+
+#### on deletion
+
+__del__ - python calls this method when the instance of the class is being destroyed
 
 ### dynamic typing
 
@@ -145,3 +153,17 @@ to gain access to methods in super type you use the class name. It's the same fo
 ```
 
 **When using multiple inheritance you must invoke all super constructors explicitly.**
+
+## intrinsics
+
+intrinsic members:
+
+Class.__name__
+Class.__doc__
+Class.__dict__
+Class.__bases__
+
+From an IDe type in Class.__ and see the auto complete! There are a lot
+
+__enter__ - invoked whenever an instance of this class is invoked, and if class is directly invoked
+__exit__ - invoked whenever an inst

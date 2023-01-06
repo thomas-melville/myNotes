@@ -2,7 +2,7 @@
 
 like an iterator
 it's a function, which when called iterates
-very scalable
+very scalable, lazily loaded. Only loads one value at a time into memory!
 each value is only generated when required
 good for huge datasets
 once called it's exhausted
@@ -15,3 +15,4 @@ for root in roots:
 0.0 1.0 1.41421356237 1.73205080757 2.0 2.2360679775
 
 ```
+roots is a generator in the snippet above
