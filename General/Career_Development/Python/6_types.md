@@ -162,6 +162,16 @@ my_tuple = (4,)
 
 ```
 
+there is a namedtuple object
+
+```python
+
+from collections import namedtuple
+
+task = namedtuple('Task', ['summary', 'owner', 'done', 'id'])
+
+```
+
 ### set
 
 same as a set in java, can only have unique values
