@@ -9,7 +9,12 @@ Instead of using credentials a token is issued which has a limited time of acces
 
 I use my username and password to get a token, which is then used until it expires at which point I have to log in again
 
-TLS should be used to encrypt any user/pass combinations befor the token is received
+TLS should be used to encrypt any user/pass combinations before the token is received
+
+* Actors
+  The different roles in the process
+* Clients
+  The app, you are using to access data from
 
 ## roles
 
@@ -49,3 +54,19 @@ a token give to a client which can be used to get a new access token when the cu
   * used by the auth server to return responses containing auth creds to the client via the resource owner user agent
 
 ## redirection
+
+When your client redirects to auth server it gives a redirect uri to go to after authentication is successful
+
+## flow
+
+client request to auth server, with username and password.
+auth server responds with code
+client requests access token from auth server with code.
+client now has access token to access protected resources.
+
+## terminology
+
+Scopes
+* additive bundles of permissions asked by the client when requesting a token
+* Decouples auth policy decisions from enforcement
+* 
