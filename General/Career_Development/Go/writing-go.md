@@ -1,5 +1,7 @@
 # writing go
 
+https://blog.stackademic.com/best-practices-in-go-golang-writing-clean-efficient-and-maintainable-code-dccf61542b57
+
 all go files start with a package declaration
 
 func main(){} in the package main is the entry point
@@ -32,15 +34,20 @@ opening brace for function must be on same line.
   Go enforces automatic ; insertion
 
 defer keyword, after the main function exits execute command passed to it!
+  can be used anywhere in the function, but the method will only be executed at the end.
+  If there are multiple returns it will save putting the function call before each return
 
 comments in go
 
 one line //
-multi line /* \*/
+multi line /* */
 
 ## go.mod file
 
 defines module and go version
+
+go get to install modules for your project. Adds them to go.mod
+However, just import them to your files then call "go mod tidy" and it will add them to your go.mod file.
 
 ## go cli apps
 
@@ -102,6 +109,8 @@ firstName := "Arthur" // implicit initialization syntax
 All the usual data types, they also include a complex number type (real and imaginary parts for mathematics)
 
 ## Pointers
+
+Go is pass by value, so if you want to update a variable passed into a method you need to pass a pointer to it.
 
 Instead of holding the value, hold a pointer to the address in memory where the value is
 Add an asterix before the type when declaring, and the name when setting/getting
@@ -179,7 +188,8 @@ iota resets between constant blocks
 
 ### Arrays
 
-fixed sized collection of similar data types
+fixed sized collection of similar data types.
+Once size is set, it can't be changed without creating a new array
 
 ```go
 
@@ -194,6 +204,13 @@ arr := [3]int{1,2,3}
 ### Slices
 
 Built on top of arrays, but slices are not fixed size!
+
+```go
+
+var arr []int // empty slice, size can change
+
+
+```
 Slice points to data that array is keeping so if you update a value in one it is reflected in the other.
 A little bit like a pointer
 
@@ -224,15 +241,18 @@ slice = append(slice, 4, ...)
 
 ```
 
-Underlying Go will handle array size. Once max size of ther array is reached Go will create a new bigger array and copy all elements to it
+Underlying Go will handle array size. Once max size of the array is reached Go will create a new bigger array and copy all elements to it
 
 ### Maps
 
 ```go
 
-m := map[string]int{"foo":42}
+m := map[string]int{"foo":42} // create a map and initialize it with one entry
+m := make(map[string]int) // create an empty map. it is equivalent to map[string]int{}
 
-m["foo"]
+m["foo"] // if the value doesn't exist then the default for that type is returned.
+
+value,status = m["foo"] // status can be used to check whether the value is in the map or not
 
 delete(m, "foo")
 
@@ -251,17 +271,17 @@ When initialized to a variable default (zero) values are used, boolean false, in
 use . operator to interact with fields of struct
 
 ```go
- type user struct {
+ type User struct {
    ID int
    FirstName string
    LastName string
  }
 
-var u user
+var u User
 u.ID = 1
 u.FirstName = arthur
 
-u2 := user{
+u2 := User{
   ID: 1,
   FirstName: "Arthur",
   LastName: "Dent",
@@ -271,6 +291,54 @@ End struct definition with a , to allow you to put the } on the next line
 
 GO has scope so if struct is defined within a function it is only available within that function
 
+To define functions which act on the a struct they are defined outside a struct.
+
+```go
+func (user User) getFullName() string{
+  return user.FirstName + " " + user.LastName
+}
+
+```
+
+To update the struct in the function you need to pass a pointer to the function
+
+```go
+
+func (user *User) updateLastName( newLastName string){
+  user.LastName = newLastName
+}
+
+```
+
+Structs can embed other structs to make complext objects.
+
+```go
+
+type Name struct {
+  firstName string
+  lastName string
+}
+
+type User struct {
+  name Name
+}
+
+user.name.firstName = "Tony"
+
+```
+
+You can also make the embedded struct anonymous
+
+```go
+
+
+type User struct {
+  Name
+}
+
+user.firstName = "Tony"
+
+```
 ## functions
 
 func keyword, name of function, () {}
@@ -294,7 +362,8 @@ func mymethod(inputvar string) bool { // bool is return type
 If you have multiple function parameters of the same type you can omit the type from all but the last one and GO will know all have the same type
 
 GO has an error type which can be returned from functions
-Not a lot of exceptions in GO, instead error values are returned
+GO does not have the concept of exceptions you can catch, instead error values are returned
+Check for the presence of an error using the nil check
 
 In Go you can return multiple values
 
@@ -345,4 +414,55 @@ func newUserController() *userController{
 }
 
 ```
+
+## goroutines
+
+Lightweight threads in GO.
+Use the keyword go and pass a function to it
+
+```go
+
+func gope(){
+  ...
+}
+
+func main(){
+  go gope()
+}
+
+```
+
+Use channels to sync and share data across goroutines.
+
+```go
+
+ch := make(chan int)
+
+go func(){
+  ch <- fmt.Errorf("Something went wrong")
+}
+
+```
+
+## context
+
+Go has the concept of a context object which is passed around the place.
+https://pkg.go.dev/context
+It can be used for graceful shutdown to inform the application to finish requests before shutting down
+
 ## interfaces
+
+Define your own interfaces and pass them around
+
+```go
+
+type Logger interface{
+  Log(message string)
+}
+
+func DoSomething(log Logger){
+  log.Log("...")
+}
+
+```
+but where's the implementation?

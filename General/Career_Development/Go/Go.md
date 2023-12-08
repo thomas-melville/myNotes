@@ -149,10 +149,22 @@ GUI / Thick client apps
 Machine Learning
 ... & still growing
 
-##### go tool #####
+## go tools
+
+### go
 
 command line tool to allow you to fetch, build and install Go packages and commands
 it requires you to organize your workspace in a particular way
+
+### gofmt
+
+format the code adhereing to strict rules from go
+
+### go tool
+
+see the list of and run a specific go tool
+
+Example: pprof for profiling
 
 ##### workspace #####
 all code is kept in a single workspace.
@@ -209,7 +221,7 @@ starting with uppercase -> public / exported to use go terminology
 the var keyword can be used to declare a list of variables, type is last
 these variables can be initialized, type can be left out as it will be inferred
 
-:# "short assignment statement"
+:= "short assignment statement"
 	can be used in a function in place of var with implicit type
 
 constants are declared using the "const" key word
@@ -248,3 +260,22 @@ it should contain functions with signatures: func TestXXX(t *testing.T)
 ##### go get #####
 for downloading remote packages
 go get <scm>/<import path>
+
+##### pointers
+
+Go is pass by value, so if you want to update a fuction parameter in the function and have it visible after you need to use pointers.
+
+declare a pointer
+
+var myPointer *int
+you need to specify the type it will point to.
+
+To get the address of a variable use ther & prefix.
+
+var myPointer *int = &myVariable
+
+To dereference a pointer and update the value use *
+
+*myPointer = 34556
+
+Need to use * in functions to update the value of the poibnted to address
