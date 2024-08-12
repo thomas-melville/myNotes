@@ -263,14 +263,14 @@ go get <scm>/<import path>
 
 ##### pointers
 
-Go is pass by value, so if you want to update a fuction parameter in the function and have it visible after you need to use pointers.
+Go is pass by value, so if you want to update a function parameter in the function and have it visible after you need to use pointers.
 
 declare a pointer
 
 var myPointer *int
 you need to specify the type it will point to.
 
-To get the address of a variable use ther & prefix.
+To get the address of a variable use the & prefix.
 
 var myPointer *int = &myVariable
 

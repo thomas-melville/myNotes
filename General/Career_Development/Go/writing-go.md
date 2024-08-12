@@ -339,6 +339,24 @@ type User struct {
 user.firstName = "Tony"
 
 ```
+
+Another feature in structs is tagging each type in the struct.
+Tags are annotations that appear after the type in a struct.
+
+These tags are then examined by other Go code which can then react to them.
+In the example below the tag is for json, so the json module will react to this.
+In this case when marshalling the struct to json it will give the value for ItemID the key item_id in the json body
+
+```go
+
+type LineItem struct {
+	ItemID   uuid.UUID `json:"item_id"`
+	Quantity uint `json:"quantity"`
+	Price    uint `json:"price"`
+}
+
+```
+
 ## functions
 
 func keyword, name of function, () {}
@@ -466,3 +484,43 @@ func DoSomething(log Logger){
 
 ```
 but where's the implementation?
+It is defined like a method on a struct
+
+1. define the interface methods
+2. define the struct with the properties
+3. define the methods which can be applied to the struct
+
+```go
+
+package main
+
+import "fmt"
+
+// 1. define interface methods
+type shape interface {
+  area() float64
+  perim() float64
+}
+
+// 2. define struct with properties
+type rectangle struct {
+  width, height float64
+}
+
+// 3. define methods which can be applied to the struct
+func (r rectangle) area() float64 {
+  return r.width * r.height
+}
+
+func main() {
+  fmt.Println("Hello")
+
+  r := rectangle{3, 4}
+  fmt.Println("Area", r.area())
+}
+
+
+```
+
+I'm sure there must be some value to interfaces but I don't see it.
+They don't appear to give any type safety?!?
