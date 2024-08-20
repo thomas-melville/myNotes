@@ -3,6 +3,12 @@
 What you get out of GenAI all depends on what you ask it and how!
 Prompt Engineering is a skill set in it's own right!
 
+## zero, single, few-shot learning approach
+
+zero - ask the model to perform a certain task and expecting the model to understand how it should answer and what is being asked.
+
+few-shot - give some examples of the desired behaviour to it and only then asking it do to a task which is closely related to those examples.
+
 ## 7 building blocks of Prompt Engineering
 
 1. Target Orientation
@@ -19,7 +25,7 @@ Prompt Engineering is a skill set in it's own right!
 5. Language and style
     Should match the wanted language and style of the outcome
     State what language and style you want the response in.
-    humourous, sarcastic, serious, ...
+    humorous, sarcastic, serious, ...
 6. Adaptability
     responses can be refined by adjusting following prompt
 7. Use of keywords
@@ -86,8 +92,135 @@ Create a template with placeholders to accommodate different inputs and situatio
 
 Customer support example: "Hi, I'm experiencing [Issue/Problem] with [Product/Service]. Could you please help me resolve this? I've already tried [Actions Taken]."
 
-I'm going to [location] with [group] for [time] please suggest an itinerary for the following interests [interests] 
+I'm going to [location] with [group] for [time] please suggest an itinerary for the following interests [interests]
 
 ### Test and refine
 
 Try out the template, based on the response refine it.
+
+## Innovative prompt options
+
+### Delimiters
+
+Symbolic cues that aid in structuring ChatGPT responses.
+Any symbols can be used as delimiters, you need to instruct the AI what to do with the text between them.
+Example:
+* Replace the text between them with emojis
+* Pseudo code boolean conditions
+* text between cues becomes section names
+
+Delimiters can also prevent text from being taken up as an instruction.
+For example if you have a chatbot on your site that is talking to an LLM in the background with user provided input.
+The user could try and sneak instructions in to screw up what it returned by the LLM when you give it the user input and your instruction
+
+### Requesting diverse output formats
+
+Without specifying it ChatGPT will pick an output format.
+You can specify what output format you want it in, numbered list, dialogue, Q&A, json, html, xml!
+You can also specify the keys in in json to help your backend webserver easily deserialize the response.
+
+### Translation services
+
+ChatGPT exhibits remarkable translation capabilities.
+Provide text in one language and request translation to another.
+
+### Writing and summarization
+
+Excels at condensing complex concepts and summarizing extensive text.
+
+### Sentient analysis and adjustment
+
+ChatGPT can identify the Sentient in your text and even modify the tone, output based on that.
+
+### Inference capabilities
+
+Demonstrates the ability to infer various elements such as central theme or the author's intent.
+
+### Brainstorming assistance
+
+Can facilitate creative process by aiding in brainstorming
+
+### Project Development
+
+Assist in strategizing and structuring your project.
+help with the first few steps of starting a business
+
+## Priming
+
+Set the scene for the AI, then employ prompts to get the responses.
+
+Primer: "You are a [] who has []. You possess []"
+
+Prompt: "With this background, ..."
+
+### 4 keys to effective priming
+
+Granular Persona Details
+  age, experience, industry, motivations, world view
+Required Knowledge Breadth
+  technical skills, industry, type of analysis, creative medium
+Conversation Expectations
+  professionalism, length, structure, jargon
+Scenario Modelling
+  constraints, priorty elements to feature, ...
+Applicable Business Use Cases
+
+### Advanced Prompt Engineering
+
+Role-Driven Persona Contextualization
+  give the AI a precise point of view
+Multi-Layered Prompt Directives
+  break down a complex goal into chunks, which the AI can figure out individually
+  <Prompt> Then base on X do Y. Finally, ...
+Hypothetical Scenario Simulation
+  Use phrases like "Imagine if" or "In the year 2030"
+Constraint-Bound Complex Inquiry
+  Constrain the output of the AI
+  simple language, limit text, examples or bullet points
+Iterative Refinement Loops
+  repeat prompts with evolving criteria
+Meta-Prompting
+  Get the AI to generate prompts
+Nuanced Negative Prompting
+  guide response by limiting input data
+
+## frameworks
+
+### A.P.E
+
+Action Purpose Expectation.
+  Define the job or activity to be done
+          Discuss the intention or goal
+                  State the desired outcome
+
+### R.A.C.E
+
+Role Action Context Expectations
+  Specify the role of ChatGPT
+      Detail what action is needed
+              Provide relevant details of the situation
+                        Describe the expected outcome
+
+### C.O.A.S.T.
+
+Context Objective Actions Scenario Task
+  Set the stage for the conversation
+          describe the goal
+                    Explain the actions needed
+                            Describe the scenario
+                                    describe the task
+
+### T.A.G.
+
+Task Action Goal
+  Define the specific task
+        Describe what needs to be done
+              Explain the end goal
+
+### R.I.S.E
+
+Role Input Steps Expectation
+  Specify the role of ChatGPT
+      Describe the info or resource
+            Ask for detailed Steps
+                    Describe the desired result

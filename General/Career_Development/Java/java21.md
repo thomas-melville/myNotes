@@ -50,7 +50,7 @@ now implements auto closeable.
 Once you get into Virtual Threads you can start to treat them as a set of tasks as if they're executing a single unit of work.
 you can see them as children of the thread that created them.
 
-Streamline error handling, cancellation, improve reliability and ehance observability.
+Streamline error handling, cancellation, improve reliability and enhance observability.
 
 It's a new API, which implements auto closeable.
 fork tasks, new type SubTask
