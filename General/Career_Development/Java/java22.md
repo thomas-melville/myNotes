@@ -42,9 +42,27 @@ Examples would be parameter validation, argument pre-calculation, etc.
 ## JEP 457 Class-file API
 
 A standard API for parsing, generating and transforming Java class files.
+Java ecosystem has numerous libraries for this, however the class format is eolving every 6 months.
+So the frameworks must evolve also, at the risk of not supporting the latest language evolution.
+
+The JDK itself uses ASM to implement some of its tools.
+
+The Class file API provides an API with the JDK for parsing, generating and transforming class files.
 
 ## ListFormat
 
+New formatter, format a list of strings regarding a locale based on Unicode standard
+
 ## Features coming out of preview
 
+Foreign Function & Memory API, for interacting with native code.
+
+Unnamed Variables & Patterns - allows you to use _ as a unnamed pattern or variable.
+
 ## Features that remain in preview
+
+Vector API
+Scoped Values
+Structured Concurrency
+Implicitly declared Classes and Instance Main methods
+String Templates

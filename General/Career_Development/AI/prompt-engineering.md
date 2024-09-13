@@ -6,8 +6,40 @@ Prompt Engineering is a skill set in it's own right!
 ## zero, single, few-shot learning approach
 
 zero - ask the model to perform a certain task and expecting the model to understand how it should answer and what is being asked.
+  prompt wont contain examples or demonstrations.
 
-few-shot - give some examples of the desired behaviour to it and only then asking it do to a task which is closely related to those examples.
+one/few-shot - give some examples of the desired behaviour to it and only then asking it do to a task which is closely related to those examples.
+  provide examples/demonstrations in the prompt
+  The model takes the example and uses that to refine its output
+  You can provide one or as many examples as you like
+
+chain-of-thought prompting
+  in your examples provide intermediate reasoning steps, not just the answer.
+  Combine it with few-shot to get better results.
+
+zero-shot chain of thought
+  Add "let's think step by step" to the end of your prompt
+
+## Meta prompting
+
+Advanced prompting technique, focuses on the structural and syntactical aspects of tasks and problems
+
+## Input parameters
+
+### Temperature
+
+This term defines the level of exploration by the LLM.
+0 - when you want reliability and predictability
+0.x - when you want variety
+I see it's defined in the REST API
+
+### Role
+
+You can structure your prompt using different roles: system, user and assistant.
+
+system gives the LLM some context
+user is the prompt from the user
+assistant is the model response
 
 ## 7 building blocks of Prompt Engineering
 
