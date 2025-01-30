@@ -8,6 +8,9 @@ func main(){} in the package main is the entry point
 
 functions can return multiple values
 
+the case of the first letter of a function decides whether it is exported outside the package or not.
+Capital means exported, lower case means hidden.
+
 functions can also return pointers to values, this is identified by a *
 when referencing the variable you also need to use the *
 
@@ -36,6 +39,8 @@ opening brace for function must be on same line.
 defer keyword, after the main function exits execute command passed to it!
   can be used anywhere in the function, but the method will only be executed at the end.
   If there are multiple returns it will save putting the function call before each return
+  it's evaulated where it's coded, but only executed at the end
+  you can stack defer calls, last one in first one out.
 
 comments in go
 
@@ -45,9 +50,16 @@ multi line /* */
 ## go.mod file
 
 defines module and go version
+(kind of like pom.xml im maven)
 
 go get to install modules for your project. Adds them to go.mod
 However, just import them to your files then call "go mod tidy" and it will add them to your go.mod file.
+
+A module can have multiple packages
+
+when importing it's <module-name>/<package-name>
+
+keyword internal to create packages which should not be exported
 
 ## go cli apps
 
@@ -201,6 +213,8 @@ arr := [3]int{1,2,3}
 
 ```
 
+when passing an array to a function we need to specify the size of the array in the function definition
+
 ### Slices
 
 Built on top of arrays, but slices are not fixed size!
@@ -216,6 +230,7 @@ A little bit like a pointer
 
 Very similar to Python slicing syntax!
 [begin:end]
+begin is inclusive, end is exclusive
 indexes are optional
 
 ```go
@@ -243,6 +258,16 @@ slice = append(slice, 4, ...)
 
 Underlying Go will handle array size. Once max size of the array is reached Go will create a new bigger array and copy all elements to it
 
+length of a slice: len()
+capacity of a slice: cap() - this counts from the start of the slice to the end of the array!
+
+When passing a slice to a function you pass a pointer to the original array.
+
+You can create a slice with make:
+
+make([]int, 8, 5) - 8 is length, 5 is capacity
+
+
 ### Maps
 
 ```go
@@ -250,13 +275,23 @@ Underlying Go will handle array size. Once max size of the array is reached Go w
 m := map[string]int{"foo":42} // create a map and initialize it with one entry
 m := make(map[string]int) // create an empty map. it is equivalent to map[string]int{}
 
-m["foo"] // if the value doesn't exist then the default for that type is returned.
+m["foo"] // if the value doesn't exist then the default for that type is returned or if it's assignment then it will be added
 
 value,status = m["foo"] // status can be used to check whether the value is in the map or not
 
 delete(m, "foo")
 
 ```
+
+### range
+
+easily iterate over an array, slice or map
+
+for i, v := range s {
+  i - index
+  v - range
+  are available in the the scope of each iteration
+}
 
 ### Structs
 
@@ -340,6 +375,11 @@ user.firstName = "Tony"
 
 ```
 
+When a struct is passed to a function it is passed by value, so any changes made are not reflected in the original struct
+To update original a pointer to it must be passed around
+
+pointer dereference can be explicit or implicit!
+
 Another feature in structs is tagging each type in the struct.
 Tags are annotations that appear after the type in a struct.
 
@@ -409,6 +449,8 @@ _, err := mymethod()
 Object Oriented programming in GO is a bit different
 1. Define a Struct
 2. create methods and tie them to the Struct
+    By specifying the struct as a receiver of the function
+    directly after the keyword func
 
 ```go
 
@@ -421,7 +463,18 @@ func (uc UserController) func_name (){
 }
 ```
 
+
+Initializing an object
+
+me := BacnkAccount{}
+
+or 
+
+var me = new(BacnkAccount) - fields are initialized to zero
+
+
 No constructor in GO, so use a special function
+convention is New<Struct-name>
 
 ```go
 
@@ -433,10 +486,18 @@ func newUserController() *userController{
 
 ```
 
+returns a pointer to the created object
+
+function or method?
+  if the logic only depends on the input parameters use a function
+  if the logic depends on values that are changed while program is running
+
 ## goroutines
 
 Lightweight threads in GO.
 Use the keyword go and pass a function to it
+goroutines are multipled onto multiple O/S threads
+GO hides complexitie of thread creation and management
 
 ```go
 
@@ -450,23 +511,99 @@ func main(){
 
 ```
 
+Can also pass a function literal (closure) to goroutine
+
+```go
+
+func main(){
+  go func(n int){
+    ...
+  }(5)
+}
+
+```
+
+We use wait groups to wait for all goroutines to finish
+
+Create a wait group
+specify the number of goroutines to wait for
+add wg.Done as defer to each func
+call wg.Wait()
+
+```go
+
+wg := new(sync.WaitGroup)
+wg.Add(2)
+
+```
+
+Need to be careful with closures and variable states! Especially in loops which create goroutines.
+
 Use channels to sync and share data across goroutines.
+A channel can share one type of data.
+Only one piece of data on the channel at a time
+Nothing on it, read waits.
+Something on it, write waits
+
+To write/read we use the <- operator
+
 
 ```go
 
 ch := make(chan int)
 
 go func(){
-  ch <- fmt.Errorf("Something went wrong")
+  ch <- fmt.Errorf("Something went wrong") // write
+  mine := <- ch // read
 }
 
 ```
+
+Only one go routine has access to a variable in the channel at a time.
+No worrying about synchronzing!
+
+If one is reading, any other has to wait until its completes before it gets its go
+
+Multiple goroutines can read and write to a channel
+
+There is a select keyword which allows a go routine to read from multiple channels.
+  like switch, whichever channel has a value first is used
+  If you don't want it to block specify a default case
+  if you want it to timeout use a case with a time
+
+### buffered channels
+
+When creating the channel specify a size to it.
+This allows multiple values to be placed in it at a time.
+Buffered channel is same effect as semaphores (protect access to resources)
 
 ## context
 
 Go has the concept of a context object which is passed around the place.
 https://pkg.go.dev/context
 It can be used for graceful shutdown to inform the application to finish requests before shutting down
+
+## Struct embedding
+
+This enables polymorphism in GO!!!
+
+```go
+
+type BankAccount struct{
+  ...
+}
+
+type SavingsAccount struct {
+  BankAccount
+  ...
+}
+
+sa := SavingsAccount{ BankAccount{...}, ...}
+
+
+```
+
+sa now has access to all methods of BankAccount
 
 ## interfaces
 
@@ -497,19 +634,23 @@ package main
 import "fmt"
 
 // 1. define interface methods
-type shape interface {
+type Shape interface {
   area() float64
   perim() float64
 }
 
 // 2. define struct with properties
-type rectangle struct {
+type Rectangle struct {
   width, height float64
 }
 
-// 3. define methods which can be applied to the struct
-func (r rectangle) area() float64 {
+// 3. define methods which can be applied to the struct. Once the methods match the interface it will work
+func (r *Rectangle) area() float64 {
   return r.width * r.height
+}
+
+func (r *Rectangle) Perim() float64 {
+  return 2 * ( r.width + r.height)
 }
 
 func main() {
@@ -517,10 +658,48 @@ func main() {
 
   r := rectangle{3, 4}
   fmt.Println("Area", r.area())
+  processShape(r)
+}
+
+func processShape(shape Shape){
+  shape.area()
 }
 
 
 ```
 
-I'm sure there must be some value to interfaces but I don't see it.
-They don't appear to give any type safety?!?
+interface types can be used as cases in switch!
+
+Need to be careful with interface methods that have the same signature.
+There is no type safety like in Java which fails if there are two interfaces in the hierarchy with the same signature
+
+## loops
+
+only one, for
+same syntax as Java, only addition is you can leave out the  ( )
+Like other languages you can omit parts of thhe for loop to simulate while loop
+leave out all 3 parts to have an infinite loop.
+
+break and continue keywords are present with same function as other languages.
+
+You can give the break/continue a label to go to a certain point, like a go to in Java
+
+## conditionals
+
+if, same as Java, again ( ) are optional
+
+You can declare a variable inside the condition.
+These variables are visible only within the if, else
+
+## switch
+
+switch, case and default keywords
+Same as java
+Can put multiple values comma separated in one case
+
+switch can also have no expression and each case has a condition
+
+expression can be integer, float, string.
+
+Go is the opposite of Java, there is no need for break as it does not fall through.
+If you want fall through you use the keyword fallthrough

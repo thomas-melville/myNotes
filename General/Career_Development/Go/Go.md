@@ -199,6 +199,9 @@ import (
 	"..."
 	"..."
 )
+
+when importing you can give a package an alias, the alias is placed between import and the package name
+
 it's called a factored import statement
 you can also write each import individually
 
@@ -220,11 +223,23 @@ starting with uppercase -> public / exported to use go terminology
 
 the var keyword can be used to declare a list of variables, type is last
 these variables can be initialized, type can be left out as it will be inferred
+when not initiialized vars have default values, 0, false, ""
+
+you can also define multiple vars inside () outside the function
+
+when creating multiple vars in one line you can initialize them as well.
+But the list of initial values comes after the type. 
 
 := "short assignment statement"
 	can be used in a function in place of var with implicit type
 
+no auto conversion between compatible types in GO, must explicitly cast.
+
 constants are declared using the "const" key word
+	can't use := with const
+	should do same convention of constatns as upper case
+
+Not many keywords in GO
 
 #### function signatures ####
 
@@ -246,16 +261,63 @@ to return mulitple values from a function specify them as a command separated li
 
 you can also name the values to be returned
 specify their name along with the type in the function signature
+Then set the names in the function and use the return keyword on it's own at the end.
+
+no default values for function parameters
+no named parameters
+no function overloading
 
 ##### go compiled code #####
 
 the executables look to be quite large in size.
 that is because all required dependencies are compiled along side your code
 
-##### testing in go #####
+##### testing in go
 
 append test file with _test.go
+In the same package as the code, so it can access unexported functions.
+But, if tests in folder then can't run go run *.go
+
+import testing package
 it should contain functions with signatures: func TestXXX(t *testing.T)
+
+Arrange, Act & Assert in each test
+
+no formal assert function.
+verify outcome, if it's incorrect call t.Error() / t.Errorf() - function will keep running.
+Call Fatal/Fatalf() if you want function to end
+
+Parameterized tests supported
+* define a structure containing inputs and expected outputs.
+* create a slice of this data
+* iterate through the slice and execute the test code
+
+###### Setup & Teardown
+
+TestMain function to manage state and run tests
+
+```go
+
+func TestMain(m *testing.M){
+
+	...
+
+	exitVal := m.Run()
+}
+```
+
+###### Coverage & Benchmarking
+
+integrated in Go testing framework
+run the tests with go test -cover
+
+benchmarking integrated into GO testing fwk also.
+
+write BenchmarkXxx (b *testing.B){
+	for loop with b.N for number of iterations
+}
+
+run go test -bench=.
 
 ##### go get #####
 for downloading remote packages
@@ -269,6 +331,7 @@ declare a pointer
 
 var myPointer *int
 you need to specify the type it will point to.
+initialized to nil by default
 
 To get the address of a variable use the & prefix.
 
@@ -279,3 +342,5 @@ To dereference a pointer and update the value use *
 *myPointer = 34556
 
 Need to use * in functions to update the value of the poibnted to address
+
+No pointer arithmetic in GO!

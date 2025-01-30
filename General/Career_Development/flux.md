@@ -77,6 +77,13 @@ Can manage multiple clusters from a single management cluster
 Kustomization objects link back to folders in the sync'd git repo
 applies manifests to cluster
 
+## Notification Controller
+
+Can send notifications to external systems
+
+But also, can receive events from external systems which then could trigger controllers.
+i.e. commit on github sends an event, using webhooks, which triggers the source controller
+
 ## using flux
 
 flux cli to bootstrap a cluster
@@ -93,3 +100,17 @@ CRDs:
 
 HelmRepository points to a helm registry somewhere
 HelmRelease depends on a HelmRepository and points to a chart in the helm registry
+
+## workflow
+
+1. install flux cli
+2. boot strap flux in cluster.
+    * install CRD & controllers in cluster in flux-system namespace
+    * create a git repository
+        pushes manifests to manage flux istelf
+3. This created repository is where you will put the manifests for your deployment
+    flux create source <type> <name> ....
+    * GitRepository
+        The git repository tp pull app manifests from
+    * Kustomization
+        Kubernetes yamls file from the app repo to pull from
