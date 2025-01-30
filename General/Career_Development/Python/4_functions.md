@@ -34,6 +34,7 @@ def func(*args):
 	# args is a single list of all the parameters to the method
 ```
 
+The single asterisk gathers positional arguments into a tuple called args.
 if you pass a list it will become the first element in the args list in the function.
 To expand the list into it's individual elements and into the args list precede it with a *
 
@@ -53,7 +54,18 @@ def func(**kwargs):
 func(desc="Loves Python", age=43)
 ```
 
-** tells python to use a dict
+** tells python to use a dict instead of a list
+
+You can combine args and kwargs into a single function
+
+```python
+
+def both (*args, **kwargs):
+	pass
+
+```
+
+kwargs must come after args in the function definition
 
 ### nested functions
 

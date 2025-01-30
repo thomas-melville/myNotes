@@ -8,12 +8,18 @@
 class Student: # this is the old way, don't do this anymore
 	pass
 
+class Student():
+	pass
+
+
 class Student(object): # this is the new way to do it. You get some new features this way
 	pass
 
 #...
 student = Student()
 ```
+
+All three classes inherit from object, either implicitly or explicitly.
 
 pass is a keyword in the interpreter which tells python to do nothing.
 
@@ -50,6 +56,24 @@ my_class.my_method('hello')
 MyClass.my_method(my_class, 'hello')
 
 ```
+
+#### __repr__
+
+in the python interpreter __repr__ is used instead of __str__
+
+```
+
+class ban:
+	def __repr__(self):
+		return "In repr"
+
+
+python
+>>> ban
+In repr
+```
+
+Recommendation is when you override __str__ override __repr__ and call __str__ from it.
 
 #### instance comparison
 
@@ -104,7 +128,7 @@ synonymous with equals() in Java
 
 #### string representation
 
-override __str__ to give a meaningful string represntation of the class
+override __str__ to give a meaningful string representation of the class
 synonymous with toString() in Java
 
 ### instance and class attributes/fields
@@ -166,4 +190,28 @@ Class.__bases__
 From an IDe type in Class.__ and see the auto complete! There are a lot
 
 __enter__ - invoked whenever an instance of this class is invoked, and if class is directly invoked
-__exit__ - invoked whenever an inst
+__exit__ - invoked whenever an instance of this class is finished being invoked
+
+
+## slots
+
+Restrict the properties for a class, prevent users from adding extra ones.
+```python
+
+class Fruit(metaclass=ABCMeta):
+	__slots__ = ("colour")
+
+class Banana:
+	__slots__ = ('properties for this class') # tuple of properties for this class
+
+banana = Banana()
+banana.__rotten = True
+
+```
+Will fail!
+
+## Class properties and methods
+
+if you define a property on the same level as the methods then it is a class property, like static in Java
+
+If you decorate a method with @classmethod then it becomes a method of the class, not instance. Again like static in Java

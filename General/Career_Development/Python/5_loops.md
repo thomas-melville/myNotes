@@ -1,6 +1,7 @@
 # loops
 
 range method, upper limit is less than
+it's efficient because it doesn't store all the numbers in memory, it yields one when needed
 
 ```python
 range(10)

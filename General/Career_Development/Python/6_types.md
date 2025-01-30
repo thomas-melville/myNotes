@@ -106,6 +106,8 @@ It can be <, ==, or > the existing slice
 
 #### list comprehension
 
+comprehension == covering everything, maybe should have been called comprehensive.
+Less to do with understanding everything, more to do with covering everything.
 very powerful mechanism for generating lists
 generate a new list by applying a function to elements in a source list, tuple or range
 

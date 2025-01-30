@@ -17,6 +17,20 @@ class Payment(metaclass = ABCMeta) - this will ensure that any implementing clas
 
 eval function. Give it a reference to a class and then you can instantiate it.
 
+```python
+
+from abc import ABCMeta, abstractmethod
+
+class AbstractShape(metaclass=ABCMeta):
+  # abstract class in Python. Declare properties and methods that we will need to implement in concrete classes.
+
+  @property
+  @abstractmethod
+  def num_sides(self, num_sides):
+    pass
+
+```
+
 
 Factory
   creates things
@@ -44,9 +58,10 @@ Add it as an "annotation" to the function to be decorated.
 def myfunction(a, b, c):
   ...
 
-def decoatingFunction(f):
+def decoratingFunction(f):
   def new_func(*args, **kwargs):
     ....
+    return f(*args, **kwargs)
   return new_func
 
 ```
@@ -54,6 +69,8 @@ def decoatingFunction(f):
 ### property
 
 is a decorator in python. Gives special functionality to certain methods to make them act as getters, setters or deleters.
+
+The validation in setters can also help protect against users corrupting variables after the fact.
 
 ```python
 
@@ -68,6 +85,7 @@ class House:
 
   @price.setter # setter
   def price(self, new_price):
+    # This enables validation to be carried out on incoming value
     self.__price = new_price
 
   @price.deleter # deleter

@@ -1,7 +1,18 @@
 # concurrency
 
+Python runs on a main thread, in your code you can spawn another thread.
+Anything to do with IO must go through the main thread!
+Even if you make the call on the thread it'll go back to the main thread!
+
 Threads use the same memory heap so they can write to the same location in memory.
+Threads get their own little heap when they start, destroyed when the thread finishes
+Memory management is left to the underlying python implementation.
+  uses a mark and sweep mechanism.
+    stop execution (so small that it's not noticeable to people), look at memory, what can be removed? mark it, can do multiple mark stages.
+    eventually come and sweep
 That is why the GIL - Global Interpreter Lock in CPython was created.
+  Prevents threads from calling code which is part of python concurrently
+  is being made optional in latest versions of python
 Some Python implementations don't have a GIL: IronPython, JPython
 I'm nearly certain I use CPython, will this hinder our concurrency efforts?
 
@@ -46,6 +57,9 @@ Create an instance and call the start method
 To block and wait for all threads to finish iterate through them and call the join method
 
 http://chriskiehl.com/article/parallelism-in-one-line/
+
+__call__ method cam be implemented on a class which doesn't extend Thread to allow it to be invoked in a separate thread.
+Then specify the class as the target with args when creating the THread instance
 
 ### GIL affect
 
@@ -112,6 +126,7 @@ When creating a semaphore you specify the number of concurrent threads allowed
 ## async, await and coroutines
 
 the word coroutine has come to be overloaded in python.
+a coroutine is essentially the same thing as a thread. OS running the thread, coroutine is the code running in the thread
 conventional coroutines
 coroutine is a decorator
 in python generators are coroutines
@@ -119,3 +134,17 @@ they can yield more than one value
 
 modern python lets us manage asynchronous code using 'async' and 'await'
 if we async we must use await or something similar
+
+```python
+
+import asyncio
+
+
+async def m():
+    await asyncio.sleep(1)
+    print('thread is done')
+    
+if __name__ == '__main__':
+  with asyncio.run(m())
+  print('main is done')
+```

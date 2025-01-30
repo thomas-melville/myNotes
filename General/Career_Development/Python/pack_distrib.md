@@ -29,7 +29,12 @@ if __name__ == '__main__':
 	# code to execute
 ```
 
-This will not be executed if the module is imported into another module
+This will not be executed if the module is imported into another module.
+
+When python runs a script it runs it as __main__.
+This is only the script which is directly run!
+
+This means we could write test code in this block which will only execute if the module is executed directly.
 
 ## 12. pipenv
 

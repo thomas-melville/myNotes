@@ -12,6 +12,7 @@ access modes
 * w	write, will overwrite existing data. It's called clobbering
 * * if the file doesn't exist it will create it
 * b	open the file in binary mode, Windows only! but doesn't hurt when your developing on linux, makes the module platform independent
+* t open the file in text mode
 
 .write(...)
 .close()
