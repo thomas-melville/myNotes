@@ -1,5 +1,19 @@
 # LLM
 
+## Machine learning
+
+Traditional programming, give in rules and data to get out answers.
+Machine learning, give in answers and data to get out rules. out are guesses by the AI which you rate so it can fine tune it's answer next time.
+  Once the rules are fine tuned enough, this becomes the model.
+You give the model data and it gives out inferences
+This is called supervised learning
+
+## Supervised Learning
+
+Training a model on a dataset using labels.
+When model has given a good answer this data is labeled as such
+ChatGPT, Gemini are trained on large amounts of data
+
 Large Language Model
 A dataset that an AI is trained on.
 
@@ -18,7 +32,7 @@ Misinformation - Again based on the dataset, can't distinguish truth from falseh
 
 ## GPT
 
-Generative Pretrained Transformers
+Generative Pre-trained Transformers
 
 Generative - it can create/generate responses based on it's data
 Pretrained - previously trained on a vast amount of data.
@@ -26,10 +40,26 @@ Transformers - refers to the specific model that allows this to happen.
 
 ### Transformers model
 
-Game changer when introduced by Google in 2017
+Game changer when introduced by Google in 2017, in a paper.
 It's all to do with how the AI handles the data.
 Before it was word by word in a sentence, which was limited.
 The Transformers model considers all words in a sentence at once.
+sequences of text / data
+process all parts of the data simultaneously.
+Build up a context of what's been inputted
+
+Attention - allow the model to focus on specific words when predicting the next word
+            consider relationships between words in a sentence to predict the next word.
+            focus on adjectives
+
+
+Text is broken down in tokens, usually words or parts of words. Each token is assigned a multi dimensional vector.
+Certain values in the vector are dependent on the previous tokens
+This can be used to infer the underlying concept being described
+
+Encoders and Decoders - take the entire input sequence, and using attention focus on the important tokens. Encode them into context vectors, encapsulating the learned insights of the input data
+                        decoder reverses this process
+
 
 #### Self improvement
 
@@ -39,3 +69,20 @@ To test it's understanding, the model sometimes hides a word in a sentence and t
 ## API Access to LLM's
 
 Use jupyter notebooks
+
+## Context window
+
+The longest token sequence a model can process
+Range from 16K to 1M+ tokens
+can be used up quickly
+LLMs don't remember previous prompts or responses.
+every prompt from you contains all the previous prompts and answers from the conversation!
+
+Some models are reasoning models, they think out loud (show your work) 
+We may not see the reasoning tokens as they could be excluded from the chat history
+
+some tools have compacting context window functionality.
+LLM may seem to forget earlier details
+
+Keep in mind the size of your context window!!!
+

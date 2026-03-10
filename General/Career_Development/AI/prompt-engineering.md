@@ -3,6 +3,22 @@
 What you get out of GenAI all depends on what you ask it and how!
 Prompt Engineering is a skill set in it's own right!
 
+1. be specific
+2. assign a role
+3. request an expert opinion
+4. give feedback, iteratively prompt the LLM
+
+Set goals
+  could have a conventions doc in the repo which the LLM can read
+set boundaries
+  what it can/not edit
+  what approach should it take
+  any design you want it to use
+inspect, test and iterate
+  always review the generated code
+Maintain ownership
+  don't rely on the model, always understand the changes that have been made
+
 ## zero, single, few-shot learning approach
 
 zero - ask the model to perform a certain task and expecting the model to understand how it should answer and what is being asked.

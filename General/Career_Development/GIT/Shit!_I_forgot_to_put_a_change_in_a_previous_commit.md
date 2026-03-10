@@ -17,3 +17,16 @@ save and exit the editor
 
 be very careful in the git rebase!!!
 	make sure the commit you want to fixup into is first in the list of commits!!!!!
+
+Thanks to GenAI I have now found out a simpler way to do this.
+Came across it when I was investigating Stacked PRs
+
+You have a change of commits which build on each other.
+
+git rebase -i origin/master
+    in the interactive shell that appears mark the commit you want to work on as edit, it can be more than one.
+    leave the rest as pick
+make the updates
+git commit --amend
+git rebase --continue
+    to move onto the next commit or complete the rebasing
