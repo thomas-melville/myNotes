@@ -75,3 +75,19 @@ Testing in LangGraph
 
 Model Context Protocol, how different components in an AI ecosystem can communicate and share context.
 This is getting into the area of multi-agent, where to complete the task multiple agents are employed.
+
+
+## sub agents
+
+an agent can call sub agents to execute tasks.
+sub agents have access to same tools as parent that calls them.
+Two types of sub agents
+1. map reduce
+    break work into different chunks
+    process tasks simualtaneously
+2. task dependency graph
+    sequential
+kiro will know what way to organize work of sub agents
+they can be combined in a single execution depending on the work
+
+agent configuration, add "subagent" to tools and allowedTools arrays

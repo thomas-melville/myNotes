@@ -6,6 +6,15 @@ all go files start with a package declaration
 
 func main(){} in the package main is the entry point
 
+There's another function that can run before main if it is specified!
+func init(){}
+  is treated as part of package initialization
+  package level variables are setup, then every init in the package is executed
+
+When a package is imported the packages init function will be executed
+Then the main packages init function
+Then main function will be called.
+
 functions can return multiple values
 
 the case of the first letter of a function decides whether it is exported outside the package or not.
@@ -257,6 +266,7 @@ slice = append(slice, 4, ...)
 ```
 
 Underlying Go will handle array size. Once max size of the array is reached Go will create a new bigger array and copy all elements to it
+If multiple slices are pointing to an array, only the slice that forced the creation of a new array will point to the new array, the other slices will still point to the old array
 
 length of a slice: len()
 capacity of a slice: cap() - this counts from the start of the slice to the end of the array!
@@ -492,6 +502,46 @@ function or method?
   if the logic only depends on the input parameters use a function
   if the logic depends on values that are changed while program is running
 
+## Generics
+
+Go introduced generics in 1.18. Same concept as Generics in Java
+Includes type inference, when it can.
+Type inference does not apply to struct type parameters
+  Struct type parameters must be explicitly provided
+
+```go
+
+func Print[T any](slice []T) {
+
+}
+
+```
+
+any is a keyword which means any type can be used.
+If you want it to be more specific use an interface
+
+```go
+
+func Print[T comparable](slice []T){
+
+}
+
+```
+
+constraints:
+any -> matches alltypes
+comparable -> types supporting == !=
+constraints.Ordered -> types support ordering
+
+### pitfalls to avoid
+
+execissive use
+  iveruse can reduce ode clarity
+assuming performance gains
+  don't always improve perrormance
+complext constrints
+reflection pitfalls
+
 ## goroutines
 
 Lightweight threads in GO.
@@ -571,6 +621,29 @@ There is a select keyword which allows a go routine to read from multiple channe
   If you don't want it to block specify a default case
   if you want it to timeout use a case with a time
 
+there is a select statement that allows which ever channel is ready to be selected
+
+```go
+
+select {
+  case m1 := <- c1:
+    ...
+  case m2 := <- c2:
+    ....
+}
+
+```
+
+add a default or timeout branch to the select
+
+default
+ //
+case <- time.After(...)>
+
+When passing channels into functions you can specify if you can only read from or write to ther channel
+<-chan - is only read from the channel
+chan<- is only write to the channel
+
 ### buffered channels
 
 When creating the channel specify a size to it.
@@ -581,7 +654,22 @@ Buffered channel is same effect as semaphores (protect access to resources)
 
 Go has the concept of a context object which is passed around the place.
 https://pkg.go.dev/context
-It can be used for graceful shutdown to inform the application to finish requests before shutting down
+It can be used for graceful shutdown to inform the application to finish requests before shutting down.
+Incoming requests should create a Context, which is then passed along execution of request.
+context creation has different options for closing it, withCancel, withDeadline, withtimeout, withValue.
+  these functions take a context and return a derived context, child.
+A context may be cancelled to indicate that work done on its behalf should stop.
+A context with a deadline will be cancelled after the deadline passes.
+All contexts derived from it are cancelled.
+Never store contexts in structs of an object, always pass it as the first argument to functions.
+
+Use context values only for reques-scoped data that transits processes and APIs, not for passing optional parameters to functions.
+
+In the context of a GO App that's a Kubernetes Controller (would be the same for a Http Server)
+Create a context on app start for the lifetime of the app, add NotifyContext for the different termination signals.
+For each request a call to Context.Background will be made, by the framework that is accepting the incoming requests, then your code will receive a context as the first parameter in the first function definition in the chain, for example Reconile in Kubernetes Controller implementation.
+Create contexts with timeouts to pass to functions that call external systems.
+Call cancel in a deferred function for contexts you create.
 
 ## Struct embedding
 
@@ -604,12 +692,19 @@ sa := SavingsAccount{ BankAccount{...}, ...}
 ```
 
 sa now has access to all methods of BankAccount
+When you don't give the embedded struct a name all it's methods are promoted to  enclosing struct
 
 ## interfaces
 
 Define your own interfaces and pass them around
 
 ```go
+
+type Number interface{
+  int | int64 | float64
+}
+// interface Nuber accepts only int, int64 or float64
+
 
 type Logger interface{
   Log(message string)
@@ -658,8 +753,7 @@ func main() {
 
   r := rectangle{3, 4}
   fmt.Println("Area", r.area())
-  processShape(r)
-}
+  processShape(r)}
 
 func processShape(shape Shape){
   shape.area()
@@ -703,3 +797,45 @@ expression can be integer, float, string.
 
 Go is the opposite of Java, there is no need for break as it does not fall through.
 If you want fall through you use the keyword fallthrough
+
+## io
+
+os.WriteFile(name, content, permissions)
+
+bufio provides a Scanner interface
+  scanner.Scan() - read next line of text
+  scanner.Token() - fetch token (what was read)
+
+## concurrency patterns
+
+### fan out - fan in
+
+same as fork join.
+distribute work acoss multiple goroutines
+collect the results
+maximize parallelism
+
+### pipelines
+
+series of processing stages
+each stage performs an operation and puts the result onto a channel for the next stage to process it
+
+### worker pool
+
+distribute work across a number of workers concurrently.
+limit the number of concurrent go routines to manage resources
+fixed number of worker goroutines
+
+### generator
+
+generate a sequence of values
+
+### queueing
+
+allow workloads to be managed when load occurs in bursts
+
+## Rest Application
+
+Gin Web framework is popular.
+Just like Java, a router is at the heart of it.
+Take in requests and map them to handlers

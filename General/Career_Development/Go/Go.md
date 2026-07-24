@@ -239,7 +239,7 @@ constants are declared using the "const" key word
 	can't use := with const
 	should do same convention of constatns as upper case
 
-Not many keywords in GO
+Not many keywords in GO, 25
 
 #### function signatures ####
 
@@ -344,3 +344,26 @@ To dereference a pointer and update the value use *
 Need to use * in functions to update the value of the poibnted to address
 
 No pointer arithmetic in GO!
+
+## garbage collector
+
+automatic memory management process
+	identfies and reclaims memory no longer in use
+Simplicity
+Safety
+Performance
+mark and sweep algorithm
+tri-color system
+	white - unreachable objects collected during sweep phase
+	gray - objects with references that have not been fully processed
+	black - fully processed objects confirmed as reachable
+
+each function gets a stack for variables which is discarded once the function returns.
+Go has a heap for objects which live outside the scope of a single function.
+
+reduce heap allocations
+	return value types, which means a copy of the value is returned.
+	inline functions, so that stack is discarded after
+	object polling
+		use sync.Pool for reusable objects
+		instad of constructing and destroying objects many times use a pool of said objects
